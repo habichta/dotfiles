@@ -1,5 +1,3 @@
-
-
 #Colorscheme for Dirs
 eval "$(dircolors ~/.dircolors)"
 
@@ -76,7 +74,6 @@ ZSH_THEME="spaceship"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-    git
     z
     )
 
@@ -104,24 +101,18 @@ source $ZSH/oh-my-zsh.sh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-#
-
-# Add wisely, as too many plugins slow down shell startup.
-#plugins=(
-# git
-# ssh-agent
-#)
 
 #zstyle :omz:plugins:ssh-agent agent-forwarding on
 #zstyle :omz:plugins:ssh-agent identities bitbucket.com github.com dae.cdk@ti8m.ch dae@ti8m.ch dle@ebikon pi@ebikon
 #zstyle :omz:plugins:ssh-agent lifetime
 
 
+# deactivate ctrl-s XOFF
+stty -ixon 
 
-
+# NVM
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 #####################################################
 ################ BEGIN  ALIAS #######################
 #####################################################
@@ -129,76 +120,12 @@ source $ZSH/oh-my-zsh.sh
 #Show all
 alias lsa="ls -la"
 
-#Vim
-alias svim="sudo vim"
-
 #Reload Shell
 alias reload="exec $SHELL"
-
-#Sedimentum root
-alias sedi="cd ~/Projects/Sedimentum"
-
-alias work="cd ~/Projects/Work"
-
-alias pers="cd ~/Projects/Personal"
-
-#xclip
-alias xclip="xclip -selection c"
-
-# Useful Git Commands
-alias gl="git log --pretty=format:'%Cred%h %Cgreen%ad %Cblue%aN %Creset%s' --date=iso --graph --branches"
-alias gall="git add --all"
-alias ga="git add"
-alias gs="git status"
-alias gb="git branch -a"
-alias gco="git checkout"
-alias gcm="git commit -m"
-alias gp="git push"
-alias gpa="git push --all"
-alias gpt="git push --follow-tags"
-alias gip="git pull --verbose"
-alias cola="git-cola"
-
-# function to commit and push all with a message in format of: gcp example text [ENTER TO SEND]
-function __gcp() {
-  gall
-  gcm "$*"
-  gp
-}
-alias gcp='__gcp'
-
-# Aliases for shutting down
-alias sdn="sudo shutdown -P now"
-alias rbn="sudo shutdown -r now"
-
-# Alias for installing and removing
-alias gimme="sudo apt-get install"
-alias update="sudo apt-get update"
-alias upgrade="sudo apt-get upgrade"
-alias uu="sudo apt update && sudo apt upgrade"
-alias rem="sudo apt autoremove -y"
-alias cu="conda update --all"
-alias usdn="uu -y && cu -y && sdn"
-
-alias begone="__begone && rem"
-function __begone {
-	sudo apt-get purge "$1"
-}
 
 #Python
 #Activate virtual env
 alias vact="source venv/bin/activate"
-
-# Docker & Docker-Compose alias
-alias dc="docker-compose"
-alias dwipe='echo "y" | docker system prune -a'
-alias dwipev='echo "y" | docker volume prune'
-alias drmi="docker rmi -f $(docker image ls -q)"
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
 
 # copy pwd to clip board
 alias cpwd="pwd | xclip -sel clip"
@@ -210,18 +137,6 @@ export PATH="$PATH:/snap/bin"
 export PATH="$HOME/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
-
-#Docker
-alias sdocker="sudo docker"
-
-#Colorscheme for Dirs
-eval "$(dircolors ~/.dircolors)"
-
-#Maven
-export M2_HOME=/opt/apache-maven-3.6.3
-export MAVEN_HOME=/opt/apache-maven-3.6.3
-export PATH=${M2_HOME}/bin:${PATH}
-
 
 #FZF
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow'
@@ -235,12 +150,3 @@ alias  czsh="vim ~/.zshrc"
 
 #Balena CLI
 export PATH=$PATH:${HOME}/Software/balena-cli-v12.7.3
-
-#Rust
-export PATH=$PATH:${HOME}/.cargo/bin
-
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/home/nox/.sdkman"
-[[ -s "/home/nox/.sdkman/bin/sdkman-init.sh" ]] && source "/home/nox/.sdkman/bin/sdkman-init.sh"
-

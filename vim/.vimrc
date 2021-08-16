@@ -55,6 +55,9 @@ set hlsearch
 " This will allow you to search specifically for capital letters.
 set ignorecase
 
+" FOLD
+"
+let g:SimpylFold_docstring_preview = 1
 
 "COMMAND LINE
 set smartcase

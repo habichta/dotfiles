@@ -25,3 +25,5 @@ nnoremap <Leader>z <C-w>\|<C-w>_
 nnoremap <Leader>Z <C-w>=
 " delete paranthesis under cursor and matching
 nnoremap <Leader>X %x<C-o>x
+" rename file (prompts for new filename)
+nnoremap <Leader>rn :call functions#RenameFile()<CR>
