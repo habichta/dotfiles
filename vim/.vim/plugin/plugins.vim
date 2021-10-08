@@ -19,3 +19,6 @@ try
     nmap <silent> [c :call CocAction('diagnosticNext')<cr>
     nmap <silent> ]c :call CocAction('diagnosticPrevious')<cr>
 endtry
+
+"Tagbar
+nmap <script> <silent> <unique> <F4> :TagbarToggle<CR>

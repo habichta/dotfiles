@@ -9,11 +9,19 @@ nnoremap <C-W><C-O> :call functions#MaximizeToggle()<CR>
 "Search and Replace
 nnoremap <Leader>r :%s/\<<C-r><C-w>\>//gc<Left><Left><Left>
 nnoremap <Leader>R :%s/\<<C-r><C-w>\>//g<Left><Left>
+nnoremap <Leader>P :Rg
+
+
+" For local replace (scoped)
+nnoremap gr gd[{V%::s/<C-r>///gc<left><left><left>
+
+" For global replace
+nnoremap gR gD:%s/<C-r>///gc<left><left><left>
 
 " Saving, closing, ... "{{{
 " use common Ctrl-shortcuts
 nnoremap <C-s> :w<CR>
-inoremap <C-s> <Esc>:w<CR>a
+inoremap <C-s> <Esc>:w<CR>
 
 nnoremap <C-c> :q<CR>
 
