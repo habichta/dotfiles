@@ -19,6 +19,3 @@
 [submodule "vim/.vim/pack/plugins/start/quickfix-reflector.vim"]
 	path = vim/.vim/pack/plugins/start/quickfix-reflector.vim
 	url = https://github.com/stefandtw/quickfix-reflector.vim.git
-[submodule "vim/.vim/pack/plugins/start/SimpylFold"]
-	path = vim/.vim/pack/plugins/start/SimpylFold
-	url = https://github.com/tmhedberg/SimpylFold.git
