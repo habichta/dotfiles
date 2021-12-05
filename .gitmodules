@@ -1,0 +1,24 @@
+[submodule "vim/.vim/pack/plugins/start/black"]
+	path = vim/.vim/pack/plugins/start/black
+	url = https://github.com/psf/black.git
+[submodule "vim/.vim/pack/plugins/start/camelcasemotion"]
+	path = vim/.vim/pack/plugins/start/camelcasemotion
+	url = https://github.com/bkad/CamelCaseMotion.git
+[submodule "vim/.vim/pack/plugins/start/coc.nvim"]
+	path = vim/.vim/pack/plugins/start/coc.nvim
+	url = https://github.com/neoclide/coc.nvim.git
+[submodule "vim/.vim/pack/plugins/start/ctrlp.vim"]
+	path = vim/.vim/pack/plugins/start/ctrlp.vim
+	url = https://github.com/kien/ctrlp.vim.git
+[submodule "vim/.vim/pack/plugins/start/gruvbox"]
+	path = vim/.vim/pack/plugins/start/gruvbox
+	url = https://github.com/morhetz/gruvbox.git
+[submodule "vim/.vim/pack/plugins/start/nerdtree"]
+	path = vim/.vim/pack/plugins/start/nerdtree
+	url = https://github.com/preservim/nerdtree.git
+[submodule "vim/.vim/pack/plugins/start/quickfix-reflector.vim"]
+	path = vim/.vim/pack/plugins/start/quickfix-reflector.vim
+	url = https://github.com/stefandtw/quickfix-reflector.vim.git
+[submodule "vim/.vim/pack/plugins/start/SimpylFold"]
+	path = vim/.vim/pack/plugins/start/SimpylFold
+	url = https://github.com/tmhedberg/SimpylFold.git
