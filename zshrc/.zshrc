@@ -1,3 +1,12 @@
+#TMUX
+if [ -z "$TMUX" ]
+then
+    tmux attach -t TMUX || tmux new -s TMUX
+fi
+
+eval "$(ssh-agent -s)"
+
+
 #Colorscheme for Dirs
 eval "$(dircolors ~/.dircolors)"
 
@@ -6,7 +15,7 @@ eval "$(dircolors ~/.dircolors)"
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/nox/.oh-my-zsh"
+export ZSH="/home/$USER/.oh-my-zsh"
 
 
 # Set name of the theme to load --- if set to "random", it will
@@ -14,6 +23,9 @@ export ZSH="/home/nox/.oh-my-zsh"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="spaceship"
+
+# Turn off power status when using spaceship prompt
+export SPACESHIP_BATTERY_SHOW=false
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -125,6 +137,7 @@ alias reload="exec $SHELL"
 
 #Python
 #Activate virtual env
+alias python=python3
 alias vact="source venv/bin/activate"
 
 # copy pwd to clip board
@@ -139,6 +152,7 @@ eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
 #FZF
+export PATH="$HOME/.local/bin:$PATH"
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -150,3 +164,4 @@ alias  czsh="vim ~/.zshrc"
 
 #Balena CLI
 export PATH=$PATH:${HOME}/Software/balena-cli-v12.7.3
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
