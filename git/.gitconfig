@@ -8,9 +8,23 @@
     lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
     lg = !"git lg1"
     co = commit
+    s = status
+    sw = switch
+    d = diff
+    a = diff
     ctags = "!bash -c '[ -f .git/hooks/ctags ] || git init; .git/hooks/ctags' git-ctags"
 [core]
 	editor = vim
   pager = "type diff-so-fancy &> /dev/null && diff-so-fancy | less -RFX --pattern='^(Author|added|deleted|modified|renamed): ' || less -RFX"
 [init]
   templatedir = ~/.git-templates
+[merge]
+  tool = diffconflicts
+[mergetool]
+  keepBackup = false
+[mergetool.diffconflicts]
+  cmd = vim -c DiffConflicts "$MERGED" "$BASE" "$LOCAL" "$REMOTE"
+  trustExitCode = true
+[pager]
+  stash = false
+  grep = false
