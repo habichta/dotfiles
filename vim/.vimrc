@@ -83,3 +83,8 @@ set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx
 " open new split panes to right and bottom
 set splitbelow
 set splitright
+
+
+"CTAGS
+exec 'set tags+=' . findfile('.git/tags', ';')
+
