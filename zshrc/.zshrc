@@ -4,7 +4,7 @@ then
     tmux attach -t TMUX || tmux new -s TMUX
 fi
 
-eval "$(ssh-agent -s)"
+#eval "$(ssh-agent -s)"
 
 
 #Colorscheme for Dirs
@@ -165,3 +165,7 @@ alias  czsh="vim ~/.zshrc"
 #Balena CLI
 export PATH=$PATH:${HOME}/Software/balena-cli-v12.7.3
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
+#YARN Binaries
+export PATH="$PATH:$(yarn global bin)"
