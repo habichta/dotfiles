@@ -37,3 +37,7 @@
 
 
 ## GIT & CTAGS
+- move .ctags settings to home
+
+## Yarn Binaries
+- Install diff-so-fancy globally
