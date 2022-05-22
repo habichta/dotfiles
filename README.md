@@ -4,6 +4,7 @@
 - Install ZSH
 - Install OhMyZSH
 - Install Powerline fonts
+- Install NerdFont
 - Install spaceship theme
 - Install Python
 - Install pyenv
@@ -41,3 +42,12 @@
 
 ## Yarn Binaries
 - Install diff-so-fancy globally
+
+## Essentals (Debian)
+`sudo apt install build-essential zlib1g-dev libffi-dev libssl-dev libbz2-dev libreadline-dev libsqlite3-dev liblzma-dev`
+
+## Others
+- Install htop
+- Install iotop
+- Install nmap
+- Install net-tools
