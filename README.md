@@ -32,9 +32,12 @@
 
 
 ## VIM
+- Install neovim
+- pip install neovim
 - Initialize Submodules recursively
 - Copy .vimrc and .vim
 - yarn install for nvim.coc
+- :CocInstall coc-pyright
 
 
 ## GIT & CTAGS
@@ -47,6 +50,7 @@
 `sudo apt install build-essential zlib1g-dev libffi-dev libssl-dev libbz2-dev libreadline-dev libsqlite3-dev liblzma-dev`
 
 ## Others
+- move the monitoring script to /usr/bin/monitoring
 - Install htop
 - Install iotop
 - Install nmap
