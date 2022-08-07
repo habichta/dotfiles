@@ -74,6 +74,9 @@ nnoremap <silent> N Nzv:call functions#HighlightNext(0.2)<CR>
 " use F7 for pasting
 set pastetoggle=<F7>
 
+" use F6 for mouse mode
+nnoremap <F6> :call functions#ToggleMouse()<CR>
+
 " go automatically to the end of the text after yanking/pasting
 vnoremap <silent> y y`]
 vmap <silent> p p`]
