@@ -15,10 +15,9 @@ nnoremap <Leader>O :Obsess!<CR>
 " don't CD when opening file
 let g:startify_change_to_dir=0
 
-try
-    nmap <silent> [c :call CocAction('diagnosticNext')<cr>
-    nmap <silent> ]c :call CocAction('diagnosticPrevious')<cr>
-endtry
+"Coc Snippets
+" Use <C-l> for trigger snippet expand.
+imap <C-l> <Plug>(coc-snippets-expand)
 
 "Tagbar
 nmap <script> <silent> <unique> <F4> :TagbarToggle<CR>

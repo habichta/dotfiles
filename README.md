@@ -38,6 +38,8 @@
 - Copy .vimrc and .vim
 - yarn install for nvim.coc
 - :CocInstall coc-pyright
+- :CocInstall coc-snippets
+- :CocInstall coc-actions
 
 
 ## GIT & CTAGS
@@ -48,6 +50,10 @@
 
 ## Essentals (Debian)
 `sudo apt install build-essential zlib1g-dev libffi-dev libssl-dev libbz2-dev libreadline-dev libsqlite3-dev liblzma-dev`
+
+## Global Python Packages
+- pip install rope
+- pip install black
 
 ## Others
 - move the monitoring script to /usr/bin/monitoring

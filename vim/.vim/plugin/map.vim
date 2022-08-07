@@ -6,14 +6,8 @@ nnoremap <C-W>O :call functions#MaximizeToggle()<CR>
 nnoremap <C-W>o :call functions#MaximizeToggle()<CR>
 nnoremap <C-W><C-O> :call functions#MaximizeToggle()<CR>
 
-"Search and Replace
-vnoremap <leader>r y:%s/<C-r>"//gc<Left><Left><Left>
-" nnoremap <Leader>r :%s/\<<C-r><C-w>\>//gc<Left><Left><Left>
-" nnoremap <Leader>R :%s/\<<C-r><C-w>\>//g<Left><Left>
+" Bulk Changes over multiple files with RipGrep
 nnoremap <Leader>P :Rg
-
-
-" For local replace (scoped)
 
 " Saving, closing, ... "{{{
 " use common Ctrl-shortcuts
