@@ -7,16 +7,13 @@ nnoremap <C-W>o :call functions#MaximizeToggle()<CR>
 nnoremap <C-W><C-O> :call functions#MaximizeToggle()<CR>
 
 "Search and Replace
-nnoremap <Leader>r :%s/\<<C-r><C-w>\>//gc<Left><Left><Left>
-nnoremap <Leader>R :%s/\<<C-r><C-w>\>//g<Left><Left>
+vnoremap <leader>r y:%s/<C-r>"//gc<Left><Left><Left>
+" nnoremap <Leader>r :%s/\<<C-r><C-w>\>//gc<Left><Left><Left>
+" nnoremap <Leader>R :%s/\<<C-r><C-w>\>//g<Left><Left>
 nnoremap <Leader>P :Rg
 
 
 " For local replace (scoped)
-nnoremap gr gd[{V%::s/<C-r>///gc<left><left><left>
-
-" For global replace
-nnoremap gR gD:%s/<C-r>///gc<left><left><left>
 
 " Saving, closing, ... "{{{
 " use common Ctrl-shortcuts
@@ -68,10 +65,6 @@ vnoremap P p:call setreg('+', getreg('0'))<CR>
 "}}}
 
 " Editing "{{{
-" for command mode
-nnoremap <S-Tab> <<
-" for insert mode - TOOD: check that this works
-inoremap <S-Tab> <C-d>
 
 " Bubble single lines
 nnoremap <silent> <C-Up>   :move-2<CR>==
@@ -96,3 +89,7 @@ nmap <silent> P P`]
 
 " show me when I use `gu` because that's mostly by accident
 noremap gu gu:echoerr 'Did you just intend to lowercase?'<CR>
+
+"Cycle through buffers
+nnoremap <Tab> :bnext<CR>
+nnoremap <S-Tab> :bprevious<CR>

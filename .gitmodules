@@ -58,3 +58,6 @@
 [submodule "vim/.vim/pack/plugins/start/diffconflicts"]
 	path = vim/.vim/pack/plugins/start/diffconflicts
 	url = https://github.com/whiteinge/diffconflicts.git
+[submodule "vim/.vim/pack/plugins/start/vim-choosewin"]
+	path = vim/.vim/pack/plugins/start/vim-choosewin
+	url = https://github.com/t9md/vim-choosewin.git
