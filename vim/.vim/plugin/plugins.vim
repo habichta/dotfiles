@@ -27,3 +27,7 @@ nmap <script> <silent> <unique> <F4> :TagbarToggle<CR>
 "Choose Windows
 nmap - <Plug>(choosewin)
 let g:choosewin_overlay_enable = 1
+
+"FZF
+set rtp+=/usr/bin/fzf
+nnoremap <C-p> :Files<Cr>

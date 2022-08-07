@@ -7,9 +7,6 @@
 [submodule "vim/.vim/pack/plugins/start/coc.nvim"]
 	path = vim/.vim/pack/plugins/start/coc.nvim
 	url = https://github.com/neoclide/coc.nvim.git
-[submodule "vim/.vim/pack/plugins/start/ctrlp.vim"]
-	path = vim/.vim/pack/plugins/start/ctrlp.vim
-	url = https://github.com/kien/ctrlp.vim.git
 [submodule "vim/.vim/pack/plugins/start/gruvbox"]
 	path = vim/.vim/pack/plugins/start/gruvbox
 	url = https://github.com/morhetz/gruvbox.git
@@ -61,3 +58,9 @@
 [submodule "vim/.vim/pack/plugins/start/vim-choosewin"]
 	path = vim/.vim/pack/plugins/start/vim-choosewin
 	url = https://github.com/t9md/vim-choosewin.git
+[submodule "vim/.vim/pack/plugins/start/fzf.vim"]
+	path = vim/.vim/pack/plugins/start/fzf.vim
+	url = https://github.com/junegunn/fzf.vim.git
+[submodule "vim/.vim/pack/plugins/start/fzf"]
+	path = vim/.vim/pack/plugins/start/fzf
+	url = https://github.com/junegunn/fzf.git
