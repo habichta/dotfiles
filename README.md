@@ -41,6 +41,7 @@
 - pip install rope
 - pip install black
 - Initialize Submodules recursively
+- adapt fzf binary path
 - yarn install for nvim.coc
 - :CocInstall coc-pyright
 - :CocInstall coc-snippets
