@@ -88,3 +88,5 @@ set splitright
 "CTAGS
 exec 'set tags+=' . findfile('.git/tags', ';')
 
+"Python3
+let g:python3_host_prog = '/home/habichta/.config/nvim/python_env/bin/python3'
