@@ -22,6 +22,7 @@
 - Install ansible
 - Install Docker
 - Install docker-compose
+- Install ranger
 
 
 ## TMUX
