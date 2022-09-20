@@ -4,6 +4,7 @@ then
     tmux attach -t TMUX || tmux new -s TMUX
 fi
 
+export EDITOR="nvim"
 #eval "$(ssh-agent -s)"
 
 
@@ -169,17 +170,76 @@ export PATH="$HOME/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
-#FZF
-export PATH="$HOME/.local/bin:$PATH"
-export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow'
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-alias ff="fzf --preview '([[ -f {}  ]] && (bat --style=numbers --color=always {} || cat {})) || ([[ -d {}  ]] && (tree -C {} | less)) || echo {} 2> /dev/null | head -200' --color='hl:148,hl+:154,pointer:032,marker:010,bg+:237,gutter:008'"
-alias ffc='cd $(dirname `ff`)'
-alias ffv='vim `ff`'
 #Change ZSH
 alias  czsh="vim ~/.zshrc"
 
 alias sdocker="sudo docker"
 
+# FZF ########################################################
+export PATH="$HOME/.local/bin:$PATH"
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+
+FD_OPTIONS="--follow --exclude .git --exclude node_modules"
+export FZF_DEFAULT_COMMAND="fd --type f --type l $FD_OPTIONS"
+export FZF_DEFAULT_OPTS='--height 80% --layout=reverse --border --info=inline
+--bind "?:toggle-preview,ctrl-f:half-page-down,ctrl-b:half-page-up,ctrl-a:select-all+accept"'
+
+export FZF_CTRL_T_COMMAND="fd $FD_OPTIONS"
+export FZF_CTRL_T_OPTS="--preview '(bat --color=always {} || tree -C {}) 2> /dev/null | head -200' --select-1 --exit-0"
+
+export FZF_ALT_C_COMMAND="fd --type d $FD_OPTIONS"
+export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
+
+# Modified version where you can press
+#   - CTRL-O to open with `open` command,
+#   - CTRL-E or Enter key to open with the $EDITOR
+fo() {
+  IFS=$'\n' out=("$(fzf --query="$1" --exit-0 --expect=ctrl-o,ctrl-e)")
+  key=$(head -1 <<< "$out")
+  file=$(head -2 <<< "$out" | tail -1)
+  if [ -n "$file" ]; then
+    [ "$key" = ctrl-o ] && open "$file" || ${EDITOR} "$file"
+  fi
+}
+
+# fkill - kill processes - list only the ones you can kill. Modified the earlier script.
+fkill() {
+    local pid 
+    if [ "$UID" != "0" ]; then
+        pid=$(ps -f -u $UID | sed 1d | fzf -m | awk '{print $2}')
+    else
+        pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
+    fi  
+
+    if [ "x$pid" != "x" ]
+    then
+        echo $pid | xargs kill -${1:-9}
+    fi  
+}
+
+# use CTRL+G/CTRL+? to select git things with FZF
+# https://junegunn.kr/2016/07/fzf-git/
+_is_in_git_repo() {
+  git rev-parse HEAD > /dev/null 2>&1
+}
+
+gb() {
+  _gitLogLineToHash="echo {} | grep -o '[a-f0-9]\{7\}' | head -1 | tr -d '\n'"
+  _viewGitLogLine="$_gitLogLineToHash | xargs -I % sh -c 'git show --color=always % | diff-so-fancy'"
+  git log --graph --abbrev-commit --decorate --date=short --color=always --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all |
+    fzf --no-sort --reverse --tiebreak=index --no-multi \
+    --ansi --preview="$_viewGitLogLine" \
+    --header "enter to view, alt-c to copy hash to clipboard" \
+    --bind "enter:execute:$_viewGitLogLine | less -R" \
+    --bind "alt-c:execute:$_gitLogLineToHash | xclip -i -sel c"
+}
+
+gh() {
+  _is_in_git_repo || return
+  git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --graph --color=always |
+    fzf --ansi --no-sort --reverse --multi --bind 'ctrl-s:toggle-sort' \
+    --header 'Press CTRL-S to toggle sort' \
+    --preview 'grep -o "[a-f0-9]\{7,\}" <<< {} | xargs git show --color=always' |
+    grep -o "[a-f0-9]\{7,\}"
+}
