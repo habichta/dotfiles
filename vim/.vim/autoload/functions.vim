@@ -76,6 +76,11 @@ function! functions#InsertPUDB()
   execute "normal o".trace
 endfunction
 
+function! functions#TrimWhitespace()
+    let l:save = winsaveview()
+    keeppatterns %s/\s\+$//e
+    call winrestview(l:save)
+endfunction
 
 " The Silver Searcher
 if executable('ag')
@@ -99,3 +104,5 @@ function! functions#ToggleMouse()
         set mouse=a
     endif
 endfunc"
+
+

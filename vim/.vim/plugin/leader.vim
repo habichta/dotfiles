@@ -27,3 +27,6 @@ nnoremap <Leader>Z <C-w>=
 nnoremap <Leader>X %x<C-o>x
 " rename file (prompts for new filename)
 nnoremap <Leader>rn :call functions#RenameFile()<CR>
+
+"Remove Trailing Whitespace
+nnoremap <Leader>tw :call functions#TrimWhitespace()<CR>
