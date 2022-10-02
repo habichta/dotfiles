@@ -2,20 +2,25 @@ cd ~/.dotfiles
 git submodule update --init --recursive
 
 #TMUX
-ln -s ~/.dotfiles/tmux/.tmux.conf ~/.tmux.conf
+ln -sf ~/.dotfiles/tmux/.tmux.conf ~/.tmux.conf
 
 #ZSHRC
-ln -s ~/.dotfiles/zshrc/.zshrc ~/.zshrc
-ln -s ~/.dotfiles/zshrc/.dircolors ~/.dircolors 
+ln -sf ~/.dotfiles/zshrc/.zshrc ~/.zshrc
+ln -sf ~/.dotfiles/zshrc/.dircolors ~/.dircolors 
 
 #FZF
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install
 
+#Yarn
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+sudo apt update && sudo apt install --no-install-recommends yarn
+
 #NVIM
-ln -s ~/.dotfiles/vim/.vimrc ~/.vimrc
-ln -s ~/.dotfiles/configs/.config/nvim ~/.config/
-ln -s ~/.dotfiles/vim/.vim ~/ 
+ln -sf ~/.dotfiles/vim/.vimrc ~/.vimrc
+ln -sf ~/.dotfiles/configs/.config/nvim ~/.config/
+ln -sf ~/.dotfiles/vim/.vim ~/ 
 
 ## NVIM Python
 cd ~/.dotfiles/configs/.config/nvim
@@ -39,11 +44,11 @@ vim -c "CocInstall coc-actions"
 
 
 # CTAGS
-ln -s ~/.dotfiles/ctags/.ctags ~/.ctags
+ln -sf ~/.dotfiles/ctags/.ctags ~/.ctags
 
 #GIT
-ln -s ~/.dotfiles/git/.gitconfig ~/.gitconfig
-ln -s ~/.dotfiles/git/.git-templates ~/ 
+ln -sf ~/.dotfiles/git/.gitconfig ~/.gitconfig
+ln -sf ~/.dotfiles/git/.git-templates ~/ 
 
 
 
