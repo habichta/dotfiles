@@ -1,0 +1,22 @@
+{
+  "coc.preferences.formatOnSaveFiletypes": [
+    "python"
+  ],
+  "snippets.snipmate.enable": false,
+  "snippets.ultisnips.enable": true,
+  "python.formatting.provider": "black",
+  "python.formatting.blackPath": "/usr/bin/black",
+  "python.formatting.blackArgs": [
+    "--line-length",
+    "120"
+  ],
+  "python.linting.pylintEnabled": true,
+  "python.sortImports.path": "/usr/bin/isort",
+  "python.sortImports.args": [
+    "--line-length",
+    "120",
+    "--profile",
+    "black"
+  ],
+  "pyright.organizeimports.provider": "isort"
+}
