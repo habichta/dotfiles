@@ -1,13 +1,16 @@
 cd ~/.dotfiles
 git submodule update --init --recursive
 
-
 #TMUX
 ln -s ~/.dotfiles/tmux/.tmux.conf ~/.tmux.conf
 
 #ZSHRC
 ln -s ~/.dotfiles/zshrc/.zshrc ~/.zshrc
 ln -s ~/.dotfiles/zshrc/.dircolors ~/.dircolors 
+
+#FZF
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install
 
 #NVIM
 ln -s ~/.dotfiles/vim/.vimrc ~/.vimrc
@@ -29,6 +32,10 @@ pip install black
 ## COC Plugin
 cd ~/.dotfiles/vim/.vim/pack/plugins/start/coc.nvim
 yarn install
+
+vim -c "CocInstall coc-pyright"
+vim -c "CocInstall coc-snippets"
+vim -c "CocInstall coc-actions"
 
 
 # CTAGS
