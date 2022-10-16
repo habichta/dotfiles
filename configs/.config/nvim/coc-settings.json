@@ -5,7 +5,7 @@
   "snippets.snipmate.enable": false,
   "snippets.ultisnips.enable": true,
   "python.formatting.provider": "black",
-  "python.formatting.blackPath": "/usr/bin/black",
+  "python.formatting.blackPath": "~/.dotfiles/configs/.config/nvim/venv/bin/black",
   "python.formatting.blackArgs": [
     "--line-length",
     "120"
