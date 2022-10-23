@@ -41,6 +41,11 @@ yarn install
 vim -c "CocInstall coc-pyright"
 vim -c "CocInstall coc-snippets"
 vim -c "CocInstall coc-actions"
+vim -c "CocInstall coc-eslint"
+vim -c "CocInstall coc-prettier"
+vim -c "CocInstall coc-tsserver"
+vim -c "CocInstall coc-json"
+vim -c "CocInstall coc-rust-analyzer"
 
 
 # CTAGS
