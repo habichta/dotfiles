@@ -90,3 +90,9 @@ noremap gu gu:echoerr 'Did you just intend to lowercase?'<CR>
 "Cycle through buffers
 nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprevious<CR>
+
+"Autoclosing Parenthesis
+inoremap ( ()<Left>
+inoremap [ []<Left>
+inoremap { {}<Left>
+
