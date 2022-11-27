@@ -175,12 +175,16 @@ alias  czsh="vim ~/.zshrc"
 
 alias sdocker="sudo docker"
 
+#Kubernetes
+## Minikube
+alias mk="mkubectl"
+
 # FZF ########################################################
 export PATH="$HOME/.local/bin:$PATH"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 
-FD_OPTIONS="--follow --exclude .git --exclude node_modules"
+FD_OPTIONS="--follow -E .git -E node_modules"
 export FZF_DEFAULT_COMMAND="fd --type f --type l $FD_OPTIONS"
 export FZF_DEFAULT_OPTS='--height 80% --layout=reverse --border --info=inline
 --bind "?:toggle-preview,ctrl-f:half-page-down,ctrl-b:half-page-up,ctrl-a:select-all+accept"'

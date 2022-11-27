@@ -64,3 +64,6 @@
 [submodule "vim/.vim/pack/plugins/start/fzf"]
 	path = vim/.vim/pack/plugins/start/fzf
 	url = https://github.com/junegunn/fzf.git
+[submodule "vim/.vim/pack/plugins/start/indent-blankline.nvim"]
+	path = vim/.vim/pack/plugins/start/indent-blankline.nvim
+	url = git@github.com:lukas-reineke/indent-blankline.nvim.git
