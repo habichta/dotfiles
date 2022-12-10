@@ -1,29 +1,19 @@
 {
-  "coc.preferences.formatOnSaveFiletypes": [
-    "python"
-  ],
+  "coc.preferences.formatOnSave": true,
   "snippets.snipmate.enable": false,
   "snippets.ultisnips.enable": true,
   "python.formatting.provider": "black",
   "python.formatting.blackPath": "~/.dotfiles/configs/.config/nvim/venv/bin/black",
-  "python.formatting.blackArgs": [
-    "--line-length",
-    "120"
-  ],
+  "python.formatting.blackArgs": ["--line-length", "120"],
   "python.linting.pylintEnabled": true,
   "python.sortImports.path": "/usr/bin/isort",
-  "python.sortImports.args": [
-    "--line-length",
-    "120",
-    "--profile",
-    "black"
-  ],
+  "python.sortImports.args": ["--line-length", "120", "--profile", "black"],
   "pyright.organizeimports.provider": "isort",
   "javascript.autoClosingTags": true,
   "typescript.autoClosingTags": true,
+  "html.format.enable": true,
 
   "yaml.schemas": {
-     "kubernetes": "/*.yaml"
+    "kubernetes": "/*.yaml"
   }
-
 }

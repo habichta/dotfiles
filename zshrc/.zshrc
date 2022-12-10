@@ -177,6 +177,7 @@ alias sdocker="sudo docker"
 
 #Kubernetes
 ## Minikube
+alias mkubectl="minikube kubectl"
 alias mk="mkubectl"
 
 # FZF ########################################################
