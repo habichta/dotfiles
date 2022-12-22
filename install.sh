@@ -45,6 +45,9 @@ vim -c "CocInstall coc-eslint"
 vim -c "CocInstall coc-prettier"
 vim -c "CocInstall coc-tsserver"
 vim -c "CocInstall coc-json"
+vim -c "CocInstall coc-yaml"
+vim -c "CocInstall coc-html"
+vim -c "CocInstall coc-go"
 vim -c "CocInstall coc-rust-analyzer"
 
 

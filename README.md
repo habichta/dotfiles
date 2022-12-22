@@ -1,6 +1,7 @@
 # dotfiles
 
 ## ZSH
+
 - Install ZSH
 - Install OhMyZSH
 - Install Powerline fonts
@@ -23,19 +24,20 @@
 - Install Docker
 - Install docker-compose
 - Install ranger
-
+- Install lazygit
 
 ## TMUX
+
 - Install tmux
 - Install TPM plugin manager
 - copy .tmux.conf
-- <prefix> + I  to load plugins 
-
+- <prefix> + I to load plugins
 
 ## VIM
+
 - Install neovim
 - Install init.vim into .config
-- Copy .vimrc and .vim 
+- Copy .vimrc and .vim
 - create virtualenv pointing to system python for neovim and change vimrc path
   and activate venv
 - pip install neovim
@@ -48,19 +50,22 @@
 - :CocInstall coc-snippets
 - :CocInstall coc-actions
 
-
 ## GIT & CTAGS
+
 - move .ctags settings to home
 
 ## Yarn Binaries
+
 - Install diff-so-fancy globally
 
 ## Essentals (Debian)
+
 `sudo apt install build-essential zlib1g-dev libffi-dev libssl-dev libbz2-dev libreadline-dev libsqlite3-dev liblzma-dev`
 
 ## Global Python Packages
 
 ## Others
+
 - move the monitoring script to /usr/bin/monitoring
 - Install htop
 - Install iotop

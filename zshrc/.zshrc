@@ -135,6 +135,8 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 export PATH="$PATH:$(yarn global bin)"
 
+#Lazygit
+alias lg="lazygit"
 
 #VIM
 alias v="vim"
@@ -164,6 +166,9 @@ export PATH="$PATH:/snap/bin"
 
 # Rust 
 export PATH="$PATH:~/.cargo/bin"
+
+# Go
+export PATH="$PATH:/usr/local/go/bin"
 
 #PyEnv
 export PATH="$HOME/.pyenv/bin:$PATH"
