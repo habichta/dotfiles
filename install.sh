@@ -4,6 +4,9 @@ sudo apt install python3
 sudo apt install python3-pip
 sudo apt install neovim
 
+#BASIC
+sudo apt install build-essential zlib1g-dev libffi-dev libssl-dev libbz2-dev libreadline-dev libsqlite3-dev liblzma-dev
+
 
 pip install virtualenv
 
