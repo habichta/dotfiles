@@ -171,7 +171,8 @@ export PATH="$PATH:~/.cargo/bin"
 export PATH="$PATH:/usr/local/go/bin"
 
 #PyEnv
-export PATH="$HOME/.pyenv/bin:$PATH"
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
