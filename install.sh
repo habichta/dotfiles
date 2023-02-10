@@ -5,7 +5,7 @@ sudo apt install python3-pip
 sudo apt install neovim
 
 #BASIC
-sudo apt install build-essential zlib1g-dev libffi-dev libssl-dev libbz2-dev libreadline-dev libsqlite3-dev liblzma-dev
+sudo apt install build-essential zlib1g-dev libffi-dev libssl-dev libbz2-dev libreadline-dev libsqlite3-dev liblzma-dev tk-dev
 
 
 pip install virtualenv
@@ -39,6 +39,11 @@ sudo apt update && sudo apt install --no-install-recommends yarn
 ln -sf ~/.dotfiles/vim/.vimrc ~/.vimrc
 ln -sf ~/.dotfiles/configs/.config/nvim ~/.config/
 ln -sf ~/.dotfiles/vim/.vim ~/ 
+
+
+#Python 3.11.2
+pyenv install -v 3.11.2
+pyenv global 3.11.2
 
 ## NVIM Python
 cd ~/.dotfiles/configs/.config/nvim
