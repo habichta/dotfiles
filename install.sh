@@ -3,6 +3,8 @@ sudo apt install git-all
 sudo apt install python3
 sudo apt install python3-pip
 sudo apt install neovim
+sudo apt install tree
+sudo apt install bat
 
 #BASIC
 sudo apt install build-essential zlib1g-dev libffi-dev libssl-dev libbz2-dev libreadline-dev libsqlite3-dev liblzma-dev tk-dev
@@ -12,6 +14,11 @@ pip install virtualenv
 
 cd ~/.dotfiles
 git submodule update --init --recursive
+
+
+#GIT
+ln -sf ~/.dotfiles/git/.gitconfig ~/.gitconfig
+ln -sf ~/.dotfiles/git/.git-templates ~/ 
 
 #PYENV
 git clone https://github.com/pyenv/pyenv.git ~/.pyenv
@@ -71,9 +78,13 @@ vim -c "CocInstall coc-pyright | CocInstall coc-snippets |
 # CTAGS
 ln -sf ~/.dotfiles/ctags/.ctags ~/.ctags
 
-#GIT
-ln -sf ~/.dotfiles/git/.gitconfig ~/.gitconfig
-ln -sf ~/.dotfiles/git/.git-templates ~/ 
+#Lazygit
+LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
+curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
+tar xf lazygit.tar.gz lazygit
+sudo install lazygit /usr/local/bin
+rm lazygit, lazygit.tar.gz
+
 
 
 

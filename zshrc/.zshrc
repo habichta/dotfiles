@@ -197,7 +197,7 @@ export FZF_DEFAULT_OPTS='--height 80% --layout=reverse --border --info=inline
 --bind "?:toggle-preview,ctrl-f:half-page-down,ctrl-b:half-page-up,ctrl-a:select-all+accept"'
 
 export FZF_CTRL_T_COMMAND="fd $FD_OPTIONS"
-export FZF_CTRL_T_OPTS="--preview '(bat --color=always {} || tree -C {}) 2> /dev/null | head -200' --select-1 --exit-0"
+export FZF_CTRL_T_OPTS="--preview '(batcat -n --color=always {} || tree -C {}) 2> /dev/null | head -200' --select-1 --exit-0"
 
 export FZF_ALT_C_COMMAND="fd --type d $FD_OPTIONS"
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
