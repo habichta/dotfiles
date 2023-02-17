@@ -4,6 +4,9 @@ then
     tmux attach -t TMUX || tmux new -s TMUX
 fi
 
+#SEDIMENTUM
+eval `ssh-agent` > /dev/null
+
 export EDITOR="nvim"
 #eval "$(ssh-agent -s)"
 
@@ -254,3 +257,7 @@ gh() {
     --preview 'grep -o "[a-f0-9]\{7,\}" <<< {} | xargs git show --color=always' |
     grep -o "[a-f0-9]\{7,\}"
 }
+
+
+#### SEDIMENTUM
+alias fdns=~/.dotfiles/scripts/sedimentum_dns/fix-resolv-conf.sh
