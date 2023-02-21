@@ -67,3 +67,6 @@
 [submodule "vim/.vim/pack/plugins/start/indent-blankline.nvim"]
 	path = vim/.vim/pack/plugins/start/indent-blankline.nvim
 	url = git@github.com:lukas-reineke/indent-blankline.nvim.git
+[submodule "vim/.vim/pack/plugins/start/vim-tmux-navigator"]
+	path = vim/.vim/pack/plugins/start/vim-tmux-navigator
+	url = git@github.com:christoomey/vim-tmux-navigator.git

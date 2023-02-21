@@ -27,6 +27,7 @@ export ZSH="/home/$USER/.oh-my-zsh"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="spaceship"
+SPACESHIP_USER_SHOW=always
 
 # Turn off power status when using spaceship prompt
 export SPACESHIP_BATTERY_SHOW=false
