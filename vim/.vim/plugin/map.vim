@@ -96,3 +96,6 @@ inoremap ( ()<Left>
 inoremap [ []<Left>
 inoremap { {}<Left>
 
+"Deleting in insert mode
+inoremap <C-d> <Esc>lxi
+
