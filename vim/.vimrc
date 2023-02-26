@@ -10,7 +10,7 @@ filetype indent on
 " Turn syntax highlighting on."
 syntax on
 " use default linux encoding in vim
-set encoding=utf-8
+set encoding=utf8
 " share the plus register with the system clipboard
 "set clipboard=unnamedplus
 " Map Leader
@@ -32,16 +32,6 @@ set shiftround
 " but discard the indentation if the line remains empty
 set copyindent
 set autoindent
-
-
-" VISUALS
-" Add numbers to each line on the left-hand side."
-set number
-set relativenumber
-" Do not let cursor scroll below or above N number of lines when scrolling.
-set scrolloff=20
-" Do not wrap lines. Allow long lines to extend as far as the line goes.
-set nowrap
 
 
 " SEARCH

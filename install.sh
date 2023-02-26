@@ -17,6 +17,9 @@ cd ~/.dotfiles
 git submodule update --init --recursive
 
 
+#TERMINAL
+ln -sf ~/.dotfiles/terminal/tilda ~/.config/tilda
+
 #GIT
 ln -sf ~/.dotfiles/git/.gitconfig ~/.gitconfig
 ln -sf ~/.dotfiles/git/.git-templates ~/ 
@@ -86,6 +89,7 @@ tar xf lazygit.tar.gz lazygit
 sudo install lazygit /usr/local/bin
 rm lazygit, lazygit.tar.gz
 
-
-
+## Fonts
+# Select font in respective terminal
+wget https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DejaVuSansMono/Regular/complete/DejaVu%20Sans%20Mono%20Nerd%20Font%20Complete.ttf -P ~/.local/share/fonts/NerdFonts
 
