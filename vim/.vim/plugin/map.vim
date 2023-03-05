@@ -97,5 +97,16 @@ inoremap [ []<Left>
 inoremap { {}<Left>
 
 "Deleting in insert mode
-inoremap <C-d> <Esc>lxi
+inoremap <C-d> <Esc>xi
+inoremap <C-f> <Esc>lxi
 
+"Moving in insert mode
+inoremap <C-h> <Left>
+inoremap <C-l> <Right>
+inoremap <C-k> <Up>
+inoremap <C-j> <Down>
+
+inoremap <A-h> <C-Left>
+inoremap <A-l> <C-Right>
+inoremap <A-k> <C-Up>
+inoremap <A-j> <C-Down>
