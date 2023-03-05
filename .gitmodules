@@ -70,3 +70,6 @@
 [submodule "vim/.vim/pack/plugins/start/gruvbox-material"]
 	path = vim/.vim/pack/plugins/start/gruvbox-material
 	url = https://github.com/sainnhe/gruvbox-material.git
+[submodule "vim/.vim/pack/plugins/start/vim-easymotion"]
+	path = vim/.vim/pack/plugins/start/vim-easymotion
+	url = https://github.com/easymotion/vim-easymotion.git
