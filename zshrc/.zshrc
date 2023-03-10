@@ -131,13 +131,17 @@ stty -ixon
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-#####################################################
-################ BEGIN  ALIAS #######################
-#####################################################
 
 #YARN Binaries
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 export PATH="$PATH:$(yarn global bin)"
+#####################################################
+################ BEGIN  ALIAS #######################
+#####################################################
+
+#Personal Planner
+alias plan="v ~/.dotfiles/personal_notes/day_planning.md"
+
 
 #Lazygit
 alias lg="lazygit"
