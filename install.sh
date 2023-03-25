@@ -78,6 +78,11 @@ vim -c "CocInstall coc-pyright | CocInstall coc-snippets |
   CocInstall coc-tsserver | CocInstall coc-json | CocInstall coc-yaml | 
   CocInstall coc-html | CocInstall coc-go | CocInstall coc-rust-analyzer"
 
+## TODO install watchman
+#https://facebook.github.io/watchman/docs/install.html
+#Required for updating imports on filename changes
+
+
 
 # CTAGS
 ln -sf ~/.dotfiles/ctags/.ctags ~/.ctags
