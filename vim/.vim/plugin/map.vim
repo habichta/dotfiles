@@ -55,7 +55,8 @@ vnoremap D y'>p
 
 " Press Shift+P while in visual mode to replace the selection without
 " overwriting the default register
-vnoremap P p:call setreg('+', getreg('0'))<CR>
+" vnoremap P p:call setreg('+', getreg('0'))<CR>
+vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 "}}}
 
 " Editing "{{{
