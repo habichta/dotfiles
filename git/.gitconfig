@@ -17,6 +17,7 @@
 [core]
 	editor = vim
   pager = "type diff-so-fancy &> /dev/null && diff-so-fancy | less -RFX --pattern='^(Author|added|deleted|modified|renamed): ' || less -RFX"
+	excludesfile = "~/.dotfiles/git/.gitignore"
 [init]
   templatedir = ~/.git-templates
 [merge]

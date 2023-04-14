@@ -73,3 +73,6 @@
 [submodule "vim/.vim/pack/plugins/start/vim-easymotion"]
 	path = vim/.vim/pack/plugins/start/vim-easymotion
 	url = https://github.com/easymotion/vim-easymotion.git
+[submodule "vim/.vim/pack/plugins/start/vim-isort"]
+	path = vim/.vim/pack/plugins/start/vim-isort
+	url = https://github.com/fisadev/vim-isort.git
