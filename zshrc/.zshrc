@@ -127,10 +127,11 @@ source $ZSH/oh-my-zsh.sh
 # deactivate ctrl-s XOFF
 stty -ixon 
 
-# NVM
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+#NVM
+export PATH="$PATH:$HOME/.nvm/versions/node/v18.2.0/bin"
+export NVM_DIR=~/.nvm
+[[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh" --no-use # This loads nvm
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 #YARN Binaries
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
@@ -149,8 +150,6 @@ alias lg="lazygit"
 #VIM
 alias v="vim"
 
-#RANGER
-alias r=ranger
 
 #rmr
 alias rmr="rm -r"
@@ -210,6 +209,15 @@ export FZF_CTRL_T_OPTS="--preview '(batcat -n --color=always {} || tree -C {}) 2
 export FZF_ALT_C_COMMAND="fd --type d $FD_OPTIONS"
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 
+
+# Quick way do go to previously visited directories
+d() {
+  ddir="$(dirs -v | awk '{print $2}' | fzf)"
+  ddir=${ddir/#\~/${HOME}} 
+  cd "$ddir"
+}
+
+
 # Modified version where you can press
 #   - CTRL-O to open with `open` command,
 #   - CTRL-E or Enter key to open with the $EDITOR
@@ -266,3 +274,6 @@ gh() {
 
 #### SEDIMENTUM
 alias fdns=~/.dotfiles/scripts/sedimentum_dns/fix-resolv-conf.sh
+
+#### Timing Test for ZSHELL Startup
+#for i in $(seq 1 10); do /usr/bin/time /bin/zsh -i -c exit; done
