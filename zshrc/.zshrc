@@ -1,4 +1,5 @@
 #TMUX
+export TERM=xterm-256color
 if [ -z "$TMUX" ]
 then
     tmux attach -t TMUX || tmux new -s TMUX
@@ -28,6 +29,7 @@ export ZSH="/home/$USER/.oh-my-zsh"
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="spaceship"
 SPACESHIP_USER_SHOW=always
+SPACESHIP_PROMPT_DIR_TRUNC=0
 
 # Turn off power status when using spaceship prompt
 export SPACESHIP_BATTERY_SHOW=false
