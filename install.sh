@@ -1,4 +1,9 @@
 sudo apt update
+sudo apt install zsh
+chsh -s $(which zsh)
+
+#Log in and out
+
 sudo apt install git-all
 sudo apt install python3
 sudo apt install python3-pip
@@ -16,6 +21,7 @@ pip install virtualenv
 cd ~/.dotfiles
 git submodule update --init --recursive
 
+mkdir ~/.config
 
 #TERMINAL
 ln -sf ~/.dotfiles/terminal/tilda ~/.config/tilda
@@ -26,16 +32,26 @@ ln -sf ~/.dotfiles/git/.git-templates ~/
 
 #PYENV
 git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
 git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
 
 #TMUX
 sudo apt install tmux
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ln -sf ~/.dotfiles/tmux/.tmux.conf ~/.tmux.conf
+#source ~/tmux.conf
+#Press prefix + I (capital i, as in Install) to fetch the plugin.
 
+#OHMyZSH
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 #ZSHRC
 ln -sf ~/.dotfiles/zshrc/.zshrc ~/.zshrc
 ln -sf ~/.dotfiles/zshrc/.dircolors ~/.dircolors 
+
 
 #FZF
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
@@ -59,7 +75,7 @@ pyenv global 3.11.2
 ## NVIM Python
 cd ~/.dotfiles/configs/.config/nvim
 virtualenv venv
-vact
+source venv/bin/activate
 pip install neovim
 pip install rope
 pip install black
@@ -68,6 +84,11 @@ deactivate
 ##Update Plugins
 cd ~/.dotfiles/vim/.vim/pack/plugins/start
 ./update.sh
+
+## Install NVM
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+source ~/.zshrc
+nvm install node
 
 ## COC Plugin
 cd ~/.dotfiles/vim/.vim/pack/plugins/start/coc.nvim
