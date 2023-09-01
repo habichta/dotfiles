@@ -12,7 +12,7 @@ syntax on
 " use default linux encoding in vim
 set encoding=utf8
 " share the plus register with the system clipboard
-"set clipboard=unnamedplus
+set clipboard=unnamedplus
 " Map Leader
 let mapleader = ","
 
@@ -80,3 +80,16 @@ exec 'set tags+=' . findfile('.git/tags', ';')
 
 "Python3
 let g:python3_host_prog = '~/.config/nvim/venv/bin/python3'
+
+
+
+"Vim PLUG
+"
+" call plug#begin()
+
+" Plug 'chipsenkbeil/distant.nvim', {
+" \ 'branch': 'v0.3',
+" \ 'do': ':lua require("distant"):setup()'
+" \ }
+
+" call plug#end()

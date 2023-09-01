@@ -76,6 +76,6 @@
 [submodule "vim/.vim/pack/plugins/start/vim-isort"]
 	path = vim/.vim/pack/plugins/start/vim-isort
 	url = https://github.com/fisadev/vim-isort.git
-[submodule "vim/.vim/pack/plugins/start/copilot.vim"]
-	path = vim/.vim/pack/plugins/start/copilot.vim
-	url = https://github.com/github/copilot.vim.git
+[submodule "vim/.vim/pack/plugins/start/distant.nvim"]
+	path = vim/.vim/pack/plugins/start/distant.nvim
+	url = https://github.com/chipsenkbeil/distant.nvim.git
