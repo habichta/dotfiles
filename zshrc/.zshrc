@@ -130,9 +130,8 @@ source $ZSH/oh-my-zsh.sh
 stty -ixon 
 
 #NVM
-export PATH="$PATH:$HOME/.nvm/versions/node/v18.2.0/bin"
 export NVM_DIR=~/.nvm
-[[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh" --no-use # This loads nvm
+[[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 #YARN Binaries
@@ -272,6 +271,8 @@ gh() {
     --preview 'grep -o "[a-f0-9]\{7,\}" <<< {} | xargs git show --color=always' |
     grep -o "[a-f0-9]\{7,\}"
 }
+
+
 
 
 #### SEDIMENTUM
