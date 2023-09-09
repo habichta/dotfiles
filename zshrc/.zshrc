@@ -1,5 +1,5 @@
 #TMUX
-export TERM=xterm-256color
+export TERM=tmux-256color
 if [ -z "$TMUX" ]
 then
     tmux attach -t TMUX || tmux new -s TMUX
