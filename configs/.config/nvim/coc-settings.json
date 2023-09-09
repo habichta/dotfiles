@@ -12,8 +12,10 @@
   "javascript.autoClosingTags": true,
   "typescript.autoClosingTags": true,
   "html.format.enable": true,
+  "diagnostic.checkCurrentLine": true,
 
   "yaml.schemas": {
     "kubernetes": "/*.yaml"
-  }
+  },
+  "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/16.0.2/clangd_16.0.2/bin/clangd"
 }

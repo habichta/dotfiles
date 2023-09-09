@@ -85,7 +85,7 @@ let g:python3_host_prog = '~/.config/nvim/venv/bin/python3'
 
 "Vim PLUG
 
- call plug#begin()
-
-
- call plug#end()
+call plug#begin()
+Plug 'mfussenegger/nvim-dap'
+Plug 'rcarriga/nvim-dap-ui'
+call plug#end()
