@@ -21,7 +21,6 @@ dap.configurations.c= {
     end,
     cwd = '${workspaceFolder}',
     stopOnEntry = false,
-    args = {}
   },
 }
 
