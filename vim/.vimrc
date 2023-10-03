@@ -81,12 +81,3 @@ exec 'set tags+=' . findfile('.git/tags', ';')
 "Python3
 let g:python3_host_prog = '~/.config/nvim/venv/bin/python3'
 
-
-
-"Vim PLUG
-
-call plug#begin()
-Plug 'mfussenegger/nvim-dap'
-Plug 'rcarriga/nvim-dap-ui'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-call plug#end()
