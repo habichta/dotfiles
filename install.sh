@@ -63,6 +63,7 @@ echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/source
 sudo apt update && sudo apt install --no-install-recommends yarn
 
 #NVIM
+sudo snap install --beta nvim --classic
 ln -sf ~/.dotfiles/vim/.vimrc ~/.vimrc
 ln -sf ~/.dotfiles/configs/.config/nvim ~/.config/
 ln -sf ~/.dotfiles/vim/.vim ~/ 

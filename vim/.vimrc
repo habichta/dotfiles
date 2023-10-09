@@ -80,16 +80,3 @@ exec 'set tags+=' . findfile('.git/tags', ';')
 
 "Python3
 let g:python3_host_prog = '~/.config/nvim/venv/bin/python3'
-
-
-
-"Vim PLUG
-"
-" call plug#begin()
-
-" Plug 'chipsenkbeil/distant.nvim', {
-" \ 'branch': 'v0.3',
-" \ 'do': ':lua require("distant"):setup()'
-" \ }
-
-" call plug#end()
