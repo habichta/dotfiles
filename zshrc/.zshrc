@@ -57,6 +57,15 @@ export PATH="$PATH:$(yarn global bin)"
 # Alias
 ########################################
 
+# Git
+alias g="git"
+alias gc="git commit"
+alias gch="git checkout"
+alias gs="git status"
+alias gsw="git switch"
+alias gd="git diff"
+alias ga="git add"
+
 #Lazygit
 alias lg="lazygit"
 
