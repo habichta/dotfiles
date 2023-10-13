@@ -1,6 +1,7 @@
-############### Basic ###############################
+########################################
+# Setup
+########################################
 
-#TMUX
 export TERM=tmux-256color
 if [ -z "$TMUX" ]
 then
@@ -11,8 +12,15 @@ eval `ssh-agent` > /dev/null
 
 export EDITOR="nvim"
 
+# deactivate ctrl-s XOFF
+stty -ixon 
+
+########################################
+# Theme / Oh my ZSH
+########################################
+#
 #Colorscheme for Dirs
-eval "$(dircolors ~/.dircolors)"
+eval "$(dircolors ~/.gruvbox.dircolors)"
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/$USER/.oh-my-zsh"
@@ -30,18 +38,24 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
-# deactivate ctrl-s XOFF
-stty -ixon 
 
-#NVM
+########################################
+# NVM
+########################################
+#
 export NVM_DIR=~/.nvm
 [[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-#YARN Binaries
+########################################
+# YARN Binaries
+########################################
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 export PATH="$PATH:$(yarn global bin)"
 
+########################################
+# Alias
+########################################
 
 #Lazygit
 alias lg="lazygit"
@@ -67,6 +81,10 @@ alias vact="source venv/bin/activate"
 # copy pwd to clip board
 alias cpwd="pwd | xclip -sel clip"
 
+########################################
+# Programming Languages 
+########################################
+
 # SNAP
 export PATH="$PATH:/snap/bin"
 
@@ -82,17 +100,10 @@ command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
-#Change ZSH
-alias  czsh="vim ~/.zshrc"
 
-alias sdocker="sudo docker"
-
-#Kubernetes
-## Minikube
-alias mkubectl="minikube kubectl"
-alias mk="mkubectl"
-
-############### FZF ###############################
+########################################
+# FZF 
+########################################
 export PATH="$HOME/.local/bin:$PATH"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -170,5 +181,7 @@ gh() {
     grep -o "[a-f0-9]\{7,\}"
 }
 
-############### SEDIMENTUM ###############################
+########################################
+# Sedimentum 
+########################################
 alias fdns=~/.dotfiles/scripts/sedimentum_dns/fix-resolv-conf.sh
