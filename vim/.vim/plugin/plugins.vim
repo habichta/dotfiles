@@ -26,6 +26,8 @@ let g:choosewin_overlay_enable = 1
 set rtp+=~/.fzf/bin/fzf
 nnoremap <C-p> :Files<Cr>
 nnoremap <C-]> :History<Cr>
+nnoremap <M-]> :Buffer<Cr>
+nnoremap <M-[> :Ag<Cr>
 
 "DAP
 nnoremap <silent> <F5> <Cmd>lua require'dap'.continue()<CR>
