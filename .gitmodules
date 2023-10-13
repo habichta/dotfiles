@@ -7,9 +7,6 @@
 [submodule "vim/.vim/pack/plugins/start/coc.nvim"]
 	path = vim/.vim/pack/plugins/start/coc.nvim
 	url = https://github.com/neoclide/coc.nvim.git
-[submodule "vim/.vim/pack/plugins/start/nerdtree"]
-	path = vim/.vim/pack/plugins/start/nerdtree
-	url = https://github.com/preservim/nerdtree.git
 [submodule "vim/.vim/pack/plugins/start/quickfix-reflector.vim"]
 	path = vim/.vim/pack/plugins/start/quickfix-reflector.vim
 	url = https://github.com/stefandtw/quickfix-reflector.vim.git

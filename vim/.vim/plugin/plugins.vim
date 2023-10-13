@@ -1,10 +1,8 @@
 "PLUGIN CONFIGURATIONS
 
-"NERDTree
-" define map for opening NERDTree
-nnoremap <Leader>nn :NERDTreeToggle<CR>
-let NERDTreeShowHidden=1
-
+"NvimTree
+" define map for opening NvimTree
+nnoremap <Leader>nn :NvimTreeToggle<CR>
 " vim-obsession "
 " start tracking session
 nnoremap <Leader>o :Obsess<CR>
@@ -27,7 +25,7 @@ let g:choosewin_overlay_enable = 1
 "FZF
 set rtp+=~/.fzf/bin/fzf
 nnoremap <C-p> :Files<Cr>
-nnoremap <C-[> :History<Cr>
+nnoremap <C-]> :History<Cr>
 
 "DAP
 nnoremap <silent> <F5> <Cmd>lua require'dap'.continue()<CR>
