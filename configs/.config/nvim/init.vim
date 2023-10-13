@@ -9,6 +9,7 @@ call plug#begin()
 Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'lukas-reineke/indent-blankline.nvim'
 call plug#end()
 
 luafile ~/.config/nvim/lua/init.lua
