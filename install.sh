@@ -7,7 +7,7 @@ chsh -s $(which zsh)
 sudo apt install git-all
 sudo apt install python3
 sudo apt install python3-pip
-sudo apt install neovim
+#sudo apt install neovim -> https://github.com/neovim/neovim/wiki/Building-Neovim
 sudo apt install tree
 sudo apt install bat
 sudo apt install neofetch
