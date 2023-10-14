@@ -13,6 +13,7 @@ Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'nvim-tree/nvim-tree.lua'
 Plug 'famiu/bufdelete.nvim'
+Plug 'mfussenegger/nvim-dap-python'
 call plug#end()
 
 luafile ~/.config/nvim/lua/init.lua

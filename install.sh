@@ -24,6 +24,9 @@ git submodule update --init --recursive
 
 mkdir ~/.config
 
+#Location for shared venvs 
+mkdir ~/.dotfiles/venvs
+
 #TERMINAL
 ln -sf ~/.dotfiles/terminal/tilda ~/.config/tilda
 
@@ -82,6 +85,12 @@ pip install neovim
 pip install rope
 pip install black
 deactivate
+
+#Python Debugger Venv
+#https://github.com/mfussenegger/nvim-dap-python
+cd ~/.dotfiles/venvs
+python -m venv debugpy
+debugpy/bin/python -m pip install debugpy
 
 ##Update Plugins
 cd ~/.dotfiles/vim/.vim/pack/plugins/start
