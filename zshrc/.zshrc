@@ -34,6 +34,8 @@ export SPACESHIP_BATTERY_SHOW=false
 
 plugins=(
     z
+    web-search
+    dirhistory
     )
 
 source $ZSH/oh-my-zsh.sh
