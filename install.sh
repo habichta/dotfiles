@@ -11,6 +11,7 @@ sudo apt install neovim
 sudo apt install tree
 sudo apt install bat
 sudo apt install neofetch
+sudo apt install bmon
 
 #BASIC
 sudo apt install build-essential zlib1g-dev libffi-dev libssl-dev libbz2-dev libreadline-dev libsqlite3-dev liblzma-dev tk-dev

@@ -1,0 +1,29 @@
+#!/bin/bash
+###################################################
+# Script to create a new python project with pyenv
+# It will automatically create a virualenv based
+# on a configurable python version
+# It is setup in such a way, that the virtualenv
+# is automatically activate / deactivated when cd-ing
+# in or out the root or child folders of the project
+# #################################################
+
+# Get the name of the current directory, use it as virtualenv name
+current_directory=$(basename "$(pwd)")
+
+# Display the current directory name
+echo "Virtualenv name: $current_directory"
+
+# Prompt the user for input
+read -p "Choose python version (e.g., 3.11.2): " python_version
+
+pyenv virtualenv $python_version $current_directory
+
+if [ $? -eq 0 ]; then
+  echo "Created Virtualenv: '$current_directory' with version $(python --version)"
+    echo "$current_directory" > ".python-version"
+else
+    echo "Failed to create Virtualenv. Maybe it exists already? Delete with 'pyenv virtualenv-delete $current_directory'"
+fi
+
+

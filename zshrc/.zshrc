@@ -15,6 +15,10 @@ export EDITOR="nvim"
 # deactivate ctrl-s XOFF
 stty -ixon 
 
+
+#Add custom scripts to PATH
+export PATH="$HOME/.dotfiles/scripts:$PATH"
+
 ########################################
 # Theme / Oh my ZSH
 ########################################
@@ -74,6 +78,8 @@ alias lg="lazygit"
 #VIM
 alias v="nvim"
 alias vim="nvim"
+# open last file
+alias vl="nvim -c \"normal '0\""
 
 #rmr
 alias rmr="rm -r"
@@ -84,10 +90,6 @@ alias lsa="ls -la"
 #Reload Shell
 alias reload="exec $SHELL"
 
-#Python
-#Activate virtual env
-alias python=python3
-alias vact="source venv/bin/activate"
 
 # copy pwd to clip board
 alias cpwd="pwd | xclip -sel clip"
@@ -105,11 +107,14 @@ export PATH="$PATH:~/.cargo/bin"
 # Go
 export PATH="$PATH:/usr/local/go/bin"
 
-#PyEnv
+#Python + PyEnv
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
+
+alias python=python3
+alias vact="source venv/bin/activate"
 
 
 ########################################
