@@ -50,7 +50,7 @@ ln -sf ~/.dotfiles/tmux/.tmux.conf ~/.tmux.conf
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 #ZSHRC
 ln -sf ~/.dotfiles/zshrc/.zshrc ~/.zshrc
-ln -sf ~/.dotfiles/zshrc/.gruvbox.dircolors ~/gruvbox.dircolors 
+ln -sf ~/.dotfiles/zshrc/.gruvbox.dircolors ~/.gruvbox.dircolors 
 
 
 #FZF
