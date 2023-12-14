@@ -16,7 +16,7 @@
     a = add
     ctags = "!bash -c '[ -f .git/hooks/ctags ] || git init; .git/hooks/ctags' git-ctags"
 [core]
-	editor = vim
+	editor = nvim
   pager = "type diff-so-fancy &> /dev/null && diff-so-fancy | less -RFX --pattern='^(Author|added|deleted|modified|renamed): ' || less -RFX"
 	excludesfile = "~/.dotfiles/git/.gitignore"
 [init]

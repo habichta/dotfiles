@@ -94,6 +94,9 @@ alias reload="exec $SHELL"
 # copy pwd to clip board
 alias cpwd="pwd | xclip -sel clip"
 
+#Alias cat to batcat
+alias cat="batcat"
+
 ########################################
 # Programming Languages 
 ########################################
