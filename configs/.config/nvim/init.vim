@@ -14,6 +14,8 @@ Plug 'nvim-tree/nvim-web-devicons'
 Plug 'nvim-tree/nvim-tree.lua'
 Plug 'famiu/bufdelete.nvim'
 Plug 'mfussenegger/nvim-dap-python'
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'nvim-tree/nvim-web-devicons'
 call plug#end()
 
 luafile ~/.config/nvim/lua/init.lua

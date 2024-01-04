@@ -16,9 +16,6 @@
 [submodule "vim/.vim/pack/plugins/start/tagbar"]
 	path = vim/.vim/pack/plugins/start/tagbar
 	url = https://github.com/preservim/tagbar.git
-[submodule "vim/.vim/pack/plugins/start/vim-airline"]
-	path = vim/.vim/pack/plugins/start/vim-airline
-	url = https://github.com/vim-airline/vim-airline.git
 [submodule "vim/.vim/pack/plugins/start/vim-commentary"]
 	path = vim/.vim/pack/plugins/start/vim-commentary
 	url = https://github.com/tpope/vim-commentary.git
@@ -73,3 +70,6 @@
 [submodule "vim/.vim/pack/plugins/start/vim-isort"]
 	path = vim/.vim/pack/plugins/start/vim-isort
 	url = https://github.com/fisadev/vim-isort.git
+[submodule "vim/.vim/pack/plugins/start/copilot.vim"]
+	path = vim/.vim/pack/plugins/start/copilot.vim
+	url = https://github.com/github/copilot.vim
