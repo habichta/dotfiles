@@ -16,6 +16,8 @@ Plug 'famiu/bufdelete.nvim'
 Plug 'mfussenegger/nvim-dap-python'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'nvim-tree/nvim-web-devicons'
+Plug 'akinsho/toggleterm.nvim', {'tag' : '*'}
+Plug 'lfv89/vim-interestingwords'
 call plug#end()
 
 luafile ~/.config/nvim/lua/init.lua

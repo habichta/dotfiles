@@ -8,7 +8,8 @@ vim.opt.termguicolors = true
 --Required
 require('plugins.treesitter')
 require('plugins.dap')
-require("plugins.ident-blankline")
-require("plugins.nvim-tree")
+require('plugins.ident-blankline')
+require('plugins.nvim-tree')
 require('plugins.lualine')
+require('plugins.toggleterm')
 require('dap-python').setup('~/.dotfiles/venvs/debugpy/bin/python')
