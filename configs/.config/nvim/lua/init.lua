@@ -11,5 +11,6 @@ require('plugins.dap')
 require('plugins.ident-blankline')
 require('plugins.nvim-tree')
 require('plugins.lualine')
-require('plugins.toggleterm')
+--require('plugins.toggleterm')
 require('dap-python').setup('~/.dotfiles/venvs/debugpy/bin/python')
+require("bufferline").setup{}
