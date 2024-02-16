@@ -120,6 +120,10 @@ export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 alias python=python3
 alias vact="source venv/bin/activate"
 
+#Mojo
+export MODULAR_HOME="$HOME/.modular"
+export PATH="$MODULAR_HOME/pkg/packages.modular.com_mojo/bin:$PATH"
+
 
 ########################################
 # FZF 
