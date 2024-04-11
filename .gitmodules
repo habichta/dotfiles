@@ -34,9 +34,6 @@
 [submodule "vim/.vim/pack/plugins/start/vim-ripgrep"]
 	path = vim/.vim/pack/plugins/start/vim-ripgrep
 	url = https://github.com/jremmen/vim-ripgrep.git
-[submodule "vim/.vim/pack/plugins/start/vim-startify"]
-	path = vim/.vim/pack/plugins/start/vim-startify
-	url = https://github.com/mhinz/vim-startify.git
 [submodule "vim/.vim/pack/plugins/start/vim-surround"]
 	path = vim/.vim/pack/plugins/start/vim-surround
 	url = https://github.com/tpope/vim-surround.git

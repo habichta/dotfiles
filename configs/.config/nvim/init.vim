@@ -19,6 +19,7 @@ Plug 'nvim-tree/nvim-web-devicons'
 Plug 'akinsho/toggleterm.nvim', {'tag' : '*'}
 Plug 'akinsho/bufferline.nvim', { 'tag': '*' }
 Plug 'lfv89/vim-interestingwords'
+Plug 'mhinz/vim-startify'
 call plug#end()
 
 luafile ~/.config/nvim/lua/init.lua
