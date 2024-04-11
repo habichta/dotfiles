@@ -9,10 +9,14 @@ vim.opt.termguicolors = true
 vim.wo.foldmethod = 'expr'
 vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
 
+-- swap file options
+vim.opt.directory = '/tmp/nvim/swap//'
+
 --Required
-require('plugins.treesitter')
-require('plugins.ident-blankline')
-require('plugins.nvim-tree')
-require('plugins.lualine')
 require("bufferline").setup{}
+require('functions.swap-files')
 require('plugins.coc')
+require('plugins.ident-blankline')
+require('plugins.lualine')
+require('plugins.nvim-tree')
+require('plugins.treesitter')
