@@ -101,24 +101,6 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 source ~/.zshrc
 nvm install node
 
-## COC Plugin
-cd ~/.dotfiles/vim/.vim/pack/plugins/start/coc.nvim
-yarn install
-
-vim -c "CocInstall coc-pyright | CocInstall coc-snippets | 
-  CocInstall coc-actions | CocInstall coc-eslint | CocInstall coc-prettier | 
-  CocInstall coc-tsserver | CocInstall coc-json | CocInstall coc-yaml | 
-  CocInstall coc-html | CocInstall coc-go | CocInstall coc-rust-analyzer"
-
-## TODO install watchman
-#https://facebook.github.io/watchman/docs/install.html
-#Required for updating imports on filename changes
-
-
-
-# CTAGS
-ln -sf ~/.dotfiles/ctags/.ctags ~/.ctags
-
 #Lazygit
 LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
 curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
