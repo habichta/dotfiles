@@ -5,12 +5,14 @@ vim.g.loaded_netrwPlugin = 1
 -- set termguicolors to enable highlight groups
 vim.opt.termguicolors = true
 
+-- folding options
+vim.wo.foldmethod = 'expr'
+vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
+
 --Required
 require('plugins.treesitter')
-require('plugins.dap')
 require('plugins.ident-blankline')
 require('plugins.nvim-tree')
 require('plugins.lualine')
---require('plugins.toggleterm')
-require('dap-python').setup('~/.dotfiles/venvs/debugpy/bin/python')
 require("bufferline").setup{}
+require('plugins.coc')

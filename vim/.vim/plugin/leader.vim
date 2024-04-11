@@ -4,7 +4,6 @@
 "" save (and/or) close
 nnoremap <Leader>qq :qa<CR>
 nnoremap <Leader>x :x<CR>
-nnoremap <Leader>w :w<CR>
 
 " edit another file in the same directory as the current file
 nnoremap <Leader>e :e <C-R>=escape(expand("%:p:h"),' ') . '/'<CR>
@@ -23,8 +22,10 @@ nnoremap <silent> <Leader>q :nohlsearch<CR>
 " zoom/unzoom current window
 nnoremap <Leader>z <C-w>\|<C-w>_
 nnoremap <Leader>Z <C-w>=
+
 " delete paranthesis under cursor and matching
 nnoremap <Leader>X %x<C-o>x
+
 " rename file (prompts for new filename)
 nnoremap <Leader>rn :call functions#RenameFile()<CR>
 
