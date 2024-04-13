@@ -32,7 +32,6 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-surround'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
 call plug#end()
 
 luafile ~/.config/nvim/lua/init.lua
