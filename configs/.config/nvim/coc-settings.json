@@ -1,5 +1,7 @@
 {
   "coc.preferences.formatOnSave": true,
+  "suggest.enablePreview": true,
+  "coc.preferences.hoverTarget": "float,
   "snippets.snipmate.enable": false,
   "snippets.ultisnips.enable": true,
   "python.formatting.provider": "black",
