@@ -63,18 +63,6 @@ export PATH="$PATH:$(yarn global bin)"
 # Alias
 ########################################
 
-# Git
-alias g="git"
-alias gc="git commit"
-alias gch="git checkout"
-alias gs="git status"
-alias gsw="git switch"
-alias gd="git diff"
-alias ga="git add"
-
-#Lazygit
-alias lg="lazygit"
-
 #VIM
 alias v="nvim"
 alias vim="nvim"
@@ -89,7 +77,6 @@ alias lsa="ls -la"
 
 #Reload Shell
 alias reload="exec $SHELL"
-
 
 # copy pwd to clip board
 alias cpwd="pwd | xclip -sel clip"
@@ -196,7 +183,7 @@ gb() {
     --bind "alt-c:execute:$_gitLogLineToHash | xclip -i -sel c"
 }
 
-gh() {
+ghi() {
   _is_in_git_repo || return
   git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --graph --color=always |
     fzf --ansi --no-sort --reverse --multi --bind 'ctrl-s:toggle-sort' \
