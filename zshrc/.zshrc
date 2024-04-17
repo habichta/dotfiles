@@ -14,6 +14,7 @@ export EDITOR="nvim"
 
 # deactivate ctrl-s XOFF
 stty -ixon 
+setopt IGNORE_EOF  # Ignore EOF; use 'exit' to quit the shell
 
 
 #Add custom scripts to PATH
@@ -196,11 +197,9 @@ ghi() {
 # Search and open with neovim or cd
 function vf() {
     if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-        echo "Inside Git repository"
         # Customize fzf for Git repositories
         local item=$(git ls-files | fzf --preview '[[ -f {} ]] && (batcat --style=numbers --color=always {} || cat {}) || tree -C {}' --preview-window=right:50%:wrap )
     else
-        echo "Not inside Git repository"
         # Standard fzf behavior
         local item=$(fd --type f --type d -H . | grep -I . | fzf --preview 'if [[ -d {} ]]; then tree -C {}; elif [[ -f {} ]]; then batcat --style=numbers --color=always {} || cat {}; fi' --preview-window=right:50%:wrap)
     fi
@@ -214,7 +213,7 @@ function vf() {
     zle reset-prompt
 }
 zle -N vf
-bindkey '^f' vf
+bindkey '^s' vf
 
 ########################################
 # Sedimentum 
