@@ -130,7 +130,6 @@ export FZF_CTRL_T_OPTS="--preview '(batcat -n --color=always {} || tree -C {}) 2
 export FZF_ALT_C_COMMAND="fd --type d $FD_OPTIONS"
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 
-
 # Quick way do go to previously visited directories
 d() {
   ddir="$(dirs -v | awk '{print $2}' | fzf)"
@@ -172,6 +171,7 @@ _is_in_git_repo() {
   git rev-parse HEAD > /dev/null 2>&1
 }
 
+#Git history v1
 gb() {
   _gitLogLineToHash="echo {} | grep -o '[a-f0-9]\{7\}' | head -1 | tr -d '\n'"
   _viewGitLogLine="$_gitLogLineToHash | xargs -I % sh -c 'git show --color=always % | diff-so-fancy'"
@@ -183,6 +183,7 @@ gb() {
     --bind "alt-c:execute:$_gitLogLineToHash | xclip -i -sel c"
 }
 
+#Git history v2
 ghi() {
   _is_in_git_repo || return
   git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --graph --color=always |
@@ -191,6 +192,29 @@ ghi() {
     --preview 'grep -o "[a-f0-9]\{7,\}" <<< {} | xargs git show --color=always' |
     grep -o "[a-f0-9]\{7,\}"
 }
+# Check if inside a Git repository
+# Search and open with neovim or cd
+function vf() {
+    if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+        echo "Inside Git repository"
+        # Customize fzf for Git repositories
+        local item=$(git ls-files | fzf --preview '[[ -f {} ]] && (batcat --style=numbers --color=always {} || cat {}) || tree -C {}' --preview-window=right:50%:wrap )
+    else
+        echo "Not inside Git repository"
+        # Standard fzf behavior
+        local item=$(fd --type f --type d -H . | grep -I . | fzf --preview 'if [[ -d {} ]]; then tree -C {}; elif [[ -f {} ]]; then batcat --style=numbers --color=always {} || cat {}; fi' --preview-window=right:50%:wrap)
+    fi
+    if [ -n "$item" ]; then
+        if [ -d "$item" ]; then
+            cd "$item"
+        elif [ -f "$item" ]; then
+            v "$item"
+        fi
+    fi
+    zle reset-prompt
+}
+zle -N vf
+bindkey '^f' vf
 
 ########################################
 # Sedimentum 
