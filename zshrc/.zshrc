@@ -14,7 +14,11 @@ export EDITOR="nvim"
 
 # deactivate ctrl-s XOFF
 stty -ixon 
-setopt IGNORE_EOF  # Ignore EOF; use 'exit' to quit the shell
+# Ignore EOF; use 'exit' to quit the shell
+setopt IGNORE_EOF  
+# Ignore Gnome Emoji Picker
+gsettings set org.freedesktop.ibus.panel.emoji hotkey "[]"
+
 
 
 #Add custom scripts to PATH
