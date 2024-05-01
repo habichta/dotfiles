@@ -12,9 +12,13 @@ vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
 -- swap file options
 vim.opt.directory = '/tmp/nvim/swap//'
 
+-- File format
+vim.opt.fileformats = { "unix"}
+
 --Required
 require("bufferline").setup {}
 require('functions.swap-files')
+require('functions.carriage-return')
 require('plugins.coc')
 require('plugins.ident-blankline')
 require('plugins.lualine')
