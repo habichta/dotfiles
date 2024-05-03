@@ -8,12 +8,13 @@ vim.opt.termguicolors = true
 -- folding options
 vim.wo.foldmethod = 'expr'
 vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.wo.foldlevel = 99
 
 -- swap file options
 vim.opt.directory = '/tmp/nvim/swap//'
 
 -- File format
-vim.opt.fileformats = { "unix"}
+vim.opt.fileformats = { "unix" }
 
 --Required
 require("bufferline").setup {}

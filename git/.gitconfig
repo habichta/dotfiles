@@ -19,7 +19,7 @@
 
 [core]
 	editor = nvim
-  pager = "type diff-so-fancy > /dev/null 2>&1 && diff-so-fancy | less -RFX --pattern='^(Author|added|deleted|modified|renamed): ' || less -RFX"
+  pager = "type diff-so-fancy > /dev/null 2>&1 && diff-so-fancy | less -RFX '+r/^(Author|added|deleted|modified|renamed): ' || less -RFX"
 	excludesfile = "~/.dotfiles/git/.gitignore"
 [init]
   templatedir = ~/.git-templates

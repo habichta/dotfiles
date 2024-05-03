@@ -45,10 +45,6 @@ set hlsearch
 " This will allow you to search specifically for capital letters.
 set ignorecase
 
-" FOLD
-"
-let g:SimpylFold_docstring_preview = 1
-
 "COMMAND LINE
 set smartcase
 " Show partial command you type in the last line of the screen.
@@ -76,7 +72,7 @@ set splitright
 
 
 "CTAGS
-exec 'set tags+=' . findfile('.git/tags', ';')
+" exec 'set tags+=' . findfile('.git/tags', ';')
 
 "Python3
 let g:python3_host_prog = '~/.config/nvim/venv/bin/python3'
