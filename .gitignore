@@ -1,1 +1,3 @@
 venvs/*
+*.sec
+.gitsecret/keys/random_seed
