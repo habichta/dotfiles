@@ -21,6 +21,7 @@ require("bufferline").setup {}
 require('functions.swap-files')
 require('functions.carriage-return')
 require('functions.global-replace')
+require('functions.python')
 require('plugins.coc')
 require('plugins.ident-blankline')
 require('plugins.lualine')
