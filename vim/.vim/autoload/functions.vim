@@ -36,18 +36,37 @@ function! functions#SetLastCursorPosition()
   endif
 endfunction
 
+function! functions#IsQuickfixOpen()
+  for win in range(1, winnr('$'))
+    if getwinvar(win, '&buftype') == 'quickfix'
+      return 1
+    endif
+  endfor
+  return 0
+endfunction
 
-" closes the current buffer or exits vim if the current buffer is empty
 function! functions#DeleteBufferOrExit()
-  if line('$') == 1 && getline(1) == ''
-    q
+  " Close the quickfix window if it's open
+  if functions#IsQuickfixOpen()
+    cclose
   else
-    " close location list
-    lclose
-    " just doing `bd` seems to close two buffers (?)
-    exec "normal! :bd<CR>"
+    " Check if the current buffer is empty
+    if line('$') == 1 && getline(1) == ''
+      " Exit Vim
+      quit
+    else
+      " Close the location list if it's open
+      lclose
+      " Close the current buffer safely
+      try
+        Bdelete
+      catch
+        " Handle errors silently, e.g., if there are no more buffers to delete
+      endtry
+    endif
   endif
 endfunction
+
 
 function! functions#MaximizeToggle()
   if exists("s:maximize_session")

@@ -18,13 +18,14 @@ vim.opt.fileformats = { "unix" }
 
 --Required
 require("bufferline").setup {}
-require('functions.swap-files')
 require('functions.carriage-return')
 require('functions.global-replace')
 require('functions.python')
+require('functions.swap-files')
+require('plugins.aerial')
 require('plugins.coc')
+require('plugins.copilot')
 require('plugins.ident-blankline')
 require('plugins.lualine')
 require('plugins.nvim-tree')
 require('plugins.treesitter')
-require('plugins.copilot')

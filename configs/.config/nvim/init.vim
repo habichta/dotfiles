@@ -19,19 +19,19 @@ Plug 'junegunn/fzf.vim'
 Plug 'lfv89/vim-interestingwords'
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'mhinz/vim-startify'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'nvim-tree/nvim-tree.lua'
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'preservim/tagbar'
 Plug 'psf/black'
 Plug 'ryanoasis/vim-devicons'
 Plug 'sainnhe/gruvbox-material'
+Plug 'stevearc/aerial.nvim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-surround'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 luafile ~/.config/nvim/lua/init.lua

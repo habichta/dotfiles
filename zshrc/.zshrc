@@ -1,7 +1,7 @@
 ########################################
 # Setup
 ########################################
-
+# zmodload zsh/zprof
 export TERM=tmux-256color
 if [ -z "$TMUX" ]
 then
@@ -23,6 +23,22 @@ gsettings set org.freedesktop.ibus.panel.emoji hotkey "[]"
 #Add custom scripts to PATH
 export PATH="$HOME/.dotfiles/scripts:$PATH"
 
+########################################
+## ZSH Autoloads and Completions
+########################################
+
+#Only compile completions if necessary
+# autoload -Uz compinit
+
+# if [[ ! -f ~/.zcompdump.zwc || ~/.zcompdump -nt ~/.zcompdump.zwc ]]; then
+#     compinit -i
+#     zcompile -U -z ~/.zcompdump
+# else
+#     compinit -C -i
+# fi
+
+
+autoload -U add-zsh-hook
 
 ########################################
 # Theme / Oh my ZSH
@@ -53,7 +69,6 @@ source $ZSH/oh-my-zsh.sh
 ########################################
 # NVM
 ########################################
-#
 export NVM_DIR=~/.nvm
 [[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -142,10 +157,10 @@ export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 source ~/.zsh/functions.zsh
 
 #ZSH hooks
-autoload -U add-zsh-hook
 add-zsh-hook chpwd update-tmux-window-name
 
 ########################################
 # Sedimentum 
 ########################################
 alias fdns=~/.dotfiles/scripts/sedimentum_dns/fix-resolv-conf.sh
+# zprof

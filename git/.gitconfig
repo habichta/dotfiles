@@ -17,6 +17,11 @@
     a = add
     p = push
     ctags = "!bash -c '[ -f .git/hooks/ctags ] || git init; .git/hooks/ctags' git-ctags"
+    update-all = "!f() { \
+        git fetch --all && \
+        git rebase && \
+        git submodule update --init --recursive; \
+    }; f"
 
 [core]
 	editor = nvim

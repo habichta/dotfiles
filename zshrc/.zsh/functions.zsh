@@ -1,10 +1,7 @@
 function update-tmux-window-name() {
-    if [ -n "$TMUX" ]; then
-        local REPO_NAME=$(basename "$(git rev-parse --show-toplevel 2>/dev/null)")
-        if [ $? -eq 0 ] && [ -n "$REPO_NAME" ]; then
-            tmux rename-window "$REPO_NAME"
-        fi
-    fi
+if [ -n "$TMUX" ]; then
+     update-tmux-window-name.sh
+fi
 }
 
 # Quick way do go to previously visited directories
