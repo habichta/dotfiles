@@ -23,6 +23,7 @@ gsettings set org.freedesktop.ibus.panel.emoji hotkey "[]"
 #Add custom scripts to PATH
 export PATH="$HOME/.dotfiles/scripts:$PATH"
 
+
 ########################################
 # Theme / Oh my ZSH
 ########################################
@@ -134,127 +135,16 @@ export FZF_CTRL_T_OPTS="--preview '(batcat -n --color=always {} || tree -C {}) 2
 export FZF_ALT_C_COMMAND="fd --type d $FD_OPTIONS"
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 
-# Quick way do go to previously visited directories
-function d() {
-  ddir="$(dirs -v | awk '{print $2}' | fzf)"
-  ddir=${ddir/#\~/${HOME}} 
-  cd "$ddir"
-  zle reset-prompt
-}
-zle -N d
-bindkey '^d' d
 
-# Check if inside a Git repository, if not a git repository, use fd to search
-# Search and open with neovim or cd, depending on file type
-function vf() {
-    if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-        # Customize fzf for Git repositories
-        local item=$(git ls-files | fzf --preview '[[ -f {} ]] && (batcat --style=numbers --color=always {} || cat {}) || tree -C {}' --preview-window=right:50%:wrap )
-    else
-        # Standard fzf behavior
-        local item=$(fd --type f --type d -H . | grep -I . | fzf --preview 'if [[ -d {} ]]; then tree -C {}; elif [[ -f {} ]]; then batcat --style=numbers --color=always {} || cat {}; fi' --preview-window=right:50%:wrap)
-    fi
-    if [ -n "$item" ]; then
-        if [ -d "$item" ]; then
-            cd "$item"
-        elif [ -f "$item" ]; then
-            v "$item"
-        fi
-    fi
-    zle reset-prompt
-}
-zle -N vf
-bindkey '^s' vf
+########################################
+# ZSH Hooks and Functions
+########################################
+source ~/.zsh/functions.zsh
 
+#ZSH hooks
+autoload -U add-zsh-hook
+add-zsh-hook chpwd update-tmux-window-name
 
-# Gather hosts from 'step ssh hosts' if available and remove sedimentum internal
-gather_step_hosts() {
-    if command -v step >/dev/null 2>&1; then
-      step ssh hosts | tail -n +2 | tr -d \\t | grep -v '.sedimentum.internal$'
-    fi
-}
-
-ssh_with_fzf() {
-  # Gather hosts from SSH config
-  config_hosts=$(awk '$1 == "Host" && $2 !~ /\*/ {print $2}' ~/.ssh/config)
-
-  # Include hosts from 'step ssh hosts' if available
-  step_hosts=$(gather_step_hosts)
-
-  # Combine all hosts and remove duplicates
-  all_hosts=($(
-      echo "${config_hosts[@]}" "${step_hosts[@]}" |
-      awk 'NF' |                # Remove empty lines
-      sort -u                  # Sort and remove duplicates
-  ))
-
-  # Use fzf to select a host
-  selected_host=$(printf "%s\n" "${all_hosts[@]}" | fzf --height 40% --reverse)
-
-  # SSH into the selected host
-  if [[ -n "$selected_host" ]]; then
-        BUFFER="ssh $selected_host" # Note that calling ssh within a widget does not work since it is not attached to a terminal
-        zle accept-line  # This simulates pressing Enter, executing the command
-  fi
-}
-
-zle -N ssh_with_fzf
-bindkey '^f' ssh_with_fzf
-
-# Modified version where you can press
-#   - CTRL-O to open with `open` command,
-#   - CTRL-E or Enter key to open with the $EDITOR
-fo() {
-  IFS=$'\n' out=("$(fzf --query="$1" --exit-0 --expect=ctrl-o,ctrl-e)")
-  key=$(head -1 <<< "$out")
-  file=$(head -2 <<< "$out" | tail -1)
-  if [ -n "$file" ]; then
-    [ "$key" = ctrl-o ] && open "$file" || ${EDITOR} "$file"
-  fi
-}
-
-# fkill - kill processes - list only the ones you can kill. Modified the earlier script.
-fkill() {
-    local pid 
-    if [ "$UID" != "0" ]; then
-        pid=$(ps -f -u $UID | sed 1d | fzf -m | awk '{print $2}')
-    else
-        pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
-    fi  
-
-    if [ "x$pid" != "x" ]
-    then
-        echo $pid | xargs kill -${1:-9}
-    fi  
-}
-
-# use CTRL+G/CTRL+? to select git things with FZF
-# https://junegunn.kr/2016/07/fzf-git/
-_is_in_git_repo() {
-  git rev-parse HEAD > /dev/null 2>&1
-}
-
-#Git history v1
-gb() {
-  _gitLogLineToHash="echo {} | grep -o '[a-f0-9]\{7\}' | head -1 | tr -d '\n'"
-  _viewGitLogLine="$_gitLogLineToHash | xargs -I % sh -c 'git show --color=always % | diff-so-fancy'"
-  git log --graph --abbrev-commit --decorate --date=short --color=always --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all |
-    fzf --no-sort --reverse --tiebreak=index --no-multi \
-    --ansi --preview="$_viewGitLogLine" \
-    --header "enter to view, alt-c to copy hash to clipboard" \
-    --bind "enter:execute:$_viewGitLogLine | less -R" \
-    --bind "alt-c:execute:$_gitLogLineToHash | xclip -i -sel c"
-}
-
-#Git history v2
-ghi() {
-  _is_in_git_repo || return
-  git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --graph --color=always |
-    fzf --ansi --no-sort --reverse --multi --bind 'ctrl-s:toggle-sort' \
-    --header 'Press CTRL-S to toggle sort' \
-    --preview 'grep -o "[a-f0-9]\{7,\}" <<< {} | xargs git show --color=always' |
-    grep -o "[a-f0-9]\{7,\}"
-}
 ########################################
 # Sedimentum 
 ########################################

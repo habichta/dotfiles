@@ -55,6 +55,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 #ZSHRC
 ln -sf ~/.dotfiles/zshrc/.zshrc ~/.zshrc
 ln -sf ~/.dotfiles/zshrc/.gruvbox.dircolors ~/.gruvbox.dircolors 
+ln -sf ~/.dotfiles/zshrc/.zsh ~/.zsh
 
 
 #FZF
