@@ -145,8 +145,8 @@ function d() {
 zle -N d
 bindkey '^d' d
 
-# Check if inside a Git repository
-# Search and open with neovim or cd
+# Check if inside a Git repository, if not a git repository, use fd to search
+# Search and open with neovim or cd, depending on file type
 function vf() {
     if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
         # Customize fzf for Git repositories
@@ -167,6 +167,40 @@ function vf() {
 zle -N vf
 bindkey '^s' vf
 
+
+# Gather hosts from 'step ssh hosts' if available and remove sedimentum internal
+gather_step_hosts() {
+    if command -v step >/dev/null 2>&1; then
+      step ssh hosts | tail -n +2 | tr -d \\t | grep -v '.sedimentum.internal$'
+    fi
+}
+
+ssh_with_fzf() {
+  # Gather hosts from SSH config
+  config_hosts=$(awk '$1 == "Host" && $2 !~ /\*/ {print $2}' ~/.ssh/config)
+
+  # Include hosts from 'step ssh hosts' if available
+  step_hosts=$(gather_step_hosts)
+
+  # Combine all hosts and remove duplicates
+  all_hosts=($(
+      echo "${config_hosts[@]}" "${step_hosts[@]}" |
+      awk 'NF' |                # Remove empty lines
+      sort -u                  # Sort and remove duplicates
+  ))
+
+  # Use fzf to select a host
+  selected_host=$(printf "%s\n" "${all_hosts[@]}" | fzf --height 40% --reverse)
+
+  # SSH into the selected host
+  if [[ -n "$selected_host" ]]; then
+        BUFFER="ssh $selected_host" # Note that calling ssh within a widget does not work since it is not attached to a terminal
+        zle accept-line  # This simulates pressing Enter, executing the command
+  fi
+}
+
+zle -N ssh_with_fzf
+bindkey '^f' ssh_with_fzf
 
 # Modified version where you can press
 #   - CTRL-O to open with `open` command,
