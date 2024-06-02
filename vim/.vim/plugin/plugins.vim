@@ -37,3 +37,7 @@ call wilder#set_option('renderer', wilder#popupmenu_renderer(wilder#popupmenu_bo
       \ 'max_width': '80%',
       \ 'max_height': '15%',
       \ })))
+
+
+let g:fzf_preview_window = ['right:50%', 'ctrl-_']
+command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, $AG_DEFAULT_OPTIONS . ' --ignore "*.ipynb" --ignore-dir deps', fzf#vim#with_preview(), <bang>0)
