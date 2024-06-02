@@ -104,6 +104,9 @@ alias cpwd="pwd | xclip -sel clip"
 #Alias cat to batcat
 alias cat="batcat"
 
+#Alias cat to batcat
+alias cc="clear"
+
 ########################################
 # Programming Languages 
 ########################################
