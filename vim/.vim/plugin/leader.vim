@@ -31,3 +31,6 @@ nnoremap <Leader>rn :call functions#RenameFile()<CR>
 
 "Remove Trailing Whitespace
 nnoremap <Leader>tw :call functions#TrimWhitespace()<CR>
+
+"Close Window if it is not the last
+nnoremap <Leader>qw :close<CR>

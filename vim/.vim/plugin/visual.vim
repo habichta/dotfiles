@@ -10,19 +10,6 @@ set background=dark
 colorscheme gruvbox-material
 "}}}
 
-" vim-airline "{{{
-" tell airline to use symbols of the powerline font
-let g:airline_powerline_fonts = 1
-" display buffers instead of tabs if no tabs are used
-let g:airline#extensions#tabline#enabled = 1
-" display 'straight' tabs
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
-" also count words in 'notes' files - list appending doesn't seem to work anymore
-let g:airline#extensions#wordcount#filetypes =
-    \ ['help', 'markdown', 'rst', 'org', 'text', 'asciidoc', 'tex', 'mail', 'notes']
-"}}}
-
 " General "{{{
 " always show the status line
 set laststatus=2

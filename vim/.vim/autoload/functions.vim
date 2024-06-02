@@ -36,37 +36,63 @@ function! functions#SetLastCursorPosition()
   endif
 endfunction
 
-function! functions#IsQuickfixOpen()
-  for win in range(1, winnr('$'))
-    if getwinvar(win, '&buftype') == 'quickfix'
-      return 1
-    endif
-  endfor
-  return 0
-endfunction
 
+" delete the current buffer if it is not the last one, first checking if it is
+" a quickfix or location list
 function! functions#DeleteBufferOrExit()
-  " Close the quickfix window if it's open
-  if functions#IsQuickfixOpen()
-    cclose
+    windo call functions#CheckWinType()
+
+  if g:has_quickfix
+      call functions#CloseAllQuickfixLists()
+      return
+
+  elseif g:has_location
+      call functions#CloseAllLocLists()
+      return
+
   else
-    " Check if the current buffer is empty
-    if line('$') == 1 && getline(1) == ''
-      " Exit Vim
-      quit
-    else
-      " Close the location list if it's open
-      lclose
-      " Close the current buffer safely
-      try
-        Bdelete
-      catch
-        " Handle errors silently, e.g., if there are no more buffers to delete
-      endtry
-    endif
+      if len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) > 1
+        try
+          Bdelete
+        catch
+          bd
+        endtry
+      endif
   endif
+
 endfunction
 
+function! functions#CheckWinType()
+    let win_info = getwininfo(win_getid())[0]
+    let g:has_quickfix = 0
+    let g:has_location = 0
+    if win_info['quickfix'] && !win_info['loclist']
+        let g:has_quickfix = 1
+    elseif win_info['loclist']
+        let g:has_location = 1
+    else
+        return
+    endif
+endfunction
+
+function! functions#CloseAllQuickfixLists()
+    " Iterate over all windows 
+    try
+    windo execute "if &buftype == 'quickfix' | cclose | endif"
+    catch
+        echo "Quickfix List is last window"
+    endtry
+  
+endfunction
+
+function! functions#CloseAllLocLists()
+    " Iterate over all windows / buftype is quickfix as well
+    try
+    windo execute "if &buftype == 'quickfix' | lclose | endif"
+    catch
+        echo "Location List is last window"
+    endtry
+endfunction
 
 function! functions#MaximizeToggle()
   if exists("s:maximize_session")
@@ -122,6 +148,4 @@ function! functions#ToggleMouse()
         " enable mouse everywhere
         set mouse=a
     endif
-endfunc"
-
-
+endfunction

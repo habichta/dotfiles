@@ -13,8 +13,27 @@ let g:startify_change_to_dir=0
 set rtp+=~/.fzf/bin/fzf
 nnoremap <C-p> :GFiles<Cr>
 nnoremap <M-]> :History<Cr>
-nnoremap <Leader>b :Buffers<Cr>
+nnoremap <M-b> :Buffers<Cr>
 nnoremap <M-[> :Ag<Cr>
 
 "
 let g:camelcasemotion_key = '<leader>'
+
+" wilder
+" Use wilder for command-line completion
+call wilder#setup({'modes': [':', '/', '?']})
+call wilder#set_option('renderer', wilder#popupmenu_renderer(wilder#popupmenu_border_theme({
+      \ 'highlights': {
+      \   'border': 'Normal',
+      \ },
+      \ 'border': 'rounded',
+      \ 'pumblend': 20,
+      \ 'left': [
+      \   ' ', wilder#popupmenu_devicons(),
+      \ ],
+      \ 'right': [
+      \   ' ', wilder#popupmenu_scrollbar(),
+      \ ],
+      \ 'max_width': '80%',
+      \ 'max_height': '15%',
+      \ })))

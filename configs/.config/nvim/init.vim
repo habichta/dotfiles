@@ -6,7 +6,6 @@ source ~/.vimrc
 "Vim PLUG
  
 call plug#begin()
-Plug 'airblade/vim-gitgutter'
 Plug 'akinsho/bufferline.nvim', { 'tag': '*' }
 Plug 'bkad/CamelCaseMotion'
 Plug 'christoomey/vim-tmux-navigator'
@@ -32,6 +31,9 @@ Plug 'stevearc/aerial.nvim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-surround'
+Plug 'gelguy/wilder.nvim'
+Plug 'lewis6991/gitsigns.nvim'
+Plug 'tpope/vim-fugitive'
 call plug#end()
 
 luafile ~/.config/nvim/lua/init.lua
