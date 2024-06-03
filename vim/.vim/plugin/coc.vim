@@ -83,13 +83,21 @@ augroup end
 xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
 
+" Remap keys for applying codeAction to the current selection.
+nmap <leader>ac  <Plug>(coc-codeaction-cursor)
 " Remap keys for applying codeAction to the current buffer.
-nmap <leader>ac  <Plug>(coc-codeaction)
+nmap <leader>ab  <Plug>(coc-codeaction-source)
 " Apply AutoFix to problem on the current line.
-nmap <leader>qf  <Plug>(coc-fix-current)
+nmap <leader>aq  <Plug>(coc-fix-current)
+" Map call and type hiearchies.
+nmap <silent> <leader>ai :call CocAction('showIncomingCalls')<CR>
+nmap <silent> <leader>aq :call CocAction('showOutgoingCalls')<CR>
+nmap <silent> <leader>as :call CocAction('showSuperTypes')<CR>
+nmap <silent> <leader>au :call CocAction('showSubTypes')<CR>
+
 
 " Run the Code Lens action on the current line.
-nmap <leader>cl  <Plug>(coc-codelens-action)
+nmap <leader>al  <Plug>(coc-codelens-action)
 " Coc Snippets Expand
 imap <C-l> <Plug>(coc-snippets-expand)
 

@@ -34,3 +34,7 @@ nnoremap <Leader>tw :call functions#TrimWhitespace()<CR>
 
 "Close Window if it is not the last
 nnoremap <Leader>qw :close<CR>
+
+"Show unsaved changes
+nnoremap <Leader>us :w !diff % -<CR>
+
