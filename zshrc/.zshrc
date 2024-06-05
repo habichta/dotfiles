@@ -37,6 +37,8 @@ export PATH="$HOME/.dotfiles/scripts:$PATH"
 #     compinit -C -i
 # fi
 
+autoload -Uz compinit
+compinit -C
 
 autoload -U add-zsh-hook
 
@@ -57,7 +59,12 @@ SPACESHIP_PROMPT_DIR_TRUNC=0
 # Turn off power status when using spaceship prompt
 export SPACESHIP_BATTERY_SHOW=false
 
+export NVM_LAZY_LOAD=true
+export NVM_COMPLETION=true
+export NVM_LAZY_LOAD_EXTRA_COMMANDS=('nvim')
+
 plugins=(
+    zsh-nvm
     z
     web-search
     dirhistory
@@ -69,8 +76,8 @@ source $ZSH/oh-my-zsh.sh
 ########################################
 # NVM
 ########################################
-export NVM_DIR=~/.nvm
-[[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+# export NVM_DIR=~/.nvm
+# [[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 ########################################

@@ -52,6 +52,9 @@ ln -sf ~/.dotfiles/tmux/.tmux.conf ~/.tmux.conf
 
 #OHMyZSH
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+#ZSH Plugins
+git clone https://github.com/lukechilds/zsh-nvm ~/.oh-my-zsh/custom/plugins/zsh-nvm
+
 #ZSHRC
 ln -sf ~/.dotfiles/zshrc/.zshrc ~/.zshrc
 ln -sf ~/.dotfiles/zshrc/.gruvbox.dircolors ~/.gruvbox.dircolors 
@@ -68,10 +71,14 @@ echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/source
 sudo apt update && sudo apt install --no-install-recommends yarn
 
 #NVIM
-sudo snap install --beta nvim --classic
+# sudo snap install --beta nvim --classic
+# https://github.com/neovim/neovim/blob/master/INSTALL.md
 ln -sf ~/.dotfiles/vim/.vimrc ~/.vimrc
 ln -sf ~/.dotfiles/configs/.config/nvim ~/.config/
 ln -sf ~/.dotfiles/vim/.vim ~/ 
+# PlugInstall / PlugUpdate
+# CocSetup
+
 
 
 #Python 3.11.2
@@ -79,40 +86,32 @@ pyenv install -v 3.11.2
 pyenv global 3.11.2
 
 ## NVIM Python
+## Check Requirements File in config folder
 cd ~/.dotfiles/configs/.config/nvim
 virtualenv venv
 source venv/bin/activate
-pip install neovim
-pip install rope
-pip install black
+# pip install neovim
+# pip install rope
+# pip install black
 deactivate
 
-#Python Debugger Venv
-#https://github.com/mfussenegger/nvim-dap-python
-cd ~/.dotfiles/venvs
-python -m venv debugpy
-debugpy/bin/python -m pip install debugpy
-
-##Update Plugins
-cd ~/.dotfiles/vim/.vim/pack/plugins/start
-./update.sh
 
 ## Install NVM
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 source ~/.zshrc
 nvm install node
 
-#Lazygit
-LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
-curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
-tar xf lazygit.tar.gz lazygit
-sudo install lazygit /usr/local/bin
-rm lazygit, lazygit.tar.gz
-
-## Fonts
 # Select font in respective terminal
 wget https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DejaVuSansMono/Regular/complete/DejaVu%20Sans%20Mono%20Nerd%20Font%20Complete.ttf -P ~/.local/share/fonts/NerdFonts
+
+# Install pipx
+python3 -m pip install --user pipx
+python3 -m pipx ensurepath
+
+# Install global python packages with pipx
+# pipx install nbdime  -> For Jupyter Notebooks Diff follow https://nbdime.readthedocs.io/en/latest/
 
 #TODO:
 # - Updating pyenv / managing versions
 # - Updating fzf / managing versions
+# - Download and commit font
