@@ -163,7 +163,44 @@ source ~/.zsh/functions.zsh
 add-zsh-hook chpwd update-tmux-window-name
 
 ########################################
-# Sedimentum 
+# HELPANY
 ########################################
-alias fdns=~/.dotfiles/scripts/sedimentum_dns/fix-resolv-conf.sh
+#Fix DNS for WSL 2
+alias helpany_fix_dns=~/.dotfiles/scripts/sedimentum_dns/fix-resolv-conf.sh
+
+#Update Python Dependencies of a Service Repo for Development
+function helpany_update_dev_python_deps {
+    # Path to requirements file
+    requirements_file="requirements/dev.txt"
+
+    # Check if in virtualenv
+    if [[ -z "$VIRTUAL_ENV" ]]; then
+        echo "No virtual environment found. Please activate one before running this function."
+        return 1
+    fi
+
+    # Check if requirements file exists
+    if [[ ! -f "$requirements_file" ]]; then
+        echo "requirements/dev.txt not found."
+        return 1
+    fi
+
+    # Install dependencies from requirements file, ignoring lines starting with -e file:///
+    grep -v '^-e file:///' "$requirements_file" | pip install -r /dev/stdin
+
+    # Check if deps/ directory exists
+    if [[ -d "deps" ]]; then
+        echo "Installing dependencies from submodules in deps/"
+
+        for dir in deps/*/; do
+            if [[ -d "$dir" ]]; then
+                echo "Installing dependencies from $dir"
+                pip install "$dir"
+            fi
+        done
+    else
+        echo "No deps/ directory found."
+    fi
+}
+
 # zprof
