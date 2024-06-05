@@ -140,6 +140,7 @@ require("nvim-tree").setup({ -- BEGIN_DEFAULT_OPTS
     disable_for_dirs = {},
     timeout = 400,
     cygwin_support = false,
+    ignore = false,
   },
   diagnostics = {
     enable = false,
@@ -164,7 +165,7 @@ require("nvim-tree").setup({ -- BEGIN_DEFAULT_OPTS
   },
   filters = {
     enable = true,
-    git_ignored = true,
+    git_ignored = false,
     dotfiles = false,
     git_clean = false,
     no_buffer = false,
