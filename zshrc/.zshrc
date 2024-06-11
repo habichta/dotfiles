@@ -186,15 +186,6 @@ function helpany_update_dev_python_deps {
         return 1
     fi
 
-    # Check if requirements file exists
-    if [[ ! -f "$requirements_file" ]]; then
-        echo "requirements/dev.txt not found."
-        return 1
-    fi
-
-    # Install dependencies from requirements file, ignoring lines starting with -e file:///
-    grep -v '^-e file:///' "$requirements_file" | pip install -r /dev/stdin
-
     # Check if deps/ directory exists
     if [[ -d "deps" ]]; then
         echo "Installing dependencies from submodules in deps/"
@@ -208,6 +199,14 @@ function helpany_update_dev_python_deps {
     else
         echo "No deps/ directory found."
     fi
+    # Check if requirements file exists
+    if [[ ! -f "$requirements_file" ]]; then
+        echo "requirements/dev.txt not found."
+        return 1
+    fi
+
+    # Install dependencies from requirements file, ignoring lines starting with -e file:///
+    grep -v '^-e file:///' "$requirements_file" | pip install -r /dev/stdin
 }
 
 # zprof
