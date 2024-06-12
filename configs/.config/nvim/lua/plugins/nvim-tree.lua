@@ -170,7 +170,6 @@ require("nvim-tree").setup({ -- BEGIN_DEFAULT_OPTS
     git_clean = false,
     no_buffer = false,
     no_bookmark = false,
-    ignore = false,
     custom = {},
     exclude = {},
   },

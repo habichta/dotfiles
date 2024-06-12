@@ -14,10 +14,6 @@ nnoremap <Leader>P :Rg
 nnoremap <C-s> :w<CR>
 inoremap <C-s> <Esc>:w<CR>
 
-nnoremap <C-c> :q<CR>
-
-nnoremap <C-q> :qa<CR>
-
 " Backspace deletes buffer.
 nnoremap <silent> <BS> :call functions#DeleteBufferOrExit()<CR>
 
@@ -85,17 +81,14 @@ nmap <silent> p p`]
 vmap <silent> P P`]
 nmap <silent> P P`]
 
-" show me when I use `gu` because that's mostly by accident
-noremap gu gu:echoerr 'Did you just intend to lowercase?'<CR>
-
 "Cycle through buffers
-nnoremap <Tab> :bnext<CR>
-nnoremap <S-Tab> :bprevious<CR>
+nnoremap ]b :bnext<CR>
+nnoremap [b :bprevious<CR>
 
 "Autoclosing Parenthesis
-inoremap ( ()<Left>
-inoremap [ []<Left>
-inoremap { {}<Left>
+" inoremap ( ()<Left>
+" inoremap [ []<Left>
+" inoremap { {}<Left>
 
 "Deleting in insert mode
 inoremap <C-d> <Esc>xi
