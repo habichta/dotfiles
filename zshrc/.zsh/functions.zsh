@@ -125,3 +125,23 @@ function ghi() {
     --preview 'grep -o "[a-f0-9]\{7,\}" <<< {} | xargs git show --color=always' |
     grep -o "[a-f0-9]\{7,\}"
 }
+
+# Quickly load an env file into the current shell
+function load_env_file() {
+    if [ "$#" -ne 1 ]; then
+        echo "Usage: load_env <path_to_env_file>"
+        return 1
+    fi
+
+    local env_file=$1
+
+    if [ -f "$env_file" ]; then
+        set -a
+        source "$env_file"
+        set +a
+        echo "Environment variables from $env_file have been loaded."
+    else
+        echo "Error: File '$env_file' not found!"
+        return 1
+    fi
+}
