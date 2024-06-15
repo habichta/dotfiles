@@ -14,7 +14,6 @@ set rtp+=~/.fzf/bin/fzf
 nnoremap <C-p> :GFiles<Cr>
 nnoremap <M-]> :History<Cr>
 nnoremap <C-x> :Buffers<Cr>
-nnoremap <C-m> :Marks<Cr>
 nnoremap <M-[> :Ag<Cr>
 
 "
