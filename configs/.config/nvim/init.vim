@@ -22,7 +22,6 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'nvim-tree/nvim-tree.lua'
 Plug 'nvim-tree/nvim-web-devicons'
-Plug 'nvim-tree/nvim-web-devicons'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'psf/black'
 Plug 'ryanoasis/vim-devicons'
@@ -33,7 +32,7 @@ Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-surround'
 Plug 'gelguy/wilder.nvim'
 Plug 'lewis6991/gitsigns.nvim'
-Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive', {'on':'G'}
 call plug#end()
 
 luafile ~/.config/nvim/lua/init.lua
