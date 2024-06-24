@@ -22,6 +22,8 @@
         git rebase && \
         git submodule update --init --recursive; \
     }; f"
+    clean-all-local = !git branch -vv | grep \": gone]\" | awk \"{print \\$1}\" | xargs git branch -D
+    clean-prune-origin = !git remote prune origin
 
 [core]
 	editor = nvim
