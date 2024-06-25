@@ -11,12 +11,12 @@ let g:startify_change_to_dir=0
 
 "FZF
 set rtp+=~/.fzf/bin/fzf
-nnoremap <C-p> :GFiles<Cr>
-nnoremap <M-]> :History<Cr>
-nnoremap <C-x> :Buffers<Cr>
-nnoremap <M-[> :Ag<Cr>
-
+nnoremap <M-p> :GFiles<Cr>
+nnoremap <M-[> :History<Cr>
+nnoremap <M-b> :Buffers<Cr>
+nnoremap <M-]> :Ag<Cr>
 "
+
 let g:camelcasemotion_key = '<leader>'
 
 " wilder
