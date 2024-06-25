@@ -41,3 +41,13 @@ call wilder#set_option('renderer', wilder#popupmenu_renderer(wilder#popupmenu_bo
 
 let g:fzf_preview_window = ['right:50%', 'ctrl-_']
 command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, $AG_DEFAULT_OPTIONS . ' --ignore "*.ipynb" --ignore-dir deps', fzf#vim#with_preview(), <bang>0)
+
+
+" vim-test
+" <Plug> vim-test {{{
+" setup mappings
+nnoremap <silent> <localleader>tn :TestNearest<CR>
+nnoremap <silent> <localleader>tf :TestFile<CR>
+nnoremap <silent> <localleader>tt :TestSuite<CR>
+nnoremap <silent> <localleader>tl :TestLast<CR>
+"}}}:

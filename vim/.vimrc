@@ -15,6 +15,8 @@ set encoding=utf8
 set clipboard=unnamedplus
 " Map Leader
 let mapleader = ","
+" Local Map Leader
+let localmapleader = "\\"
 
 " number of spaces that a <Tab> counts for
 set tabstop=2
