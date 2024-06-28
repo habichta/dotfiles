@@ -151,7 +151,7 @@ function! functions#ToggleMouse()
 endfunction
 
 " " FZF DeleteBuffers
-function! s:delete_buffers(buffers)
+function! functions#DeleteBuffers(buffers)
     for buffer in a:buffers
         let bufnr = matchstr(buffer, '^\[\zs\d\+\ze\]')
         if bufnr != ''
@@ -160,7 +160,7 @@ function! s:delete_buffers(buffers)
     endfor
 endfunction
 
-function! s:list_buffers()
+function! functions#ListBuffers()
     let buffers = []
     let red_prefix = "\033[31m"
     let reset = "\033[0m"
@@ -178,35 +178,25 @@ function! s:list_buffers()
     return buffers
 endfunction
 
-command! DeleteBuffers call fzf#run(fzf#wrap({
-            \ 'source': s:list_buffers(),
-            \ 'sink*': function('s:delete_buffers'),
-            \ 'options': '--ansi --multi --prompt="Select buffers to delete> " --preview "batcat --style=numbers --color=always --line-range :500 {3}"',
-            \ 'window': {
-                \ 'width': 0.9,
-                \ 'height': 0.6,
-                \ 'border': 'sharp',
-            \ }
-            \ }))
 
 
-
+" Reload the Current Vim Confguration
 " Function to source all .vim files in a directory
-function! SourceAllVimFiles(directory)
+function! functions#SourceAllVimFiles(directory)
   for filename in split(glob(a:directory . '/*.vim'), '\n')
     execute 'source' filename
   endfor
 endfunction
 
 " Function to source all .lua files in a directory
-function! SourceAllLuaFiles(directory)
+function! functions#SourceAllLuaFiles(directory)
   for filename in split(glob(a:directory . '/*.lua'), '\n')
     execute 'luafile' filename
   endfor
 endfunction
 
 " Function to reload the configuration
-function! ReloadConfig()
+function! functions#ReloadConfig()
   " Ensure runtime paths are set correctly
   set runtimepath^=~/.vim runtimepath+=~/.vim/after
   let &packpath = &runtimepath
@@ -224,15 +214,12 @@ function! ReloadConfig()
   endif
 
   " Source all .vim files in ~/.vim and ~/.vim/ftplugin
-  call SourceAllVimFiles('~/.vim')
-  call SourceAllVimFiles('~/.vim/ftplugin')
+  call functions#SourceAllVimFiles('~/.vim')
+  call functions#SourceAllVimFiles('~/.vim/ftplugin')
 
   " Source all .lua files in ~/.config/nvim/lua/functions and ~/.config/nvim/lua/plugins
   if has('nvim')
-    call SourceAllLuaFiles(stdpath('config') . '/lua/functions')
-    call SourceAllLuaFiles(stdpath('config') . '/lua/plugins')
+    call functions#SourceAllLuaFiles(stdpath('config') . '/lua/functions')
+    call functions#SourceAllLuaFiles(stdpath('config') . '/lua/plugins')
   endif
 endfunction
-
-" Command to reload the configuration
-command! ReloadConfig call ReloadConfig()

@@ -284,6 +284,6 @@ vim.api.nvim_create_autocmd("BufEnter", {
 })
 
 
-vim.api.nvim_set_keymap('n', '<Leader>n', ':NvimTreeFindFileToggle<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>nn', ':NvimTreeFindFileToggle<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>nf', ':NvimTreeFindFile<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>nc', ':NvimTreeCollapse<CR>', { noremap = true, silent = true })

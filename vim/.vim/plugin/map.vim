@@ -104,3 +104,6 @@ inoremap <A-h> <C-Left>
 inoremap <A-l> <C-Right>
 inoremap <A-k> <C-Up>
 inoremap <A-j> <C-Down>
+
+"Close Tabs
+ nnoremap <F8> :tabclose<CR>

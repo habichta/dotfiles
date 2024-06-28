@@ -8,7 +8,6 @@ source ~/.vimrc
 call plug#begin()
 Plug 'akinsho/bufferline.nvim', { 'tag': '*' }
 Plug 'bkad/CamelCaseMotion'
-Plug 'christoomey/vim-tmux-navigator'
 Plug 'famiu/bufdelete.nvim'
 Plug 'fisadev/vim-isort'
 Plug 'github/copilot.vim'
