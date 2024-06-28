@@ -149,3 +149,43 @@ function! functions#ToggleMouse()
         set mouse=a
     endif
 endfunction
+
+" " FZF DeleteBuffers
+function! s:delete_buffers(buffers)
+    for buffer in a:buffers
+        let bufnr = matchstr(buffer, '^\[\zs\d\+\ze\]')
+        if bufnr != ''
+            execute 'bdelete' bufnr
+        endif
+    endfor
+endfunction
+
+function! s:list_buffers()
+    let buffers = []
+    let red_prefix = "\033[31m"
+    let reset = "\033[0m"
+    for bufnr in range(1, bufnr('$'))
+        if buflisted(bufnr)
+            let bufname = fnamemodify(bufname(bufnr), ':p') " Ensure full path
+            let bufmodified = getbufvar(bufnr, "&modified") ? '+' : ' '
+            let bufcurrent = (bufnr == bufnr('%')) ? '%' : ' '
+            if bufname != ''
+                let line = printf('%s[%d] %s %s   %s%s', red_prefix, bufnr, bufcurrent, bufmodified, bufname, reset)
+                call add(buffers, line)
+            endif
+        endif
+    endfor
+    return buffers
+endfunction
+
+command! DeleteBuffers call fzf#run(fzf#wrap({
+            \ 'source': s:list_buffers(),
+            \ 'sink*': function('s:delete_buffers'),
+            \ 'options': '--ansi --multi --prompt="Select buffers to delete> " --preview "batcat --style=numbers --color=always --line-range :500 {3}"',
+            \ 'window': {
+                \ 'width': 0.9,
+                \ 'height': 0.6,
+                \ 'border': 'sharp',
+            \ }
+            \ }))
+

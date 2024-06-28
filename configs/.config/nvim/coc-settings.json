@@ -2,6 +2,8 @@
   "coc.preferences.formatOnSave": true,
   "coc.preferences.hoverTarget": "float",
   "diagnostic.checkCurrentLine": true,
+  "eslint.autoFixOnSave": true,
+  "eslint.enable": true,
   "html.format.enable": true,
   "javascript.autoClosingTags": true,
   "pyright.organizeimports.provider": "isort",
@@ -14,8 +16,15 @@
   "python.sortImports.path": "/usr/bin/isort",
   "snippets.snipmate.enable": false,
   "snippets.ultisnips.enable": true,
-  "suggest.enablePreview": true,
   "typescript.autoClosingTags": true,
+  "eslint.filetypes": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "prettier.enable": true,
+  "prettier.eslintIntegration": true,
 
   "yaml.schemas": {
     "kubernetes": "/*.yaml"
