@@ -7,7 +7,7 @@ require("nvim-tree").setup({ -- BEGIN_DEFAULT_OPTS
   hijack_unnamed_buffer_when_opening = false,
   root_dirs = {},
   prefer_startup_root = false,
-  sync_root_with_cwd = false,
+  sync_root_with_cwd = true,
   reload_on_bufenter = false,
   respect_buf_cwd = false,
   select_prompts = false,
@@ -71,7 +71,7 @@ require("nvim-tree").setup({ -- BEGIN_DEFAULT_OPTS
           color = true,
         },
         folder = {
-          enable = false,
+          enable = true,
           color = true,
         },
       },
@@ -286,3 +286,4 @@ vim.api.nvim_create_autocmd("BufEnter", {
 
 vim.api.nvim_set_keymap('n', '<Leader>n', ':NvimTreeFindFileToggle<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>nf', ':NvimTreeFindFile<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>nc', ':NvimTreeCollapse<CR>', { noremap = true, silent = true })
