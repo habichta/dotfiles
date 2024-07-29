@@ -24,6 +24,7 @@
     }; f"
     clean-all-local = !git branch -vv | grep \": gone]\" | awk \"{print \\$1}\" | xargs git branch -D
     clean-prune-origin = !git remote prune origin
+	amendpush = !git commit --amend && git push --force-with-lease
 
 [core]
 	editor = nvim

@@ -33,6 +33,7 @@ Plug 'gelguy/wilder.nvim'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'tpope/vim-fugitive', {'on':'G'}
 Plug 'vim-test/vim-test'
+Plug 'christoomey/vim-tmux-navigator'
 call plug#end()
 
 luafile ~/.config/nvim/lua/init.lua
