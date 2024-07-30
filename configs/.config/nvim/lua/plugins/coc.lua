@@ -34,3 +34,19 @@ vim.api.nvim_create_user_command(
   end,
   { desc = "Format document using CoC Prettier" }
 )
+
+function CocListGlobalErrors()
+  vim.cmd('CocList diagnostics --error')
+end
+
+vim.api.nvim_set_keymap('n', '<leader>gg', ':lua CocListGlobalErrors()<CR>', { noremap = true, silent = true })
+vim.api.nvim_create_user_command('CocListGlobalErrors', CocListGlobalErrors,
+  { desc = "List global errors using CoC" })
+
+function CocListBufferErrors()
+  vim.cmd('CocDiagnostics --level error')
+end
+
+vim.api.nvim_set_keymap('n', '<leader>gb', ':lua CocListBufferErrors()<CR>', { noremap = true, silent = true })
+vim.api.nvim_create_user_command('CocListBufferErrors', CocListBufferErrors,
+  { desc = "List buffer errors using CoC" })

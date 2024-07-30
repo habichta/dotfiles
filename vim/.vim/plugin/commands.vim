@@ -1,10 +1,7 @@
-"Close Buffer but keep Split
-command Bd bp\|bd \#
-
 "VimDiff Alias
 command! -complete=file -nargs=1 Vd vert diffsplit <args>
 
-" Clos Buffers with FZF
+" Close Buffers with FZF
 command! DeleteBuffers call fzf#run(fzf#wrap({
             \ 'source': functions#ListBuffers(),
             \ 'sink*': function('functions#DeleteBuffers'),
