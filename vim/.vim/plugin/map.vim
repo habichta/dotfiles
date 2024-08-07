@@ -2,9 +2,7 @@
 " More general mappings "
 """""""""""""""""""""""""
 "Focus on Window, Keep structure
-nnoremap <C-W>O :call functions#MaximizeToggle()<CR>
 nnoremap <C-W>o :call functions#MaximizeToggle()<CR>
-nnoremap <C-W><C-O> :call functions#MaximizeToggle()<CR>
 
 " Bulk Changes over multiple files with RipGrep
 nnoremap <Leader>P :Rg
@@ -46,9 +44,6 @@ vnoremap > >gv
 " select just-pasted text
 noremap gV `[v`]
 
-" duplicate visual mode selection
-vnoremap D y'>p
-
 " Press Shift+P while in visual mode to replace the selection without
 " overwriting the default register
 " vnoremap P p:call setreg('+', getreg('0'))<CR>
@@ -84,11 +79,6 @@ nmap <silent> P P`]
 "Cycle through buffers
 nnoremap ]b :bnext<CR>
 nnoremap [b :bprevious<CR>
-
-"Autoclosing Parenthesis
-" inoremap ( ()<Left>
-" inoremap [ []<Left>
-" inoremap { {}<Left>
 
 "Deleting in insert mode
 inoremap <C-d> <Esc>xi
