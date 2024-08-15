@@ -1,7 +1,8 @@
 ########################################
 # Setup
 ########################################
-# zmodload zsh/zprof
+[ -z "$ZPROF" ] || zmodload zsh/zprof
+
 export TERM=tmux-256color
 if [ -z "$TMUX" ]
 then
@@ -27,18 +28,16 @@ export PATH="$HOME/.dotfiles/scripts:$PATH"
 ## ZSH Autoloads and Completions
 ########################################
 
-#Only compile completions if necessary
-# autoload -Uz compinit
-
-# if [[ ! -f ~/.zcompdump.zwc || ~/.zcompdump -nt ~/.zcompdump.zwc ]]; then
-#     compinit -i
-#     zcompile -U -z ~/.zcompdump
-# else
-#     compinit -C -i
-# fi
 
 autoload -Uz compinit
-compinit -C
+
+# Skip delay and check for insecure directories
+if [[ ! -f ~/.zcompdump.zwc || ~/.zcompdump -nt ~/.zcompdump.zwc ]]; then
+    compinit -i -D
+    zcompile -U -z ~/.zcompdump
+else
+    compinit -C -i -D
+fi
 
 autoload -U add-zsh-hook
 
@@ -53,21 +52,15 @@ eval "$(dircolors ~/.gruvbox.dircolors)"
 export ZSH="/home/$USER/.oh-my-zsh"
 
 ZSH_THEME="spaceship"
+SPACESHIP_PROMPT_ORDER=(user host dir git venv node exec_time line_sep jobs exit_code char)
 SPACESHIP_USER_SHOW=always
-SPACESHIP_PROMPT_DIR_TRUNC=0
 
 # Turn off power status when using spaceship prompt
 export SPACESHIP_BATTERY_SHOW=false
 
-export NVM_LAZY_LOAD=true
-export NVM_COMPLETION=true
-export NVM_LAZY_LOAD_EXTRA_COMMANDS=('nvim')
-
 plugins=(
-    zsh-nvm
-    z
-    web-search
-    dirhistory
+  z
+  zsh-syntax-highlighting
     )
 
 source $ZSH/oh-my-zsh.sh
@@ -214,4 +207,12 @@ function helpany_update_dev_python_deps {
     grep -v '^-e file:///' "$requirements_file" | pip install -r /dev/stdin
 }
 
-# zprof
+
+# fnm
+FNM_PATH="/home/habichta/.local/share/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="/home/habichta/.local/share/fnm:$PATH"
+  eval "`fnm env`"
+fi
+
+[ -z "$ZPROF" ] || zprof
