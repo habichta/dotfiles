@@ -115,6 +115,8 @@ function gb() {
     --bind "enter:execute:$_viewGitLogLine | less -R" \
     --bind "alt-c:execute:$_gitLogLineToHash | xclip -i -sel c"
 }
+zle -N gb
+bindkey '^g' gb
 
 #Git history v2
 function ghi() {

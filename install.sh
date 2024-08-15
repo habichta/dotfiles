@@ -110,6 +110,12 @@ python3 -m pipx ensurepath
 
 # Install global python packages with pipx
 # pipx install nbdime  -> For Jupyter Notebooks Diff follow https://nbdime.readthedocs.io/en/latest/
+#
+# Install zeal for docs, install docset:
+sudo apt install zeal
+
+# C++
+sudo apt install clang-format
 
 #TODO:
 # - Updating pyenv / managing versions

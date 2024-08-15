@@ -3,7 +3,7 @@
 "autocmd BufWritePre *.py execute ':Black'
 autocmd BufWritePre *.py execute ':Isort'
 
-" configure the test runner (assuming I'm using nose2 for all python projects...)
+" configure the test runner 
 let test#python#runner = 'pytest'
 let test#python#pytest#options = '--ignore=deps --exitfirst --failed-first --new-first --capture=no -v'
 let test#python#pytest#file_pattern = '\v(test_[^/]+|[^/]+_tests)\.py$'
