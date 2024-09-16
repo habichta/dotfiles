@@ -35,6 +35,9 @@ set shiftround
 set copyindent
 set autoindent
 
+" Allow per project .vimrc/.nvimrc files
+set exrc
+
 
 " SEARCH
 "

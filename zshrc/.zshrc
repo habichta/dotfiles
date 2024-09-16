@@ -25,23 +25,6 @@ gsettings set org.freedesktop.ibus.panel.emoji hotkey "[]"
 export PATH="$HOME/.dotfiles/scripts:$PATH"
 
 ########################################
-## ZSH Autoloads and Completions
-########################################
-
-
-autoload -Uz compinit
-
-# Skip delay and check for insecure directories
-if [[ ! -f ~/.zcompdump.zwc || ~/.zcompdump -nt ~/.zcompdump.zwc ]]; then
-    compinit -i -D
-    zcompile -U -z ~/.zcompdump
-else
-    compinit -C -i -D
-fi
-
-autoload -U add-zsh-hook
-
-########################################
 # Theme / Oh my ZSH
 ########################################
 #
@@ -58,9 +41,13 @@ SPACESHIP_USER_SHOW=always
 # Turn off power status when using spaceship prompt
 export SPACESHIP_BATTERY_SHOW=false
 
+# Optimizations
+NVM_LAZY_LOAD=true
+DISABLE_UPDATE_PROMPT=true # automatically update oh-my-zsh
+
 plugins=(
+  zsh-nvm
   z
-  zsh-syntax-highlighting
     )
 
 source $ZSH/oh-my-zsh.sh
@@ -72,8 +59,11 @@ export PATH="$PATH:/home/habichta/.local/bin"
 
 
 ########################################
-# YARN Binaries
+# NVM/YARN Binaries
 ########################################
+#export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 export PATH="$PATH:$(yarn global bin)"
 

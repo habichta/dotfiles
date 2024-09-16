@@ -28,3 +28,6 @@ nnoremap <Leader>cw :close<CR>
 "Close Buffer, keeping split
 nnoremap <Leader>cb :Bdelete<CR>
 
+"Undo to last saved state
+nnoremap <Leader>u :e!<CR>
+
