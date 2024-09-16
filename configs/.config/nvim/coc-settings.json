@@ -24,6 +24,7 @@
   "typescript.updateImportsOnFileMove.enabled": "always",
   "typescript.inlayHints.variableTypes.enabled": true,
   "typescript.inlayHints.parameterNames.enabled": "all",
+  "tsserver.experimental.enableProjectDiagnostics": true,
   "eslint.filetypes": [
     "javascript",
     "javascriptreact",
