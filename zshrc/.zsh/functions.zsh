@@ -108,12 +108,13 @@ function _is_in_git_repo() {
 function gb() {
   _gitLogLineToHash="echo {} | grep -o '[a-f0-9]\{7\}' | head -1 | tr -d '\n'"
   _viewGitLogLine="$_gitLogLineToHash | xargs -I % sh -c 'git show --color=always % | diff-so-fancy'"
-  git log --graph --abbrev-commit --decorate --date=short --color=always --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all |
+  git log --graph --abbrev-commit --decorate --date=short --color=always --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%ad%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all |
     fzf --no-sort --reverse --tiebreak=index --no-multi \
     --ansi --preview="$_viewGitLogLine" \
     --header "enter to view, alt-c to copy hash to clipboard" \
     --bind "enter:execute:$_viewGitLogLine | less -R" \
-    --bind "alt-c:execute:$_gitLogLineToHash | xclip -i -sel c"
+    --bind "alt-c:execute:$_gitLogLineToHash | xclip -i -sel c" \
+    --preview-window=right:40%
 }
 zle -N gb
 bindkey '^g' gb
