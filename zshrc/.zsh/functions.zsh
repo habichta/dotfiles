@@ -71,6 +71,18 @@ function ssh_with_fzf() {
 zle -N ssh_with_fzf
 bindkey '^f' ssh_with_fzf
 
+fzf_z_widget() {
+  local selected_dir
+  selected_dir=$(z -l 2>&1 | sed '1d' | fzf --no-preview | awk '{print $2}')
+  if [[ -n "$selected_dir" ]]; then
+    BUFFER="cd $selected_dir"
+    zle accept-line
+  fi
+}
+
+zle -N fzf_z_widget
+bindkey '^z' fzf_z_widget
+
 # Modified version where you can press
 #   - CTRL-O to open with `open` command,
 #   - CTRL-E or Enter key to open with the $EDITOR
@@ -148,3 +160,4 @@ function load_env_file() {
         return 1
     fi
 }
+

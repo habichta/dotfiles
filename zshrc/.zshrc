@@ -6,7 +6,7 @@
 export TERM=tmux-256color
 if [ -z "$TMUX" ]
 then
-    tmux attach -t TMUX || tmux new -s TMUX
+    tmux attach -t Shell || tmux new -s Shell
 fi
 
 eval `ssh-agent` > /dev/null

@@ -22,9 +22,16 @@
         git rebase && \
         git submodule update --init --recursive; \
     }; f"
-    clean-all-local = !git branch -vv | grep \": gone]\" | awk \"{print \\$1}\" | xargs git branch -D
-    clean-prune-origin = !git remote prune origin
-	amendpush = !git commit --amend && git push --force-with-lease
+    branch-clean-all-local = !git branch -vv | grep \": gone]\" | awk \"{print \\$1}\" | xargs git branch -D
+    branch-clean-prune-origin = !git remote prune origin
+    amendpush = !git commit --amend && git push --force-with-lease
+    clean-state = "!f() { \
+        git update-all; \
+        if [ \"$1\" = '--hard' ]; then \
+          git reset --hard && git stash clear; \
+        fi; \
+      }; f"
+
 
 [core]
 	editor = nvim
