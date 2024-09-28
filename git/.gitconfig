@@ -31,6 +31,13 @@
           git reset --hard && git stash clear; \
         fi; \
       }; f"
+    af = "!f() { \
+            git status --porcelain | awk '{print $2}' | fzf --multi --bind 'tab:toggle+down' | xargs git add; \
+            }; f"
+        
+    rf = "!f() { \
+        git diff --cached --name-only | fzf --multi --bind 'tab:toggle+down' | xargs git reset; \
+        }; f"
 
 
 [core]
