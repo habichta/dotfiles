@@ -37,6 +37,7 @@ export ZSH="/home/$USER/.oh-my-zsh"
 ZSH_THEME="spaceship"
 SPACESHIP_PROMPT_ORDER=(user host dir git venv node exec_time line_sep jobs exit_code char)
 SPACESHIP_USER_SHOW=always
+ZSH_DISABLE_COMPFIX="true" # Disable compfix for faster startup
 
 # Turn off power status when using spaceship prompt
 export SPACESHIP_BATTERY_SHOW=false

@@ -11,10 +11,10 @@
     lg = !"git lg1"
     c = commit
     ch = checkout
-    s = status
+    s = "!git status --untracked-files=all"
     sw = switch
     d = diff
-    a = add
+    a = "!git add $@ && git s"
     p = push
     ctags = "!bash -c '[ -f .git/hooks/ctags ] || git init; .git/hooks/ctags' git-ctags"
     update-all = "!f() { \
@@ -32,7 +32,8 @@
         fi; \
       }; f"
     af = "!f() { \
-            git status --porcelain | awk '{print $2}' | fzf --multi --bind 'tab:toggle+down' | xargs git add; \
+            files=$(git status --porcelain | awk '{print $2}' | fzf --multi --bind 'tab:toggle+down'); \
+            [ -n \"$files\" ] && echo \"$files\" | xargs git add; \
             }; f"
         
     rf = "!f() { \

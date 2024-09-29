@@ -166,9 +166,9 @@ Ag() {
 
     if [[ -n "$query" ]]; then
         # Perform the search and format the output for fzf
-        local item=$(git ls-files | xargs ag --hidden --ignore "*.ipynb" --ignore-dir deps --ignore-dir node_modules  "$query" |
-        awk -F':' -v query="$query" '{printf "%s:\n", $0}' | 
-        fzf --preview 'batcat --style=numbers --color=always --line-range :300 $(echo {} | cut -d ":" -f 1)' --preview-window=right:50%:wrap --height 40% --header="Files containing: $query")
+        local item=$(git ls-files | xargs ag --hidden --ignore "*.ipynb" --ignore-dir deps --ignore-dir node_modules "$query" |
+        awk -F':' -v query="$query" '{printf "%s:%d\n", $1, $2}' | 
+        fzf --preview 'batcat --style=numbers --color=always $(echo {} | cut -d ":" -f 1) | grep  -C 10 "$(echo {} | cut -d ":" -f 2)"' --preview-window=right:70%:wrap --height 40% --header="Files containing: $query")
 
         if [[ -n "$item" ]]; then
             # Extract the filename and line number from the selected item
