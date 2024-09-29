@@ -116,6 +116,21 @@ eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 
+#Unset pyenv virtualenv hook for performance reasons
+unset -f _pyenv_virtualenv_hook
+# Conditionally re-enable pyenv virtualenv hook if necessary
+_pyenv_virtualenv_hook_conditional() {
+  if [ -f ".python-version" ]; then
+    # Re-enable the hook if .python-version exists
+    if ! type _pyenv_virtualenv_hook > /dev/null 2>&1; then
+      eval "$(pyenv virtualenv-init -)"
+    fi
+  fi
+}
+
+# Add the conditional hook to precmd functions
+precmd_functions=(_pyenv_virtualenv_hook_conditional "${precmd_functions[@]}")
+
 alias python=python3
 alias vact="source venv/bin/activate"
 
