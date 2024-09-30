@@ -132,14 +132,14 @@ zle -N gb
 bindkey '^g' gb
 
 #Git history v2
-function ghi() {
-  _is_in_git_repo || return
-  git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --graph --color=always |
-    fzf --ansi --no-sort --reverse --multi --bind 'ctrl-s:toggle-sort' \
-    --header 'Press CTRL-S to toggle sort' \
-    --preview 'grep -o "[a-f0-9]\{7,\}" <<< {} | xargs git show --color=always' |
-    grep -o "[a-f0-9]\{7,\}"
-}
+# function ghi() {
+#   _is_in_git_repo || return
+#   git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --graph --color=always |
+#     fzf --ansi --no-sort --reverse --multi --bind 'ctrl-s:toggle-sort' \
+#     --header 'Press CTRL-S to toggle sort' \
+#     --preview 'grep -o "[a-f0-9]\{7,\}" <<< {} | xargs git show --color=always' |
+#     grep -o "[a-f0-9]\{7,\}"
+# }
 
 # Quickly load an env file into the current shell
 function load_env_file() {

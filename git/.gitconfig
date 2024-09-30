@@ -31,14 +31,16 @@
           git reset --hard && git stash clear; \
         fi; \
       }; f"
+
     af = "!f() { \
-            files=$(git status --porcelain | awk '{print $2}' | fzf --multi --bind 'tab:toggle+down'); \
-            [ -n \"$files\" ] && echo \"$files\" | xargs git add; \
-            }; f"
-        
+      files=$(git status --porcelain | awk '{print $2}' | fzf --multi --preview 'if git ls-files --error-unmatch -- {} >/dev/null 2>&1; then git diff --color=always -- {}; else batcat --style=plain --color=always {}; fi' --preview-window=right:70%:wrap --bind 'tab:toggle+down'); \
+      [ -n \"$files\" ] && echo \"$files\" | xargs git add; \
+    }; f"
+
     rf = "!f() { \
-        git diff --cached --name-only | fzf --multi --bind 'tab:toggle+down' | xargs git reset; \
-        }; f"
+        files=$(git diff --cached --name-only | fzf --multi --preview 'if git ls-files --error-unmatch -- {} >/dev/null 2>&1; then git diff --staged --color=always -- {}; else batcat --style=plain --color=always {}; fi' --preview-window=right:70%:wrap --bind 'tab:toggle+down'); \
+        [ -n \"$files\" ] && echo \"$files\" | xargs git reset; \
+    }; f"
 
 
 [core]

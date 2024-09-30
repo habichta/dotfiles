@@ -1,5 +1,5 @@
 ########################################
-# Setup
+# Basic Setup
 ########################################
 [ -z "$ZPROF" ] || zmodload zsh/zprof
 
@@ -27,15 +27,16 @@ export PATH="$HOME/.dotfiles/scripts:$PATH"
 ########################################
 # Theme / Oh my ZSH
 ########################################
-#
+export ZSH="/home/$USER/.oh-my-zsh"
+
 #Colorscheme for Dirs
 eval "$(dircolors ~/.gruvbox.dircolors)"
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/$USER/.oh-my-zsh"
+# export ZSH="/home/$USER/.oh-my-zsh"
 
 ZSH_THEME="spaceship"
-SPACESHIP_PROMPT_ORDER=(user host dir git venv node exec_time line_sep jobs exit_code char)
+SPACESHIP_PROMPT_ORDER=(user host dir git venv line_sep char)
 SPACESHIP_USER_SHOW=always
 ZSH_DISABLE_COMPFIX="true" # Disable compfix for faster startup
 
@@ -44,6 +45,7 @@ export SPACESHIP_BATTERY_SHOW=false
 
 # Optimizations
 NVM_LAZY_LOAD=true
+export NVM_LAZY_LOAD_EXTRA_COMMANDS=('nvim')
 DISABLE_UPDATE_PROMPT=true # automatically update oh-my-zsh
 
 plugins=(
@@ -56,7 +58,7 @@ source $ZSH/oh-my-zsh.sh
 ########################################
 # PIPX
 ########################################
-export PATH="$PATH:/home/habichta/.local/bin"
+export PATH="$PATH:~/.local/bin"
 
 
 ########################################
@@ -114,7 +116,6 @@ export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
-export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 
 #Unset pyenv virtualenv hook for performance reasons
 unset -f _pyenv_virtualenv_hook
@@ -151,11 +152,10 @@ export FZF_DEFAULT_COMMAND="fd --type f --type l $FD_OPTIONS"
 export FZF_DEFAULT_OPTS='--height 80% --layout=reverse --border --info=inline
 --bind "?:toggle-preview,ctrl-f:half-page-down,ctrl-b:half-page-up,ctrl-a:select-all+accept"'
 
-export FZF_CTRL_T_COMMAND="fd $FD_OPTIONS"
-export FZF_CTRL_T_OPTS="--preview '(batcat -n --color=always {} || tree -C {}) 2> /dev/null | head -200' --select-1 --exit-0"
 
-export FZF_ALT_C_COMMAND="fd --type d $FD_OPTIONS"
-export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
+# export FZF_CTRL_T_OPTS="--preview '(batcat -n --color=always {} || tree -C {}) 2> /dev/null | head -200' --select-1 --exit-0"
+# export FZF_ALT_C_COMMAND="fd --type d $FD_OPTIONS"
+# export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 
 
 ########################################
@@ -207,11 +207,5 @@ function helpany_update_dev_python_deps {
 }
 
 
-# fnm
-FNM_PATH="/home/habichta/.local/share/fnm"
-if [ -d "$FNM_PATH" ]; then
-  export PATH="/home/habichta/.local/share/fnm:$PATH"
-  eval "`fnm env`"
-fi
 
 [ -z "$ZPROF" ] || zprof
