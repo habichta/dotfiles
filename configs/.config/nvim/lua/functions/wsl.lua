@@ -7,8 +7,9 @@ if vim.fn.has("wsl") == 1 then
       ["*"] = 'clip.exe', -- For the selection clipboard
     },
     paste = {
-      ["+"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r",""))', -- For the system clipboard
-      ["*"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r",""))', -- For the selection clipboard
+      -- Note: `win32yank.exe` is required for clipboard support and must be out in Windows PATH, e.g. Windows/System32
+      ["+"] = 'win32yank.exe -o | sed "s/\r//g"', -- Remove carriage returns (^M) when pasting
+      ["*"] = 'win32yank.exe -o | sed "s/\r//g"',
     },
     cache_enabled = true,
   }

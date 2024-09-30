@@ -38,10 +38,27 @@
     }; f"
 
     rf = "!f() { \
-        files=$(git diff --cached --name-only | fzf --multi --preview 'if git ls-files --error-unmatch -- {} >/dev/null 2>&1; then git diff --staged --color=always -- {}; else batcat --style=plain --color=always {}; fi' --preview-window=right:70%:wrap --bind 'tab:toggle+down'); \
-        [ -n \"$files\" ] && echo \"$files\" | xargs git reset; \
+        files=$( \
+            (echo '--- STAGED FILES ---'; git diff --cached --name-only; \
+            echo ''; \
+            echo '--- UNSTAGED FILES ---'; git diff --name-only) | \
+            fzf --multi \
+            --preview 'if git ls-files --error-unmatch -- {} >/dev/null 2>&1; then \
+                          git diff --staged --color=always -- {} || git diff --color=always -- {}; \
+                      else \
+                          batcat --style=plain --color=always {} >/dev/null 2>&1; \
+                      fi' \
+            --preview-window=right:70%:wrap --bind 'tab:toggle+down'); \
+        if [ -n \"$files\" ]; then \
+            echo \"$files\" | while read file; do \
+                if git diff --cached --name-only | grep -q \"$file\"; then \
+                    git reset \"$file\"; \
+                else \
+                    git restore \"$file\"; \
+                fi; \
+            done; \
+        fi; \
     }; f"
-
 
 [core]
 	editor = nvim
