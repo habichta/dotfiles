@@ -24,7 +24,8 @@
     }; f"
     branch-clean-all-local = !git branch -vv | grep \": gone]\" | awk \"{print \\$1}\" | xargs git branch -D
     branch-clean-prune-origin = !git remote prune origin
-
+    
+    # Make amend pushing faster
     amendpush = "!f() { \
       if [ \"$1\" = \"-f\" ]; then \
         git commit --amend --no-edit && git push --force-with-lease; \
@@ -33,18 +34,21 @@
       fi; \
     }; f"
 
+    # Recent branches and stash for clean state
     clean-state = "!f() { \
         git update-all; \
         if [ \"$1\" = '--hard' ]; then \
           git reset --hard && git stash clear; \
         fi; \
       }; f"
-
+    
+    #Show what can be added to the index or stage changes
     af = "!f() { \
       files=$(git status --porcelain -u | awk '{print $2}' | fzf --multi --preview 'if git ls-files --error-unmatch -- {} >/dev/null 2>&1; then git diff --color=always -- {}; else batcat --style=plain --color=always {} ; fi' --preview-window=right:70%:wrap --bind 'tab:toggle+down'); \
       [ -n \"$files\" ] && echo \"$files\" | xargs git add; \
     }; f"
-
+    
+    #Show changes and make them revertible
     rf = "!f() { \
         files=$( \
             (echo '--- STAGED FILES ---'; git diff --cached --name-only; \
@@ -67,6 +71,9 @@
             done; \
         fi; \
     }; f"
+    
+    # Show recently used branches
+    b = "!git reflog -n 500 --pretty='%gs' | grep 'checkout' | awk '{print $NF}' | grep -v 'refs/remotes' | grep -v 'origin' | awk '!seen[$0]++' | fzf --height 10 --reverse | xargs git checkout"
 
 [core]
 	editor = nvim
