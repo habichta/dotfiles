@@ -24,7 +24,15 @@
     }; f"
     branch-clean-all-local = !git branch -vv | grep \": gone]\" | awk \"{print \\$1}\" | xargs git branch -D
     branch-clean-prune-origin = !git remote prune origin
-    amendpush = !git commit --amend && git push --force-with-lease
+
+    amendpush = "!f() { \
+      if [ \"$1\" = \"-f\" ]; then \
+        git commit --amend --no-edit && git push --force-with-lease; \
+      else \
+        git commit --amend && git push --force-with-lease; \
+      fi; \
+    }; f"
+
     clean-state = "!f() { \
         git update-all; \
         if [ \"$1\" = '--hard' ]; then \
@@ -33,7 +41,7 @@
       }; f"
 
     af = "!f() { \
-      files=$(git status --porcelain | awk '{print $2}' | fzf --multi --preview 'if git ls-files --error-unmatch -- {} >/dev/null 2>&1; then git diff --color=always -- {}; else batcat --style=plain --color=always {}; fi' --preview-window=right:70%:wrap --bind 'tab:toggle+down'); \
+      files=$(git status --porcelain -u | awk '{print $2}' | fzf --multi --preview 'if git ls-files --error-unmatch -- {} >/dev/null 2>&1; then git diff --color=always -- {}; else batcat --style=plain --color=always {} ; fi' --preview-window=right:70%:wrap --bind 'tab:toggle+down'); \
       [ -n \"$files\" ] && echo \"$files\" | xargs git add; \
     }; f"
 
