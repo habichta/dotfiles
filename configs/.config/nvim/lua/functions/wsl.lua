@@ -1,16 +1,15 @@
--- Set Clipboard to use WSL clipboard for performance. Important, may not work for non wsl users
+-- -- Set Clipboard to use WSL clipboard for performance. Important, may not work for non wsl users
 if vim.fn.has("wsl") == 1 then
   vim.g.clipboard = {
-    name = 'wsl_clipboard',
+    name = 'win32yank-wsl',
     copy = {
-      ["+"] = 'clip.exe', -- For the system clipboard
-      ["*"] = 'clip.exe', -- For the selection clipboard
+      ['+'] = 'win32yank.exe -i --crlf',
+      ['*'] = 'win32yank.exe -i --crlf',
     },
     paste = {
-      -- Note: `win32yank.exe` is required for clipboard support and must be out in Windows PATH, e.g. Windows/System32
-      ["+"] = 'win32yank.exe -o | sed "s/\r//g"', -- Remove carriage returns (^M) when pasting
-      ["*"] = 'win32yank.exe -o | sed "s/\r//g"',
+      ['+'] = 'win32yank.exe -o --lf',
+      ['*'] = 'win32yank.exe -o --lf',
     },
-    cache_enabled = true,
+    cache_enabled = 0,
   }
 end
