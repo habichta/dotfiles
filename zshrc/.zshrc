@@ -100,6 +100,9 @@ alias cat="batcat"
 #Alias cat to batcat
 alias cc="clear"
 
+#Alias cat to batcat
+alias g="git"
+
 ########################################
 # Programming Languages 
 ########################################
