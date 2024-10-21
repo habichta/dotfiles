@@ -12,7 +12,7 @@ syntax on
 " use default linux encoding in vim
 set encoding=utf8
 " share the plus register with the system clipboard
-set clipboard+=unnamedplus
+set clipboard=unnamedplus
 " Map Leader
 let mapleader = ","
 " Local Map Leader

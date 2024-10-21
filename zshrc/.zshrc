@@ -47,9 +47,11 @@ export SPACESHIP_BATTERY_SHOW=false
 NVM_LAZY_LOAD=true
 export NVM_LAZY_LOAD_EXTRA_COMMANDS=('nvim')
 DISABLE_UPDATE_PROMPT=true # automatically update oh-my-zsh
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=240'
 
 plugins=(
   zsh-nvm
+  zsh-autosuggestions
   z
     )
 
