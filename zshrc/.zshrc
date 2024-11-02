@@ -24,16 +24,20 @@ gsettings set org.freedesktop.ibus.panel.emoji hotkey "[]"
 #Add custom scripts to PATH
 export PATH="$HOME/.dotfiles/scripts:$PATH"
 
+# History
+HISTSIZE=10000
+SAVEHIST=10000
+setopt share_history
+
+
 ########################################
 # Theme / Oh my ZSH
 ########################################
+
 export ZSH="/home/$USER/.oh-my-zsh"
 
 #Colorscheme for Dirs
 eval "$(dircolors ~/.gruvbox.dircolors)"
-
-# Path to your oh-my-zsh installation.
-# export ZSH="/home/$USER/.oh-my-zsh"
 
 ZSH_THEME="spaceship"
 SPACESHIP_PROMPT_ORDER=(user host dir git venv line_sep char)
@@ -49,6 +53,10 @@ export NVM_LAZY_LOAD_EXTRA_COMMANDS=('nvim')
 DISABLE_UPDATE_PROMPT=true # automatically update oh-my-zsh
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=240'
 
+ZSH_COMPDUMP="$ZSH/completions/.zcompdump"
+
+fpath=($ZSH/completions $fpath)
+
 plugins=(
   zsh-nvm
   zsh-autosuggestions
@@ -56,7 +64,6 @@ plugins=(
     )
 
 source $ZSH/oh-my-zsh.sh
-
 ########################################
 # PIPX
 ########################################
@@ -64,13 +71,10 @@ export PATH="$PATH:~/.local/bin"
 
 
 ########################################
-# NVM/YARN Binaries
+# YARN Binaries
 ########################################
-#export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-export PATH="$PATH:$(yarn global bin)"
+
 
 ########################################
 # Alias
@@ -112,6 +116,7 @@ export PATH="$PATH:/snap/bin"
 
 # Rust 
 export PATH="$PATH:~/.cargo/bin"
+. "$HOME/.cargo/env"
 
 # Go
 export PATH="$PATH:/usr/local/go/bin"
@@ -119,31 +124,10 @@ export PATH="$PATH:/usr/local/go/bin"
 #Python + PyEnv
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
 
-#Unset pyenv virtualenv hook for performance reasons
-unset -f _pyenv_virtualenv_hook
-# Conditionally re-enable pyenv virtualenv hook if necessary
-_pyenv_virtualenv_hook_conditional() {
-  if [ -f ".python-version" ]; then
-    # Re-enable the hook if .python-version exists
-    if ! type _pyenv_virtualenv_hook > /dev/null 2>&1; then
-      eval "$(pyenv virtualenv-init -)"
-    fi
-  fi
-}
-
-# Add the conditional hook to precmd functions
-precmd_functions=(_pyenv_virtualenv_hook_conditional "${precmd_functions[@]}")
-
+alias pyenv_activate="eval \"\$(pyenv init - zsh)\" && eval \"\$(pyenv virtualenv-init - zsh)\""
 alias python=python3
 alias vact="source venv/bin/activate"
-
-#Mojo
-export MODULAR_HOME="$HOME/.modular"
-export PATH="$MODULAR_HOME/pkg/packages.modular.com_mojo/bin:$PATH"
-
 
 ########################################
 # FZF 
@@ -158,16 +142,10 @@ export FZF_DEFAULT_OPTS='--height 80% --layout=reverse --border --info=inline
 --bind "?:toggle-preview,ctrl-f:half-page-down,ctrl-b:half-page-up,ctrl-a:select-all+accept"'
 
 
-# export FZF_CTRL_T_OPTS="--preview '(batcat -n --color=always {} || tree -C {}) 2> /dev/null | head -200' --select-1 --exit-0"
-# export FZF_ALT_C_COMMAND="fd --type d $FD_OPTIONS"
-# export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
-
-
 ########################################
 # ZSH Hooks and Functions
 ########################################
-source ~/.zsh/functions.zsh
-
+# source ~/.zsh/functions.zsh
 #ZSH hooks
 add-zsh-hook chpwd update-tmux-window-name
 

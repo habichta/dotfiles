@@ -53,3 +53,26 @@ nnoremap <silent> <localleader>tl :TestLast<CR>
 "}}}:
 "
 "
+" VISTA
+"
+"" How each level is indented and what to prepend.
+" This could make the display more compact or more spacious.
+" e.g., more compact: ["▸ ", ""]
+" Note: this option only works for the kind renderer, not the tree renderer.
+let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
+
+" Executive used when opening vista sidebar without specifying it.
+" See all the avaliable executives via `:echo g:vista#executives`.
+let g:vista_default_executive = 'coc'
+
+" To enable fzf's preview window set g:vista_fzf_preview.
+" The elements of g:vista_fzf_preview will be passed as arguments to fzf#vim#with_preview()
+" For example:
+let g:vista_fzf_preview = ['down:30%']
+
+" Open Vista finder with ,mf
+nnoremap <leader>mf :Vista finder<CR>
+
+" Toggle Vista with ,mm
+nnoremap <leader>mm :Vista!!<CR>
+

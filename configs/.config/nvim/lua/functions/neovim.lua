@@ -59,5 +59,12 @@ function MoveLineUp()
   vim.api.nvim_win_set_cursor(0, { current_pos[1] - 1, 0 })
 end
 
--- Create the mapping
 vim.api.nvim_set_keymap('n', '<leader>J', ':lua MoveLineUp()<CR>', { noremap = true, silent = true })
+
+-- Function to print the full file path
+function ShowCurrentFilePath()
+  print(vim.fn.expand("%:p"))
+end
+
+vim.api.nvim_create_user_command("ShowFilePath", ShowCurrentFilePath, {})
+vim.keymap.set("n", "<leader>p", ShowCurrentFilePath, { noremap = true, silent = true })

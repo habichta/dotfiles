@@ -25,7 +25,6 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'psf/black'
 Plug 'ryanoasis/vim-devicons'
 Plug 'sainnhe/gruvbox-material'
-Plug 'stevearc/aerial.nvim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-surround'
@@ -36,6 +35,7 @@ Plug 'vim-test/vim-test'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'KabbAmine/zeavim.vim'
 Plug 'rhysd/vim-clang-format'
+Plug 'liuchengxu/vista.vim'
 call plug#end()
 
 luafile ~/.config/nvim/lua/init.lua
