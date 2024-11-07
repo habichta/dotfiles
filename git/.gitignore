@@ -2,3 +2,4 @@ venv
 pyrightconfig.json
 .python-version
 Session.vim
+.worktrees

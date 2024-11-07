@@ -4,9 +4,6 @@
 "Focus on Window, Keep structure
 nnoremap <C-W>o :call functions#MaximizeToggle()<CR>
 
-" Bulk Changes over multiple files with RipGrep
-nnoremap <Leader>P :Rg
-
 " Saving, closing, ... "{{{
 " use common Ctrl-shortcuts
 nnoremap <C-s> :w<CR>

@@ -2,7 +2,7 @@
 "
 "
 "" save (and/or) close
-nnoremap <Leader>qq :qa<CR>
+nnoremap <Leader>Q :qa<CR>
 nnoremap <Leader>x :x<CR>
 
 " edit another file in the same directory as the current file

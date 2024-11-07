@@ -45,8 +45,8 @@ function VisualAg()
 end
 
 -- Map the key combination for normal and visual mode
-vim.api.nvim_set_keymap('n', '<leader>pp', ':lua VisualAg()<CR>', { noremap = true, silent = true }) --
-vim.api.nvim_set_keymap('v', '<leader>pp', ':lua VisualAg()<CR>', { noremap = true, silent = true }) --
+vim.api.nvim_set_keymap('n', '<leader>P', ':lua VisualAg()<CR>', { noremap = true, silent = true }) --
+vim.api.nvim_set_keymap('v', '<leader>P', ':lua VisualAg()<CR>', { noremap = true, silent = true }) --
 
 
 -- Function to move the rest of the line up
