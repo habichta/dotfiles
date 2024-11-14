@@ -21,6 +21,9 @@ setopt IGNORE_EOF
 # Ignore Gnome Emoji Picker
 gsettings set org.freedesktop.ibus.panel.emoji hotkey "[]"
 
+# Remapping Capslock to ESC
+setxkbmap -option caps:escape
+
 #Add custom scripts to PATH
 export PATH="$HOME/.dotfiles/scripts:$PATH"
 

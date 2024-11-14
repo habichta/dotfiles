@@ -75,6 +75,9 @@
     # Show recently used branches
     b = "!git reflog -n 500 --pretty='%gs' | grep 'checkout' | awk '{print $NF}' | grep -v 'refs/remotes' | grep -v 'origin' | awk '!seen[$0]++' | fzf --height 10 --reverse | xargs git checkout"
 
+    # Switch to main or master branch
+    cm = "!git checkout $(git branch --list main master | sed 's/^* //')"
+
 [core]
 	editor = nvim
   pager = "type diff-so-fancy > /dev/null 2>&1 && diff-so-fancy | less -RFX '+r/^(Author|added|deleted|modified|renamed): ' || less -RFX"

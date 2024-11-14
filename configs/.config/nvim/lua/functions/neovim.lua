@@ -67,4 +67,4 @@ function ShowCurrentFilePath()
 end
 
 vim.api.nvim_create_user_command("ShowFilePath", ShowCurrentFilePath, {})
-vim.keymap.set("n", "<leader>p", ShowCurrentFilePath, { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>F", ShowCurrentFilePath, { noremap = true, silent = true })

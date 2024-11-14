@@ -17,19 +17,22 @@ vim.opt.directory = '/tmp/nvim/swap//'
 vim.opt.fileformats = { "unix" }
 
 --Required
-require("bufferline").setup {}
 require('functions.carriage-return')
 require('functions.global-replace')
 require('functions.python')
 require('functions.swap-files')
 require('functions.neovim')
 require('functions.wsl')
-require('functions.wsl')
-require('plugins.coc')
-require('plugins.copilot')
 require('plugins.ident-blankline')
-require('plugins.lualine')
 require('plugins.gruvbox-material')
-require('plugins.nvim-tree')
-require('plugins.treesitter')
-require('plugins.gitsigns')
+
+-- Lazy load
+vim.defer_fn(function()
+  require('plugins.coc')
+  require("bufferline").setup {}
+  require('plugins.nvim-tree')
+  require('plugins.lualine')
+  require('plugins.treesitter')
+  require('plugins.gitsigns')
+  require('plugins.copilot')
+end, 0)
