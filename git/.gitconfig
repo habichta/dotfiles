@@ -22,6 +22,7 @@
         git rebase && \
         git submodule update --init --recursive; \
     }; f"
+    ua = "!git update-all"
     branch-clean-all-local = !git branch -vv | grep \": gone]\" | awk \"{print \\$1}\" | xargs git branch -D
     branch-clean-prune-origin = !git remote prune origin
     
