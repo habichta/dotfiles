@@ -142,7 +142,7 @@ export PATH="$HOME/.fzf/bin:$PATH"
 FD_OPTIONS="--follow -E .git -E node_modules"
 export FZF_DEFAULT_COMMAND="fd --type f --type l $FD_OPTIONS"
 export FZF_DEFAULT_OPTS='--height 80% --layout=reverse --border --info=inline
---bind "?:toggle-preview,ctrl-f:half-page-down,ctrl-b:half-page-up,ctrl-a:select-all+accept"'
+--bind "?:toggle-preview,ctrl-f:half-page-down,ctrl-b:half-page-up,ctrl-a:select-all+accept,ctrl-y:preview-up,ctrl-e:preview-down"'
 
 
 ########################################

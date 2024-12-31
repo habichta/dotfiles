@@ -25,14 +25,13 @@ require('functions.neovim')
 require('functions.wsl')
 require('plugins.ident-blankline')
 require('plugins.gruvbox-material')
+require('plugins.copilot')
 
 -- Lazy load
 vim.defer_fn(function()
   require('plugins.coc')
-  require("bufferline").setup {}
   require('plugins.nvim-tree')
   require('plugins.lualine')
   require('plugins.treesitter')
   require('plugins.gitsigns')
-  require('plugins.copilot')
 end, 0)

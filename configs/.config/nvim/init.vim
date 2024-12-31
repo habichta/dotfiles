@@ -4,7 +4,6 @@ source ~/.vimrc
 "Vim PLUG
  
 call plug#begin()
-Plug 'akinsho/bufferline.nvim', { 'tag': '*' }
 Plug 'bkad/CamelCaseMotion'
 Plug 'famiu/bufdelete.nvim'
 Plug 'fisadev/vim-isort', {'on': 'Isort'}
@@ -31,9 +30,8 @@ Plug 'lewis6991/gitsigns.nvim'
 Plug 'tpope/vim-fugitive', {'on': 'G'}
 Plug 'vim-test/vim-test'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'KabbAmine/zeavim.vim'
 Plug 'rhysd/vim-clang-format'
-Plug 'liuchengxu/vista.vim'
+Plug 'liuchengxu/vista.vim', {'on': 'Vista'}
 call plug#end()
 
 luafile ~/.config/nvim/lua/init.lua

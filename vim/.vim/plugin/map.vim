@@ -24,15 +24,6 @@ noremap <C-l> <C-w>l
 " easier map to open the alternate file
 nnoremap <Leader><Tab> <C-^>
 
-" use <C-\> to return after tag jump with <C-]>
-" (<C-[> is something with alt/esc...)
-nnoremap <C-\> :pop<CR>
-
-" make <C-e>/<C-y> scroll faster
-nnoremap <C-e> 3<C-e>
-nnoremap <C-y> 3<C-y>
-"}}}
-
 " Visual mode "{{{
 " visual mode: < and > indent block and re-select previous indentation too
 vnoremap < <gv
@@ -76,6 +67,11 @@ nmap <silent> P P`]
 "Cycle through buffers
 nnoremap ]b :bnext<CR>
 nnoremap [b :bprevious<CR>
+
+"Cycle through tabs
+nnoremap <leader>T :tabnew<CR>
+nnoremap ]t :tabnext<CR>
+nnoremap [t :tabprevious<CR>
 
 "Deleting in insert mode
 inoremap <C-d> <Esc>xi
