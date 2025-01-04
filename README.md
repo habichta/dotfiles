@@ -36,6 +36,8 @@
 ## VIM
 
 - Install neovim
+  https://github.com/neovim/neovim/blob/master/INSTALL.md#appimage-universal-linux-package
+
 - Install init.vim into .config
 - Copy .vimrc and .vim
 - create virtualenv pointing to system python for neovim and change vimrc path
@@ -49,10 +51,6 @@
 - :CocInstall coc-pyright
 - :CocInstall coc-snippets
 - :CocInstall coc-actions
-
-## GIT & CTAGS
-
-- move .ctags settings to home
 
 ## Yarn Binaries
 

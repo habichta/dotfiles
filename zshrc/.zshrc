@@ -11,8 +11,6 @@ fi
 
 eval `ssh-agent` > /dev/null
 
-export EDITOR="nvim"
-
 # deactivate ctrl-s XOFF
 stty -ixon 
 # Ignore EOF; use 'exit' to quit the shell
@@ -32,6 +30,11 @@ HISTSIZE=10000
 SAVEHIST=10000
 setopt share_history
 
+########################################
+# Neovim 
+########################################
+export PATH="$PATH:/opt/nvim-linux64/bin"
+export EDITOR="nvim"
 
 ########################################
 # Theme / Oh my ZSH
@@ -51,8 +54,6 @@ ZSH_DISABLE_COMPFIX="true" # Disable compfix for faster startup
 export SPACESHIP_BATTERY_SHOW=false
 
 # Optimizations
-NVM_LAZY_LOAD=true
-export NVM_LAZY_LOAD_EXTRA_COMMANDS=('nvim')
 DISABLE_UPDATE_PROMPT=true # automatically update oh-my-zsh
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=240'
 
@@ -61,8 +62,8 @@ ZSH_COMPDUMP="$ZSH/completions/.zcompdump"
 fpath=($ZSH/completions $fpath)
 
 plugins=(
-  zsh-nvm
   zsh-autosuggestions
+  mise
   z
     )
 
@@ -195,3 +196,4 @@ function helpany_update_dev_python_deps {
 
 
 [ -z "$ZPROF" ] || zprof
+eval "$(/home/habichta/.local/bin/mise activate zsh)"

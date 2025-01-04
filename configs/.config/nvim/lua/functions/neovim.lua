@@ -68,3 +68,19 @@ end
 
 vim.api.nvim_create_user_command("ShowFilePath", ShowCurrentFilePath, {})
 vim.keymap.set("n", "<leader>F", ShowCurrentFilePath, { noremap = true, silent = true })
+
+
+function close_other_buffers(force)
+  for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+    if bufnr ~= vim.api.nvim_get_current_buf() then
+      local is_modified = vim.api.nvim_buf_get_option(bufnr, 'modified')
+      if force or not is_modified then
+        vim.api.nvim_buf_delete(bufnr, { force = true })
+      end
+    end
+  end
+end
+
+-- Map the function to a key, with an optional force-close option
+vim.api.nvim_set_keymap('n', '<leader>co', ':lua close_other_buffers(false)<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>cO', ':lua close_other_buffers(true)<CR>', { noremap = true, silent = true })

@@ -3,3 +3,4 @@ pyrightconfig.json
 .python-version
 Session.vim
 .worktrees
+mise.local.toml
