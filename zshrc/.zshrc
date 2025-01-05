@@ -16,9 +16,6 @@ stty -ixon
 # Ignore EOF; use 'exit' to quit the shell
 setopt IGNORE_EOF  
 
-# Ignore Gnome Emoji Picker
-gsettings set org.freedesktop.ibus.panel.emoji hotkey "[]"
-
 # Remapping Capslock to ESC
 setxkbmap -option caps:escape
 
@@ -57,13 +54,13 @@ export SPACESHIP_BATTERY_SHOW=false
 DISABLE_UPDATE_PROMPT=true # automatically update oh-my-zsh
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=240'
 
-ZSH_COMPDUMP="$ZSH/completions/.zcompdump"
+zstyle ':completion:*:make:*:targets' call-command true
+zstyle ':completion:*:*:make:*' tag-order 'targets'
+# zstyle ':autocomplete:*' min-input 3
+# zstyle -e ':autocomplete:*:*' list-lines 'reply=( $(( LINES / 3 )) )'
 
-fpath=($ZSH/completions $fpath)
 
 plugins=(
-  zsh-autosuggestions
-  mise
   z
     )
 
@@ -78,6 +75,12 @@ export PATH="$PATH:~/.local/bin"
 # YARN Binaries
 ########################################
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+
+########################################
+# MISE
+########################################
+eval "$(/home/habichta/.local/bin/mise activate zsh)"
 
 
 ########################################
@@ -153,4 +156,3 @@ add-zsh-hook chpwd update-tmux-window-name
 alias helpany_fix_dns=~/.dotfiles/scripts/sedimentum_dns/fix-resolv-conf.sh
 
 [ -z "$ZPROF" ] || zprof
-eval "$(/home/habichta/.local/bin/mise activate zsh)"
