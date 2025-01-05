@@ -8,8 +8,7 @@
 - Install NerdFont
 - Install spaceship theme
 - Install Python
-- Install pyenv
-- Install pyenv-virtualenv plugin
+- Install mise
 - Install fzf
 - Install fd
 - Install silversearcher-ag
