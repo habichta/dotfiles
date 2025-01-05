@@ -94,6 +94,7 @@ nmap <silent> <leader>ai :call CocAction('showIncomingCalls')<CR>
 nmap <silent> <leader>aq :call CocAction('showOutgoingCalls')<CR>
 nmap <silent> <leader>as :call CocAction('showSuperTypes')<CR>
 nmap <silent> <leader>au :call CocAction('showSubTypes')<CR>
+nmap <silent> <leader>at :CocCommand document.toggleInlayHint<CR>
 
 
 " Run the Code Lens action on the current line.

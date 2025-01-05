@@ -1,5 +1,7 @@
 {
   "coc.preferences.formatOnSave": true,
+  "inlayHint.enable": false,
+  "signature.enable": true,
   "diagnostic.checkCurrentLine": true,
   "eslint.autoFixOnSave": true,
   "eslint.enable": true,
