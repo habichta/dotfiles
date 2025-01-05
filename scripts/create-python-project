@@ -8,22 +8,15 @@
 # in or out the root or child folders of the project
 # #################################################
 
-# Get the name of the current directory, use it as virtualenv name
-current_directory=$(basename "$(pwd)")
-
-# Display the current directory name
-echo "Virtualenv name: $current_directory"
-
 # Prompt the user for input
 read -p "Choose python version (e.g., 3.11.2): " python_version
 
-pyenv virtualenv $python_version $current_directory
+rm -rf .venv mise.toml mise.local.toml
 
-if [ $? -eq 0 ]; then
-  echo "Created Virtualenv: '$current_directory' with version $(python3 --version)"
-    echo "$current_directory" > ".python-version"
-else
-    echo "Failed to create Virtualenv. Maybe it exists already? Delete with 'pyenv virtualenv-delete $current_directory'"
-fi
+mise use python@$python_version
 
+virtualenv -p $(mise which python) .venv
 
+mv mise.toml mise.local.toml
+echo '[env]' >> mise.local.toml
+echo '_.python.venv = ".venv"' >> mise.local.toml

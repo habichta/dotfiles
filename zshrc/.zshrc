@@ -125,14 +125,6 @@ export PATH="$PATH:~/.cargo/bin"
 # Go
 export PATH="$PATH:/usr/local/go/bin"
 
-#Python + PyEnv
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-
-alias pyenv_activate="eval \"\$(pyenv init - zsh)\" && eval \"\$(pyenv virtualenv-init - zsh)\""
-alias python=python3
-alias vact="source venv/bin/activate"
-
 ########################################
 # FZF 
 ########################################
@@ -149,8 +141,9 @@ export FZF_DEFAULT_OPTS='--height 80% --layout=reverse --border --info=inline
 ########################################
 # ZSH Hooks and Functions
 ########################################
-# source ~/.zsh/functions.zsh
-#ZSH hooks
+source ~/.zsh/functions.zsh
+
+#ZSH hooks - changes TMUX windows name when changing directories
 add-zsh-hook chpwd update-tmux-window-name
 
 ########################################
@@ -158,42 +151,6 @@ add-zsh-hook chpwd update-tmux-window-name
 ########################################
 #Fix DNS for WSL 2
 alias helpany_fix_dns=~/.dotfiles/scripts/sedimentum_dns/fix-resolv-conf.sh
-
-#Update Python Dependencies of a Service Repo for Development
-function helpany_update_dev_python_deps {
-    # Path to requirements file
-    requirements_file="requirements/dev.txt"
-
-    # Check if in virtualenv
-    if [[ -z "$VIRTUAL_ENV" ]]; then
-        echo "No virtual environment found. Please activate one before running this function."
-        return 1
-    fi
-
-    # Check if deps/ directory exists
-    if [[ -d "deps" ]]; then
-        echo "Installing dependencies from submodules in deps/"
-
-        for dir in deps/*/; do
-            if [[ -d "$dir" ]]; then
-                echo "Installing dependencies from $dir"
-                pip install "$dir"
-            fi
-        done
-    else
-        echo "No deps/ directory found."
-    fi
-    # Check if requirements file exists
-    if [[ ! -f "$requirements_file" ]]; then
-        echo "requirements/dev.txt not found."
-        return 1
-    fi
-
-    # Install dependencies from requirements file, ignoring lines starting with -e file:///
-    grep -v '^-e file:///' "$requirements_file" | pip install -r /dev/stdin
-}
-
-
 
 [ -z "$ZPROF" ] || zprof
 eval "$(/home/habichta/.local/bin/mise activate zsh)"

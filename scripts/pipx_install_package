@@ -1,0 +1,12 @@
+#!/bin/bash
+read -p "Enter the package: " package
+read -p "Enter the python version: " python_version
+read -p "Enter the version (optional): " version
+
+python_path=$(mise where python@$python_version)/bin/python
+
+if [ -z "$version" ]; then
+  pipx install $package --python $python_path
+else
+  pipx install $package==$version --python $python_path
+fi

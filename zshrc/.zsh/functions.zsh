@@ -131,16 +131,6 @@ function gb() {
 zle -N gb
 bindkey '^g' gb
 
-#Git history v2
-# function ghi() {
-#   _is_in_git_repo || return
-#   git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --graph --color=always |
-#     fzf --ansi --no-sort --reverse --multi --bind 'ctrl-s:toggle-sort' \
-#     --header 'Press CTRL-S to toggle sort' \
-#     --preview 'grep -o "[a-f0-9]\{7,\}" <<< {} | xargs git show --color=always' |
-#     grep -o "[a-f0-9]\{7,\}"
-# }
-
 # Quickly load an env file into the current shell
 function load_env_file() {
     if [ "$#" -ne 1 ]; then
@@ -174,7 +164,54 @@ Ag() {
             # Extract the filename and line number from the selected item
             local filename=$(echo "$item" | cut -d':' -f1)
             local line_number=$(echo "$item" | cut -d':' -f2)
-            vim "+${line_number}" "$filename"  # Open Vim at the specific line
+            nvim "+${line_number}" "$filename"  # Open Vim at the specific line
         fi
     fi
+}
+
+function pipx_install() {
+  read -p "Enter the package: " package
+  read -p "Enter the python version: " python_version
+  read -p "Enter the version (optional): " version
+
+  python_path=$(mise where python@$python_version)/bin/python
+  
+  if [ -z "$version" ]; then
+    pipx install $package --python $python_path
+  else
+    pipx install $package==$version --python $python_path
+  fi
+}
+#Update Python Dependencies of a Service Repo for Development
+function helpany_update_dev_python_deps {
+    # Path to requirements file
+    requirements_file="requirements/dev.txt"
+
+    # Check if in virtualenv
+    if [[ -z "$VIRTUAL_ENV" ]]; then
+        echo "No virtual environment found. Please activate one before running this function."
+        return 1
+    fi
+
+    # Check if deps/ directory exists
+    if [[ -d "deps" ]]; then
+        echo "Installing dependencies from submodules in deps/"
+
+        for dir in deps/*/; do
+            if [[ -d "$dir" ]]; then
+                echo "Installing dependencies from $dir"
+                pip install "$dir"
+            fi
+        done
+    else
+        echo "No deps/ directory found."
+    fi
+    # Check if requirements file exists
+    if [[ ! -f "$requirements_file" ]]; then
+        echo "requirements/dev.txt not found."
+        return 1
+    fi
+
+    # Install dependencies from requirements file, ignoring lines starting with -e file:///
+    grep -v '^-e file:///' "$requirements_file" | pip install -r /dev/stdin
 }
