@@ -32,6 +32,7 @@ Plug 'vim-test/vim-test'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'rhysd/vim-clang-format'
 Plug 'liuchengxu/vista.vim', {'on': 'Vista'}
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 call plug#end()
 
 luafile ~/.config/nvim/lua/init.lua

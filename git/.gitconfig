@@ -16,6 +16,7 @@
     d = diff
     a = "!git add $@ && git s"
     p = push
+    po =  !git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)
     ctags = "!bash -c '[ -f .git/hooks/ctags ] || git init; .git/hooks/ctags' git-ctags"
     update-all = "!f() { \
         git fetch --all && \
