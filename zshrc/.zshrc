@@ -114,8 +114,9 @@ alias cc="clear"
 #Alias cat to batcat
 alias g="git"
 
-#Download Youtube Video
+#Download / Watch Youtube Video
 alias youtubed='PYTHONPATH=~/projects/youtube-dl python -m youtube_dl -o "$HOME/Downloads/%(title)s.%(ext)s"'
+alias vlc="/mnt/c/Program\ Files/VideoLAN/VLC/vlc.exe"
 
 ########################################
 # Programming Languages 
