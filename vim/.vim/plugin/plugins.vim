@@ -18,6 +18,16 @@ nnoremap <M-]> :Ag<Cr>
 "
 
 let g:camelcasemotion_key = '<leader>'
+" Remap standard motions to CamelCaseMotion equivalents
+nmap w <Plug>CamelCaseMotion_w
+nmap b <Plug>CamelCaseMotion_b
+nmap e <Plug>CamelCaseMotion_e
+xmap w <Plug>CamelCaseMotion_w
+xmap b <Plug>CamelCaseMotion_b
+xmap e <Plug>CamelCaseMotion_e
+omap w <Plug>CamelCaseMotion_w
+omap b <Plug>CamelCaseMotion_b
+omap e <Plug>CamelCaseMotion_e
 
 " wilder
 " Use wilder for command-line completion
