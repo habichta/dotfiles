@@ -66,6 +66,7 @@ function ssh_with_fzf() {
         BUFFER="ssh $selected_host" # Note that calling ssh within a widget does not work since it is not attached to a terminal
         zle accept-line  # This simulates pressing Enter, executing the command
   fi
+  zle reset-prompt
 }
 
 zle -N ssh_with_fzf
@@ -78,6 +79,7 @@ fzf_z_widget() {
     BUFFER="cd $selected_dir"
     zle accept-line
   fi
+  zle reset-prompt
 }
 
 zle -N fzf_z_widget
@@ -127,9 +129,25 @@ function gb() {
     --bind "enter:execute:$_viewGitLogLine | less -R" \
     --bind "alt-c:execute:$_gitLogLineToHash | xclip -i -sel c" \
     --preview-window=right:40%
+  zle reset-prompt
 }
 zle -N gb
 bindkey '^g' gb
+
+# Search LastPass for a password
+lpass_fzf_widget() {
+  password=$(lpass ls | fzf | awk '{print $(NF)}' | sed 's/\]//g')
+  if [[ -n "$password" ]]; then
+    lpass show -c --password "$password"
+  fi
+
+  zle reset-prompt
+}
+
+# Register the widget
+zle -N lpass_fzf_widget
+bindkey '^P' lpass_fzf_widget
+
 
 # Quickly load an env file into the current shell
 function load_env_file() {
