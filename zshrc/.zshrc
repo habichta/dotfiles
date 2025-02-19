@@ -160,3 +160,6 @@ add-zsh-hook chpwd update-tmux-window-name
 alias helpany_fix_dns=~/.dotfiles/scripts/sedimentum_dns/fix-resolv-conf.sh
 
 [ -z "$ZPROF" ] || zprof
+
+# For GUI Apps on WSL2
+export DISPLAY=:0

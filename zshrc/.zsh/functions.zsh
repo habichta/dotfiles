@@ -136,7 +136,7 @@ bindkey '^g' gb
 
 # Search LastPass for a password
 lpass_fzf_widget() {
-  password=$(lpass ls | fzf | awk '{print $(NF)}' | sed 's/\]//g')
+  password=$(lpass ls | fzf --query '!Archive ' | awk '{print $(NF)}' | sed 's/\]//g')
   if [[ -n "$password" ]]; then
     lpass show -c --password "$password"
   fi
