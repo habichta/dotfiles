@@ -118,6 +118,9 @@ alias g="git"
 alias youtubed='PYTHONPATH=~/projects/youtube-dl python -m youtube_dl -o "$HOME/Downloads/%(title)s.%(ext)s"'
 alias vlc="/mnt/c/Program\ Files/VideoLAN/VLC/vlc.exe"
 
+# Aider AI
+alias ai=aider
+
 ########################################
 # Programming Languages 
 ########################################

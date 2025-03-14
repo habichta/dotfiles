@@ -4,3 +4,4 @@ pyrightconfig.json
 Session.vim
 .worktrees
 mise.local.toml
+*.aider.*

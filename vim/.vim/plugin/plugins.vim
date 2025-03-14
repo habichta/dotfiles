@@ -16,6 +16,13 @@ nnoremap <M-[> :History<Cr>
 nnoremap <M-\> :Buffers<Cr>
 nnoremap <M-]> :Ag<Cr>
 "
+"
+command! BuffersDelete call fzf#run(fzf#wrap({
+  \ 'source': functions#ListBuffers(),
+  \ 'sink*': { lines -> functions#DeleteBuffers(lines) },
+  \ 'options': '--multi --reverse --bind ctrl-a:select-all+accept' 
+  \ }))
+
 
 let g:camelcasemotion_key = '<leader>'
 " Remap standard motions to CamelCaseMotion equivalents
@@ -85,4 +92,7 @@ nnoremap <leader>mf :Vista finder<CR>
 
 " Toggle Vista with ,mm
 nnoremap <leader>mm :Vista!!<CR>
+
+" coc-fzf
+let g:coc_fzf_preview = 'up:90%'
 

@@ -149,3 +149,15 @@ function! functions#ToggleMouse()
         set mouse=a
     endif
 endfunction
+
+function! functions#ListBuffers()
+  redir => list
+  silent ls
+  redir END
+  return split(list, "\n")
+endfunction
+
+function! functions#DeleteBuffers(lines)
+  execute 'bwipeout' join(map(a:lines, {_, line -> split(line)[0]}))
+endfunction
+
