@@ -9,7 +9,6 @@
   "javascript.autoClosingTags": true,
   "pyright.organizeimports.provider": "isort",
   "python.analysis.autoImportCompletions": true,
-  "python.formatting.blackArgs": ["--line-length", "120"],
   "python.formatting.blackPath": "~/.dotfiles/configs/.config/nvim/venv/bin/black",
   "python.formatting.provider": "black",
   "python.linting.pylintEnabled": true,
@@ -33,5 +32,6 @@
     "kubernetes": "/*.yaml"
   },
   "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/18.1.3/clangd_18.1.3/bin/clangd",
-  "snippets.ultisnips.pythonPrompt": false
+  "snippets.ultisnips.pythonPrompt": false,
+  "workspace.ignoredFolders": ["$HOME", "$HOME/.cargo/**", "$HOME/.rustup/**"]
 }

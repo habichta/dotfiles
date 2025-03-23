@@ -34,6 +34,7 @@ Plug 'rhysd/vim-clang-format'
 Plug 'liuchengxu/vista.vim', {'on': 'Vista'}
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'antoinemadec/coc-fzf', {'branch': 'release'}
+Plug 'norcalli/nvim-colorizer.lua'
 call plug#end()
 
 luafile ~/.config/nvim/lua/init.lua
