@@ -29,7 +29,6 @@ Plug 'gelguy/wilder.nvim'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'tpope/vim-fugitive', {'on': 'G'}
 Plug 'vim-test/vim-test'
-Plug 'christoomey/vim-tmux-navigator'
 Plug 'rhysd/vim-clang-format'
 Plug 'liuchengxu/vista.vim', {'on': 'Vista'}
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
