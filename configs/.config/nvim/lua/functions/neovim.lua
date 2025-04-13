@@ -1,6 +1,10 @@
 -- General Mappings
-vim.api.nvim_set_keymap('n', ',gv', ':vertical wincmd f<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', ',gh', ':wincmd f<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', ',gvv', ':vertical wincmd f<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', ',gvh', ':wincmd f<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', ',gdv', ':vsplit<CR>:normal gd<CR>',
+  { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', ',gdh', ':split<CR>:normal gd<CR>',
+  { noremap = true, silent = true })
 
 function VisualAg()
   -- Check if we are in visual mode or normal mode

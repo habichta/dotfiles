@@ -27,7 +27,7 @@ Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-surround'
 Plug 'gelguy/wilder.nvim'
 Plug 'lewis6991/gitsigns.nvim'
-Plug 'tpope/vim-fugitive', {'on': 'G'}
+Plug 'tpope/vim-fugitive'
 Plug 'vim-test/vim-test'
 Plug 'rhysd/vim-clang-format'
 Plug 'liuchengxu/vista.vim', {'on': 'Vista'}

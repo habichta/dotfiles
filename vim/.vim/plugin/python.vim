@@ -1,2 +1,2 @@
-map <Leader>pu :call functions#InsertPDB()<CR>
+map <Leader>id :call functions#InsertPDB()<CR>
 

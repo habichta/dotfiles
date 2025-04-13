@@ -2,7 +2,7 @@
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "rust",
   callback = function()
-    vim.api.nvim_set_keymap('n', '<leader>pt', ':CocCommand rust-analyzer.peekTests<CR>',
+    vim.api.nvim_set_keymap('n', '<leader>t', ':CocCommand rust-analyzer.peekTests<CR>',
       { noremap = true, silent = true })
   end
 })

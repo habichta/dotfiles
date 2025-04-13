@@ -1,4 +1,4 @@
-########################################
+#######################################
 # Basic Setup
 ########################################
 [ -z "$ZPROF" ] || zmodload zsh/zprof
@@ -14,9 +14,9 @@ eval `ssh-agent` > /dev/null
 # deactivate ctrl-s XOFF
 stty -ixon 
 # Ignore EOF; use 'exit' to quit the shell
-setopt IGNORE_EOF  
+setopt IGNORE_EOF
 
-# Remapping Capslock to ESC
+# Remapping Capslock to ESC -> Powertoys for WSL
 setxkbmap -option caps:escape
 
 #Add custom scripts to PATH
@@ -25,7 +25,7 @@ export PATH="$HOME/.dotfiles/scripts:$PATH"
 # History
 HISTSIZE=10000
 SAVEHIST=10000
-setopt share_history
+setopt share_history # Share history between all sessions
 
 ########################################
 # Neovim 
@@ -36,8 +36,11 @@ export EDITOR="nvim"
 ########################################
 # Theme / Oh my ZSH
 ########################################
-
 export ZSH="/home/$USER/.oh-my-zsh"
+
+# OH my ZSH seems to cause issue with fpath. Modified oh-my-zh.sh (check if something does not work)
+export ZSH_CACHE_DIR="$ZSH/cache"
+export ZSH_COMPDUMP="$ZSH_CACHE_DIR/completions/zsh_compdump"
 
 #Colorscheme for Dirs
 eval "$(dircolors ~/.gruvbox.dircolors)"
@@ -54,17 +57,12 @@ export SPACESHIP_BATTERY_SHOW=false
 DISABLE_UPDATE_PROMPT=true # automatically update oh-my-zsh
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=240'
 
-zstyle ':completion:*:make:*:targets' call-command true
-zstyle ':completion:*:*:make:*' tag-order 'targets'
-# zstyle ':autocomplete:*' min-input 3
-# zstyle -e ':autocomplete:*:*' list-lines 'reply=( $(( LINES / 3 )) )'
-
-
 plugins=(
   z
     )
 
 source $ZSH/oh-my-zsh.sh
+
 ########################################
 # PIPX
 ########################################
@@ -135,6 +133,9 @@ export PATH="$PATH:~/.cargo/bin"
 # Go
 export PATH="$PATH:/usr/local/go/bin"
 
+# Lua
+export PATH="$HOME/.luarocks/bin:$PATH"
+
 ########################################
 # FZF 
 ########################################
@@ -152,6 +153,7 @@ export FZF_DEFAULT_OPTS='--height 80% --layout=reverse --border --info=inline
 # ZSH Hooks and Functions
 ########################################
 source ~/.zsh/functions.zsh
+source ~/.zsh/bindkeys.zsh
 
 #ZSH hooks - changes TMUX windows name when changing directories
 add-zsh-hook chpwd update-tmux-window-name
@@ -162,7 +164,7 @@ add-zsh-hook chpwd update-tmux-window-name
 #Fix DNS for WSL 2
 alias helpany_fix_dns=~/.dotfiles/scripts/sedimentum_dns/fix-resolv-conf.sh
 
-[ -z "$ZPROF" ] || zprof
-
 # For GUI Apps on WSL2
 export DISPLAY=:0
+
+[ -z "$ZPROF" ] || zprof

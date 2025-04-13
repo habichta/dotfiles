@@ -12,7 +12,6 @@ function d() {
   zle reset-prompt
 }
 zle -N d
-bindkey '^d' d
 
 # Check if inside a Git repository, if not a git repository, use fd to search
 # Search and open with neovim or cd, depending on file type
@@ -34,7 +33,6 @@ function vf() {
     zle reset-prompt
 }
 zle -N vf
-bindkey '^s' vf
 
 
 # Gather hosts from 'step ssh hosts' if available and remove sedimentum internal
@@ -70,7 +68,6 @@ function ssh_with_fzf() {
 }
 
 zle -N ssh_with_fzf
-bindkey '^f' ssh_with_fzf
 
 fzf_z_widget() {
   local selected_dir
@@ -83,7 +80,6 @@ fzf_z_widget() {
 }
 
 zle -N fzf_z_widget
-bindkey '^z' fzf_z_widget
 
 # Modified version where you can press
 #   - CTRL-O to open with `open` command,
@@ -132,7 +128,6 @@ function gb() {
   zle reset-prompt
 }
 zle -N gb
-bindkey '^g' gb
 
 # Search LastPass for a password
 lpass_fzf_widget() {
@@ -146,8 +141,6 @@ lpass_fzf_widget() {
 
 # Register the widget
 zle -N lpass_fzf_widget
-bindkey '^P' lpass_fzf_widget
-
 
 # Quickly load an env file into the current shell
 function load_env_file() {

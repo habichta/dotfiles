@@ -68,3 +68,8 @@
 - Install iotop
 - Install nmap
 - Install net-tools
+
+## CTAGS
+
+- Install universal CTAGS
+- use options file (sym link to ~/.ctags.d)

@@ -154,4 +154,4 @@ nnoremap <silent><nowait> <leader>vd :call CocAction('jumpDefinition', 'vsplit')
 " Jump with horizontal split
 nnoremap <silent><nowait> <leader>sd :call CocAction('jumpDefinition', 'split')<CR>
 " Peek Definition
-nnoremap <silent><nowait> <leader>pd  :call CocAction('jumpDefinition', v:false)<CR>
+nnoremap <silent><nowait> <leader>d  :call CocAction('jumpDefinition', v:false)<CR>

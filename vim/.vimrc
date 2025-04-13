@@ -75,9 +75,8 @@ set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx
 set splitbelow
 set splitright
 
-
 "CTAGS
-" exec 'set tags+=' . findfile('.git/tags', ';')
+exec 'set tags+=' . findfile('.git/tags', ';')
 
 "Python3
 let g:python3_host_prog = '~/.config/nvim/venv/bin/python3'

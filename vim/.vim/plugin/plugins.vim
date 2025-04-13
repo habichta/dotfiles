@@ -1,9 +1,9 @@
 "PLUGIN CONFIGURATIONS
 " vim-obsession "
 " start tracking session
-nnoremap <Leader>o :Obsess<CR>
+nnoremap <Leader>0 :Obsess<CR>
 " stop tracking session and delete session file
-nnoremap <Leader>O :Obsess!<CR>
+nnoremap <Leader>9 :Obsess!<CR>
 
 " startify "
 " don't CD when opening file
@@ -11,12 +11,13 @@ let g:startify_change_to_dir=0
 
 "FZF
 set rtp+=~/.fzf/bin/fzf
-nnoremap <M-p> :GFiles<Cr>
-nnoremap <M-[> :History<Cr>
-nnoremap <M-\> :Buffers<Cr>
-nnoremap <M-]> :Ag<Cr>
-"
-"
+nnoremap <Leader>p :GFiles<Cr>
+nnoremap <Leader>l :GFiles?<Cr>
+nnoremap <Leader>[ :History<Cr>
+nnoremap <Leader>\ :Buffers<Cr>
+nnoremap <Leader>] :Tags<Cr>
+nnoremap <Leader>o :Ag<Cr>
+
 command! BuffersDelete call fzf#run(fzf#wrap({
   \ 'source': functions#ListBuffers(),
   \ 'sink*': { lines -> functions#DeleteBuffers(lines) },
