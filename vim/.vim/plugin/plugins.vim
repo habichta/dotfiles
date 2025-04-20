@@ -12,7 +12,7 @@ let g:startify_change_to_dir=0
 "FZF
 set rtp+=~/.fzf/bin/fzf
 nnoremap <Leader>p :GFiles<Cr>
-nnoremap <Leader>l :GFiles?<Cr>
+nnoremap <Leader>P :GFiles?<Cr>
 nnoremap <Leader>[ :History<Cr>
 nnoremap <Leader>\ :Buffers<Cr>
 nnoremap <Leader>] :Tags<Cr>

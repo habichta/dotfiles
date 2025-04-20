@@ -31,3 +31,6 @@ nnoremap <Leader>cb :Bdelete<CR>
 "Undo to last saved state
 nnoremap <Leader>u :e!<CR>
 
+"" Copy current file path to clipboard
+nnoremap <silent> <leader>cp :let @+ = expand('%:p')<CR>
+

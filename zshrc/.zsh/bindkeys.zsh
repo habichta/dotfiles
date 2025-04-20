@@ -18,6 +18,7 @@ bindkey -M vicmd '^[s' vf
 
 bindkey -M vicmd '^[x' d
 
+bindkey -M viins '^[\[' ssh_with_fzf
 bindkey -M vicmd '^[\[' ssh_with_fzf
 
 bindkey -M viins '^[z' fzf_z_widget

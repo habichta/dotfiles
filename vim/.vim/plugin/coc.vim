@@ -150,8 +150,8 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 " Jump with vertical split
-nnoremap <silent><nowait> <leader>vd :call CocAction('jumpDefinition', 'vsplit')<CR>
+nnoremap <silent><nowait> <leader>gdv :call CocAction('jumpDefinition', 'vsplit')<CR>
 " Jump with horizontal split
-nnoremap <silent><nowait> <leader>sd :call CocAction('jumpDefinition', 'split')<CR>
+nnoremap <silent><nowait> <leader>gds :call CocAction('jumpDefinition', 'split')<CR>
 " Peek Definition
 nnoremap <silent><nowait> <leader>d  :call CocAction('jumpDefinition', v:false)<CR>
