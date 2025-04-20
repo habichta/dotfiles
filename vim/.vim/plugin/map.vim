@@ -21,6 +21,13 @@ noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
 
+" easier window navigation in terminal mode
+tnoremap <C-w> <C-\><C-n><C-w>
+tnoremap <C-h> <C-\><C-n><C-w>h
+tnoremap <C-j> <C-\><C-n><C-w>j
+tnoremap <C-k> <C-\><C-n><C-w>k
+tnoremap <C-l> <C-\><C-n><C-w>l
+
 " easier map to open the alternate file
 nnoremap <Leader><Tab> <C-^>
 
@@ -82,11 +89,6 @@ inoremap <C-h> <Left>
 inoremap <C-l> <Right>
 inoremap <C-k> <Up>
 inoremap <C-j> <Down>
-
-inoremap <A-h> <C-Left>
-inoremap <A-l> <C-Right>
-inoremap <A-k> <C-Up>
-inoremap <A-j> <C-Down>
 
 "Close Tabs
  nnoremap <F8> :tabclose<CR>

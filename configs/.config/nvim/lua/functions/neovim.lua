@@ -1,10 +1,6 @@
 -- General Mappings
 vim.api.nvim_set_keymap('n', ',gvv', ':vertical wincmd f<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', ',gvh', ':wincmd f<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', ',gdv', ':vsplit<CR>:normal gd<CR>',
-  { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', ',gdh', ':split<CR>:normal gd<CR>',
-  { noremap = true, silent = true })
 
 function VisualAg()
   -- Check if we are in visual mode or normal mode
@@ -49,8 +45,8 @@ function VisualAg()
 end
 
 -- Map the key combination for normal and visual mode
-vim.api.nvim_set_keymap('n', '<leader>P', ':lua VisualAg()<CR>', { noremap = true, silent = true }) --
-vim.api.nvim_set_keymap('v', '<leader>P', ':lua VisualAg()<CR>', { noremap = true, silent = true }) --
+vim.api.nvim_set_keymap('n', '<leader>O', ':lua VisualAg()<CR>', { noremap = true, silent = true }) --
+vim.api.nvim_set_keymap('v', '<leader>O', ':lua VisualAg()<CR>', { noremap = true, silent = true }) --
 
 
 -- Function to move the rest of the line up

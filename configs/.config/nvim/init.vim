@@ -4,6 +4,7 @@ source ~/.vimrc
 "Vim PLUG
  
 call plug#begin()
+Plug 'folke/snacks.nvim'
 Plug 'bkad/CamelCaseMotion'
 Plug 'famiu/bufdelete.nvim'
 Plug 'fisadev/vim-isort', {'on': 'Isort'}
@@ -34,6 +35,7 @@ Plug 'liuchengxu/vista.vim', {'on': 'Vista'}
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'antoinemadec/coc-fzf', {'branch': 'release'}
 Plug 'norcalli/nvim-colorizer.lua'
+Plug 'GeorgesAlkhouri/nvim-aider'
 call plug#end()
 
 luafile ~/.config/nvim/lua/init.lua
