@@ -38,6 +38,15 @@ vnoremap > >gv
 
 " select just-pasted text
 noremap gV `[v`]
+nnoremap gbo :call search('[{([]', 'c')<CR>a<CR><Esc>O
+nnoremap g(o :call search('[(]', 'c')<CR>a<CR><Esc>O
+nnoremap g[o :call search('[[]', 'c')<CR>a<CR><Esc>O
+nnoremap g{o :call search('[{]', 'c')<CR>a<CR><Esc>O
+
+nnoremap gbv :call search('[{([])}]', 'c')<CR>vib
+nnoremap g(v :call search('[()]', 'c')<CR>vi(
+nnoremap g[v :call search('[[]]', 'c')<CR>vi[
+nnoremap g{v :call search('[{}]', 'c')<CR>vi{
 
 " Press Shift+P while in visual mode to replace the selection without
 " overwriting the default register
@@ -75,10 +84,11 @@ nmap <silent> P P`]
 nnoremap ]b :bnext<CR>
 nnoremap [b :bprevious<CR>
 
-"Cycle through tabs
+"Tabs
 nnoremap <leader>T :tabnew<CR>
 nnoremap ]t :tabnext<CR>
 nnoremap [t :tabprevious<CR>
+nnoremap <F8> :tabclose<CR>
 
 "Deleting in insert mode
 inoremap <C-d> <Esc>xi
@@ -89,6 +99,3 @@ inoremap <C-h> <Left>
 inoremap <C-l> <Right>
 inoremap <C-k> <Up>
 inoremap <C-j> <Down>
-
-"Close Tabs
- nnoremap <F8> :tabclose<CR>

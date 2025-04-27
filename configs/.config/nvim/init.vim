@@ -35,7 +35,7 @@ Plug 'liuchengxu/vista.vim', {'on': 'Vista'}
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'antoinemadec/coc-fzf', {'branch': 'release'}
 Plug 'norcalli/nvim-colorizer.lua'
-Plug 'GeorgesAlkhouri/nvim-aider'
+Plug 'habichta/nvim-aider'
 call plug#end()
 
 luafile ~/.config/nvim/lua/init.lua

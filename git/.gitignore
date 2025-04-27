@@ -5,3 +5,4 @@ Session.vim
 .worktrees
 mise.local.toml
 *.aider.*
+.luarc.json
