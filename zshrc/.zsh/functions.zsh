@@ -180,6 +180,49 @@ Ag() {
     fi
 }
 
+is_valid_tz() {
+    [[ -f "/usr/share/zoneinfo/$1" || -L "/usr/share/zoneinfo/$1" ]]
+}
+
+convert_timezone() {
+    local input_time="$1"
+    local from_tz="${2:-$(date +%Z)}"
+    local to_tz="$3"
+
+    if [ -z "$to_tz" ]; then
+        echo "Usage: convert_timezone [<time>] [<from_timezone>] <to_timezone>"
+        return 1
+    fi
+
+    # Validate from_tz
+    if ! is_valid_tz "$from_tz"; then
+        echo "Invalid from timezone: $from_tz"
+        return 1
+    fi
+
+    # Validate to_tz
+    if ! is_valid_tz "$to_tz"; then
+        echo "Invalid to timezone: $to_tz"
+        return 1
+    fi
+
+    local today=$(date +%Y-%m-%d)
+    input_time="${input_time:-now}"
+
+    if [[ "$input_time" =~ ^[0-9]{1,2}:[0-9]{2}(:[0-9]{2})?$ ]]; then
+        input_time="$today $input_time"
+    fi
+
+    local utc_epoch
+    utc_epoch=$(TZ="$from_tz" date -d "$input_time" +%s) || {
+        echo "Invalid input time or timezone"
+        return 1
+    }
+
+    TZ="$to_tz" date -d "@$utc_epoch" +"%Y-%m-%d %H:%M:%S %Z"
+}
+
+
 function pipx_install() {
   read -p "Enter the package: " package
   read -p "Enter the python version: " python_version
