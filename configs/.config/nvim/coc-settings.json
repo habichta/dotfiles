@@ -17,6 +17,7 @@
   "snippets.snipmate.enable": false,
   "snippets.ultisnips.enable": true,
   "typescript.autoClosingTags": true,
+  "typescript.preferences.importModuleSpecifier": "non-relative",
   "tsserver.enable": true,
   "tsserver.experimental.enableProjectDiagnostics": true,
   "eslint.filetypes": [

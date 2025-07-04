@@ -84,3 +84,34 @@ end
 -- Map the function to a key, with an optional force-close option
 vim.api.nvim_set_keymap('n', '<leader>co', ':lua close_other_buffers(false)<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>cO', ':lua close_other_buffers(true)<CR>', { noremap = true, silent = true })
+
+vim.keymap.set("n", "<leader>Gd", ":Gdiffsplit master<CR>", { desc = "Git diff with master" })
+
+
+function RemoveUnusedImports()
+  local filetype = vim.bo.filetype
+  if filetype == 'python' then
+    local file_path = vim.fn.expand('%:p')
+    local python3_host_prog = vim.g.python3_host_prog
+    local autoflake_path = python3_host_prog:gsub('python3$', 'autoflake')
+    local cmd = autoflake_path .. ' --remove-all-unused-imports --in-place ' .. file_path
+    vim.fn.system(cmd)
+    vim.cmd('e!')
+  elseif filetype == 'javascript' or filetype == 'typescript' or filetype == 'typescriptreact' or filetype == 'javascriptreact' then
+    vim.cmd('CocCommand editor.action.organizeImport')
+  else
+    print("Unsupported filetype for RemoveUnusedImports")
+  end
+end
+
+vim.api.nvim_create_user_command('RemoveUnusedImports', RemoveUnusedImports, {})
+
+vim.api.nvim_set_keymap('n', '<leader>af', ':RemoveUnusedImports<CR>', { noremap = true, silent = true })
+
+-- Reverse Lines
+vim.api.nvim_set_keymap(
+  'v',
+  '<leader>[',
+  [[:!tac<CR>]],
+  { noremap = true, silent = true }
+)

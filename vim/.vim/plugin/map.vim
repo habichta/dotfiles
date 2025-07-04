@@ -38,10 +38,17 @@ vnoremap > >gv
 
 " select just-pasted text
 noremap gV `[v`]
+
+" Bracket Mappings, go to the matching bracket
 nnoremap gbo :call search('[{([]', 'c')<CR>a<CR><Esc>O
 nnoremap g(o :call search('[(]', 'c')<CR>a<CR><Esc>O
 nnoremap g[o :call search('[[]', 'c')<CR>a<CR><Esc>O
 nnoremap g{o :call search('[{]', 'c')<CR>a<CR><Esc>O
+
+nnoremap gbi :call search('[{([]', 'c')<CR>a
+nnoremap g(i :call search('[(]', 'c')<CR>a
+nnoremap g[i :call search('[[]', 'c')<CR>a
+nnoremap g{i :call search('[{]', 'c')<CR>a
 
 nnoremap gbv :call search('[{([])}]', 'c')<CR>vib
 nnoremap g(v :call search('[()]', 'c')<CR>vi(
@@ -50,7 +57,7 @@ nnoremap g{v :call search('[{}]', 'c')<CR>vi{
 
 " Press Shift+P while in visual mode to replace the selection without
 " overwriting the default register
-" vnoremap P p:call setreg('+', getreg('0'))<CR>
+vnoremap P p:call setreg('+', getreg('0'))<CR>
 vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 "}}}
 

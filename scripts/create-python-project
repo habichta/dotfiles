@@ -1,21 +1,34 @@
 #!/bin/bash
 ###################################################
-# Script to create a new python project with pyenv
-# It will automatically create a virualenv based
+# Script to create a new python project with mise
+# It will automatically create a virtualenv based
 # on a configurable python version
 # It is setup in such a way, that the virtualenv
-# is automatically activate / deactivated when cd-ing
+# is automatically activated/deactivated when cd-ing
 # in or out the root or child folders of the project
-# #################################################
+###################################################
 
 # Prompt the user for input
-read -p "Choose python version (e.g., 3.11.2): " python_version
+read -p "Choose python version (e.g., 3.11 or 3.11.11): " python_version
 
 rm -rf .venv mise.toml mise.local.toml
 
-mise use python@$python_version
+# Find the latest installed matching version
+full_version=$(mise list | grep "^python " | awk '{print $2}' | grep -E "^${python_version}(\.|$)" | sort -V | tail -n1)
 
-virtualenv -p $(mise which python) .venv
+echo "Selected Python version: $full_version"
+
+if [[ -z "$full_version" ]]; then
+  echo "No installed Python version matching $python_version found."
+  exit 1
+fi
+
+mise use python@$full_version
+
+# Activate mise environment
+eval "$(mise activate)"
+
+virtualenv -p "$(mise which python)" .venv
 
 mv mise.toml mise.local.toml
 echo '[env]' >> mise.local.toml

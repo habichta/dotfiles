@@ -5,6 +5,8 @@ require("nvim_aider").setup({
   args = {
     "--pretty",
   },
+  -- Automatically reload buffers changed by Aider (requires vim.o.autoread = true)
+  auto_reload = true,
   -- Theme colors (automatically uses Catppuccin flavor if available)
   theme = {
     user_input_color = "#a6da95",
@@ -65,3 +67,5 @@ vim.api.nvim_set_keymap('n', '<leader>AF', ':Aider add<CR>', { noremap = true, s
 vim.api.nvim_set_keymap('n', '<leader>AD', ':Aider drop<CR>', { noremap = true, silent = true, desc = "Drop File" })
 vim.api.nvim_set_keymap('n', '<leader>AR', ':Aider add readonly<CR>',
   { noremap = true, silent = true, desc = "Add Read-Only" })
+vim.api.nvim_set_keymap('n', '<leader>AX', ':Aider reset<CR>',
+  { noremap = true, silent = true, desc = "Reset Context" })

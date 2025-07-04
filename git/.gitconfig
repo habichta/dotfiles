@@ -20,6 +20,8 @@
     d = diff
     a = "!git add $@ && git s"
     p = push
+    st = stash
+    sta = stash apply
     please = push --force-with-lease
     po =  !git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)
     cb = !git rev-parse --abbrev-ref HEAD | tr -d '\\n' | xclip -selection clipboard
