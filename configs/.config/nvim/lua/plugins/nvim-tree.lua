@@ -287,3 +287,18 @@ vim.api.nvim_create_autocmd("BufEnter", {
 vim.api.nvim_set_keymap('n', '<Leader>nn', ':NvimTreeFindFileToggle<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>nf', ':NvimTreeFindFile<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>nc', ':NvimTreeCollapse<CR>', { noremap = true, silent = true })
+
+-- Aider keybindings for nvim-tree
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "NvimTree",
+  callback = function()
+    vim.keymap.set('n', '<leader>AA', '<cmd>AiderTreeAddFile<cr>', { 
+      buffer = true, 
+      desc = "Add File from Tree to Aider" 
+    })
+    vim.keymap.set('n', '<leader>AD', '<cmd>AiderTreeDropFile<cr>', { 
+      buffer = true, 
+      desc = "Drop File from Tree from Aider" 
+    })
+  end
+})

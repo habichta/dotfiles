@@ -69,3 +69,23 @@ vim.api.nvim_set_keymap('n', '<leader>AR', ':Aider add readonly<CR>',
   { noremap = true, silent = true, desc = "Add Read-Only" })
 vim.api.nvim_set_keymap('n', '<leader>AX', ':Aider reset<CR>',
   { noremap = true, silent = true, desc = "Reset Context" })
+
+
+-- Set up buffer-local keymaps for nvim-tree
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "NvimTree",
+  callback = function()
+    vim.keymap.set('n', '<Leader>AF', ':AiderTreeAddFile<CR>', {
+      buffer = true,
+      noremap = true,
+      silent = true,
+      desc = "Add File from Tree to Aider"
+    })
+    vim.keymap.set('n', '<Leader>AD', ':AiderTreeDropFile<CR>', {
+      buffer = true,
+      noremap = true,
+      silent = true,
+      desc = "Drop File from Tree from Aider"
+    })
+  end
+})
