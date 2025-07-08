@@ -13,10 +13,17 @@ let g:startify_change_to_dir=0
 set rtp+=~/.fzf/bin/fzf
 nnoremap <Leader>p :GFiles<Cr>
 nnoremap <Leader>P :GFiles?<Cr>
+nnoremap <Leader>} :Files<Cr>
 nnoremap <Leader>[ :History<Cr>
 nnoremap <Leader>\ :Buffers<Cr>
-nnoremap <Leader>] :Tags<Cr>
-nnoremap <Leader>o :Ag<Cr>
+noremap <Leader>] :Tags<Cr>
+" nnoremap <Leader>o :RG<CR>
+nnoremap <silent> <Leader>O :call fzf#vim#grep(
+      \ 'rg --column --line-number --no-heading --color=always --smart-case -- ' . expand('<cword>'),
+      \ fzf#vim#with_preview({'options': ['--query', '!deps !tests '], 'dir': systemlist('git rev-parse --show-toplevel')[0]}))<Enter>
+nnoremap <Leader>o :RG<CR>
+
+
 
 command! BuffersDelete call fzf#run(fzf#wrap({
   \ 'source': functions#ListBuffers(),
@@ -58,8 +65,6 @@ call wilder#set_option('renderer', wilder#popupmenu_renderer(wilder#popupmenu_bo
 
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8 } }
 let g:fzf_preview_window = ['right:50%', 'ctrl-_']
-" command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, $AG_DEFAULT_OPTIONS . '--hidden --ignore "*.ipynb" --ignore-dir deps --ignore-dir node_modules --ignore-dir .git --ignore-dir .worktrees --ignore-dir target', fzf#vim#with_preview(), <bang>0)
-
 
 " vim-test
 " <Plug> vim-test {{{

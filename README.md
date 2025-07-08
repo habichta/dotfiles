@@ -12,6 +12,8 @@
 - Install fzf (git)
 - Install ansible (pipx)
 - Install docker
+- Install git-secrets
+  - `https://sobolevn.me/git-secret/installation`
 
 ## TMUX
 
@@ -38,6 +40,7 @@
 - :UpdateRemotePlugins
 - :CocSetup
 - :checkhealth -> go through issues
+- vim-test (may have to adapt path in ftplugin)
 
 ## Aider
 
@@ -73,5 +76,5 @@
 
 # TODO
 
-- Aider conf in secrets
 - Tridactyl setup
+- NAS mount

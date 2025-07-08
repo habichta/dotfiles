@@ -12,7 +12,7 @@ function! DockerTransform(cmd) abort
 endfunction
 
 function! HelpanyDockerTransform(cmd) abort
-  let parent_path = expand('~/projects/sedimentum/repos/')" Path to Helpany parent directory
+  let parent_path = expand('~/repos/helpany/')" Path to Helpany parent directory
   let cwd = getcwd()
 
   if cwd =~ '^' . parent_path

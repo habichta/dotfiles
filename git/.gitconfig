@@ -1,30 +1,31 @@
-[cola]
-	spellcheck = false
 [user]
 	name = Arthur Habicht
 	email = arthur.habicht@helpany.com
-	signingkey = C503695B
+	signingkey = 8DEC7F8A4A36931F
 [alias]
     lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
     lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
     lg3 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
-    lg = !"git lg1"
     c = commit
-    chm = checkout master
+    conflict = diff --name-only --diff-filter=U
     ch = checkout
+    chm = "!git checkout $(git branch --list main master | sed 's/^* //')"
     rom = rebase origin/master
+    ra = rebase --abort
+    rc = rebase --continue
     riom = rom -i --autosquash
     fc = c --fixup
-    s = "!git status --untracked-files=all"
+    s = status
     sw = switch
     d = diff
-    a = "!git add $@ && git s"
+    a = "!f() { git add \"$@\" && git s; }; f"
     p = push
     st = stash
     sta = stash apply
     please = push --force-with-lease
-    po =  !git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)
-    cb = !git rev-parse --abbrev-ref HEAD | tr -d '\\n' | xclip -selection clipboard
+    po =  push -u origin @
+    copy-branch = !git rev-parse --abbrev-ref HEAD | tr -d '\\n' | xclip -selection clipboard
+    fall = fetch --all --tags --recurse-submodules=on-demand
     ctags = "!bash -c '[ -f .git/hooks/ctags ] || git init; .git/hooks/ctags' git-ctags"
     update-all = "!f() { \
         git fetch --all && \
@@ -85,13 +86,14 @@
     # Show recently used branches
     b = "!git reflog -n 500 --pretty='%gs' | grep 'checkout' | awk '{print $NF}' | grep -v 'refs/remotes' | grep -v 'origin' | awk '!seen[$0]++' | fzf --height 10 --reverse | xargs git checkout"
 
-    # Switch to main or master branch
-    cm = "!git checkout $(git branch --list main master | sed 's/^* //')"
+    todo = grep -C 2 -n TODO
+    todoa = grep -C 2 -n TODO_A
+
 
 [core]
 	editor = nvim
   pager = "type diff-so-fancy > /dev/null 2>&1 && diff-so-fancy | less -RFX '+r/^(Author|added|deleted|modified|renamed): ' || less -RFX"
-	excludesfile = "~/.dotfiles/git/.gitignore"
+	excludesfile = ~/.gitignore
 [init]
   templatedir = ~/.git-templates
 [merge]
@@ -128,3 +130,12 @@
 	diff = auto
 	status = auto
 	branch = auto
+[pull]
+  rebase = true
+[rebase]
+  autoStash = true
+  autosquash = true
+[status]
+  showUntrackedFiles = all
+[submodule]
+  recurse = true

@@ -3,3 +3,11 @@ venvs/*
 .gitsecret/keys/random_seed
 mise.local.toml
 .aider*
+!*.secret
+aider/.aider.conf.yml
+
+# Ignore editor backup files
+*~
+*.swp
+*.swo
+*.bak

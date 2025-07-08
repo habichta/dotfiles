@@ -68,6 +68,7 @@ alias vi="nvim"
 alias vim="nvim"
 alias vl="nvim -c \"normal '0\"" # open last file
 alias ls='ls --color=auto'
+alias ll="ls -la --color=auto"
 alias rmr="rm -r"
 alias lsa="ls -la"
 alias reload="exec $SHELL"

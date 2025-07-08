@@ -161,7 +161,7 @@ function gb() {
     --ansi --preview="$_viewGitLogLine" \
     --header "enter to view, alt-c to copy hash to clipboard" \
     --bind "enter:execute:$_viewGitLogLine | less -R" \
-    --bind "alt-c:execute:$_gitLogLineToHash | xclip -i -sel c" \
+    --bind "alt-c:execute-silent:$_gitLogLineToHash | clip.exe"
     --preview-window=right:40%
   zle reset-prompt
 }
@@ -200,39 +200,21 @@ function load_env_file() {
     fi
 }
 
-Ag() {
-    local query="${1:-}"
 
-    if [[ -n "$query" ]]; then
-        # Perform the search and format the output for fzf
-        local item=$(git ls-files | xargs ag --hidden --ignore "*.ipynb" --ignore-dir deps --ignore-dir node_modules "$query" |
-        awk -F':' -v query="$query" '{printf "%s:%d\n", $1, $2}' | 
-        fzf --preview 'batcat --style=numbers --color=always $(echo {} | cut -d ":" -f 1) | grep  -C 10 "$(echo {} | cut -d ":" -f 2)"' --preview-window=right:70%:wrap --height 40% --header="Files containing: $query")
+# Rg() {
+#   local query="${1:-}"
+#   if [[ -n "$query" ]]; then
+#     local item=$(git ls-files | xargs rg --json --json-seq |
+#       jq -r "select(.data.lines.text | test(\"$query\")) | \"\(.data.path):\(.data.line_number)\"" 2>/dev/null |
+#       fzf --preview 'batcat --style=numbers --color=always {1} | rg --context 10 -F {2} {1}' --preview-window=right:70%:wrap --height 40% --header="Files containing: $query")
 
-        if [[ -n "$item" ]]; then
-            # Extract the filename and line number from the selected item
-            local filename=$(echo "$item" | cut -d':' -f1)
-            local line_number=$(echo "$item" | cut -d':' -f2)
-            nvim "+${line_number}" "$filename"  # Open Vim at the specific line
-        fi
-    fi
-}
-
-Rg() {
-  local query="${1:-}"
-  if [[ -n "$query" ]]; then
-    local item=$(git ls-files | xargs rg --json --json-seq |
-      jq -r "select(.data.lines.text | test(\"$query\")) | \"\(.data.path):\(.data.line_number)\"" 2>/dev/null |
-      fzf --preview 'batcat --style=numbers --color=always {1} | rg --context 10 -F {2} {1}' --preview-window=right:70%:wrap --height 40% --header="Files containing: $query")
-
-    if [[ -n "$item" ]]; then
-      local filename=$(echo "$item" | cut -d':' -f1)
-      local line_number=$(echo "$item" | cut -d':' -f2)
-      nvim "+${line_number}" "$filename"
-    fi
-  fi
-}
-
+#     if [[ -n "$item" ]]; then
+#       local filename=$(echo "$item" | cut -d':' -f1)
+#       local line_number=$(echo "$item" | cut -d':' -f2)
+#       nvim "+${line_number}" "$filename"
+#     fi
+#   fi
+# }
 
 
 

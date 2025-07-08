@@ -46,4 +46,7 @@ bindkey -M menuselect '^xg' clear-screen
 bindkey -M menuselect '^xi' vi-insert
 bindkey -M menuselect '^xh' accept-and-hold
 bindkey -M menuselect '^xn' accept-and-infer-next-history 
-bindkey -M menuselect '^xu' undo                           
+bindkey -M menuselect '^xu' undo
+
+# Enable menu selection
+bindkey '^[[Z' reverse-menu-complete  # Shift-Tab for backward

@@ -10,7 +10,7 @@ export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
 export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:$HOME/.fzf/bin"
 export PATH="$PATH:$DOTFILES/scripts"
-
+export PATH=$PATH:/mnt/c/Windows/System32:/mnt/c/Windows
 ########################################
 # ZSH 
 ########################################
@@ -27,20 +27,11 @@ export XDG_STATE_HOME="$HOME/.local/state"
 ########################################
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-FZF_EXCLUDES=(
-  --glob '!.git'
-  --glob '!node_modules'
-  --glob '!.cache'
-  --glob '!*.pyc'
-  --glob '!__pycache__'
-  --glob '!.venv'
-  --glob '!dist'
-  --glob '!build'
-)
-
-RG_OPTIONS="--files --hidden --follow ${FZF_EXCLUDES[*]}"
-export FZF_DEFAULT_COMMAND="rg $RG_OPTIONS"
-export FZF_DEFAULT_OPTS='--height 80% --layout=reverse --border --info=inline --bind "?:toggle-preview,ctrl-f:half-page-down,ctrl-b:half-page-up,ctrl-a:select-all+accept,ctrl-y:preview-up,ctrl-e:preview-down"'
+export FZF_DEFAULT_OPTS='--height 80% --layout=reverse --border --info=inline
+--bind "ctrl-/:toggle-preview,ctrl-f:half-page-down,ctrl-b:half-page-up,ctrl-a:select-all+accept"'
+# find files with `rg`
+export FZF_DEFAULT_COMMAND="rg --files --hidden --glob '!.git'"
+export FZF_CTRL_T_DEFAULT_COMMAND="$FZF_DEFAULT_COMMAND"
 
 ########################################
 # EDITOR 
