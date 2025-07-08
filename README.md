@@ -1,33 +1,21 @@
 # dotfiles
 
-## ZSH
+## ZSH / Basic
 
 - Install ZSH
-- Install OhMyZSH
-- Install Powerline fonts
-- Install NerdFont
-- Install spaceship theme
-- Install Python
-- Install mise
-- Install fzf
-- Install fd
-- Install silversearcher-ag
-- Install nvm
-- Install node
-- Install yarn
-- Install OpenSSL Dev Libraries
-- Install pip
-- Install virtualenv
-- Install ctags (exuberant)
-- Install ansible
-- Install Docker
-- Install docker-compose
-- Install ranger
-- Install lazygit
+- Install NerdFont (Hack Nerd Font)
+- Install starship theme
+  - `curl -sS https://starship.rs/install.sh | sh`
+- Install mise (-> node / python) -> create global python
+- Install pipx using pip of global python
+- Install virtualenv (pipx)
+- Install fzf (git)
+- Install ansible (pipx)
+- Install docker
 
 ## TMUX
 
-- Install tmux
+- Install tmux (apt)
 - Install TPM plugin manager
 - copy .tmux.conf
 - <prefix> + I to load plugins
@@ -35,41 +23,55 @@
 ## VIM
 
 - Install neovim
-  https://github.com/neovim/neovim/blob/master/INSTALL.md#appimage-universal-linux-package
+  - `https://github.com/neovim/neovim/blob/master/INSTALL.md#appimage-universal-linux-package`
 
-- Install init.vim into .config
-- Copy .vimrc and .vim
-- create virtualenv pointing to system python for neovim and change vimrc path
-  and activate venv
-- pip install neovim
-- pip install rope
-- pip install black
-- Initialize Submodules recursively
+- Symlink .config/nvim
+- Symlink .vimrc and .vim
+- :PlugInstall
+- Create virtualenv in ~/.config/nvim -> check `python_3_host_prog`
+  - pip install neovim
+  - pip install rope
+  - pip install black
+  - pip install autoflake
+  - pip install pynvim (wilder)
 - adapt fzf binary path
-- yarn install for nvim.coc
-- :CocInstall coc-pyright
-- :CocInstall coc-snippets
-- :CocInstall coc-actions
+- :UpdateRemotePlugins
+- :CocSetup
+- :checkhealth -> go through issues
 
-## Yarn Binaries
+## Aider
 
-- Install diff-so-fancy globally
+- Currently requires python 3.12 -> `mise install python@3.12`
+- `pipx_install_package` -> `aider-chat` with python 3.12
+- setup aider config file
 
 ## Essentals (Debian)
 
-`sudo apt install build-essential zlib1g-dev libffi-dev libssl-dev libbz2-dev libreadline-dev libsqlite3-dev liblzma-dev`
-
-## Global Python Packages
-
-## Others
-
-- move the monitoring script to /usr/bin/monitoring
-- Install htop
-- Install iotop
-- Install nmap
-- Install net-tools
+- `sudo apt install build-essential`
+- Install a GUI tool to allow WSL2 to open e.g. browser window
 
 ## CTAGS
 
 - Install universal CTAGS
 - use options file (sym link to ~/.ctags.d)
+- Requires `autoconf`, `automake`, and `pkg-config` to build
+  `sudo apt install autoconf automake pkg-config`
+
+## SSH
+
+- Install ssh-find-agent -> or change .zshrc
+
+## Others
+
+- Install diff-so-fancy
+  `https://github.com/aos/dsf-debian`
+
+- Install htop
+- Install iotop
+- Install nmap
+- Install net-tools
+
+# TODO
+
+- Aider conf in secrets
+- Tridactyl setup

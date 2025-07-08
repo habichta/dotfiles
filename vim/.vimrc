@@ -79,14 +79,17 @@ set splitright
 " Automatically reload files that have been changed outside of Vim.
 set autoread
 
+" Color Scheme
+set termguicolors
+
 "CTAGS
 exec 'set tags+=' . findfile('.git/tags', ';')
 
 "Python3
-let g:python3_host_prog = '~/.config/nvim/venv/bin/python3'
+let g:python3_host_prog = '~/.config/nvim/.venv/bin/python3'
 
 "Node - Does not work, there is an issue with project yarn being used instead
 "of global yarn, need to set copilot node command explicitly
-let g:node_host_prog = expand('~/.local/share/mise/installs/node/22.12.0/bin/neovim-node-host')
+let g:node_host_prog = expand('~/.local/share/mise/installs/node/22.17.0/bin/neovim-node-host')
 let $YARN_PATH = '/usr/bin/yarn'
-let g:copilot_node_command = '~/.local/share/mise/installs/node/22.12.0/bin/node'
+let g:copilot_node_command = '~/.local/share/mise/installs/node/22.17.0/bin/node'

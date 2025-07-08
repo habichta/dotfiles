@@ -74,9 +74,6 @@ xnoremap <silent> <C-Down> :move'>+<CR>gv=gv
 nnoremap <silent> n nzv:call functions#HighlightNext(0.2)<CR>
 nnoremap <silent> N Nzv:call functions#HighlightNext(0.2)<CR>
 
-" use F7 for pasting
-set pastetoggle=<F7>
-
 " use F6 for mouse mode
 nnoremap <F6> :call functions#ToggleMouse()<CR>
 

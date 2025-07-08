@@ -58,7 +58,7 @@ call wilder#set_option('renderer', wilder#popupmenu_renderer(wilder#popupmenu_bo
 
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8 } }
 let g:fzf_preview_window = ['right:50%', 'ctrl-_']
-command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, $AG_DEFAULT_OPTIONS . '--hidden --ignore "*.ipynb" --ignore-dir deps --ignore-dir node_modules --ignore-dir .git --ignore-dir .worktrees --ignore-dir target', fzf#vim#with_preview(), <bang>0)
+" command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, $AG_DEFAULT_OPTIONS . '--hidden --ignore "*.ipynb" --ignore-dir deps --ignore-dir node_modules --ignore-dir .git --ignore-dir .worktrees --ignore-dir target', fzf#vim#with_preview(), <bang>0)
 
 
 " vim-test

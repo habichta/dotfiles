@@ -4,6 +4,29 @@ if [ -n "$TMUX" ]; then
 fi
 }
 
+##### Improve ZSH Vi mode with text objects and vim-surround mechanics
+autoload -Uz select-bracketed select-quoted
+zle -N select-quoted
+zle -N select-bracketed
+for km in viopp visual; do
+  bindkey -M $km -- '-' vi-up-line-or-history
+  for c in {a,i}${(s..)^:-\'\"\`\|,./:;=+@}; do
+    bindkey -M $km $c select-quoted
+  done
+  for c in {a,i}${(s..)^:-'()[]{}<>bB'}; do
+    bindkey -M $km $c select-bracketed
+  done
+done
+
+autoload -Uz surround
+zle -N delete-surround surround
+zle -N add-surround surround
+zle -N change-surround surround
+bindkey -M vicmd cs change-surround
+bindkey -M vicmd ds delete-surround
+bindkey -M vicmd ys add-surround
+bindkey -M visual S add-surround
+
 # Quick way do go to previously visited directories
 function d() {
   ddir="$(dirs -v | awk '{print $2}' | fzf)"
@@ -13,27 +36,44 @@ function d() {
 }
 zle -N d
 
-# Check if inside a Git repository, if not a git repository, use fd to search
+# Check if inside a Git repository, if not a git repository, use rg to search
 # Search and open with neovim or cd, depending on file type
 function vf() {
-    if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-        # Customize fzf for Git repositories
-        local item=$(git ls-files | fzf --preview '[[ -f {} ]] && (batcat --style=numbers --color=always {} || cat {}) || tree -C {}' --preview-window=right:50%:wrap )
-    else
-        # Standard fzf behavior
-        local item=$(fd --type f --type d -H . | grep -I . | fzf --preview 'if [[ -d {} ]]; then tree -C {}; elif [[ -f {} ]]; then batcat --style=numbers --color=always {} || cat {}; fi' --preview-window=right:50%:wrap)
+  local item
+  local excludes=(
+    '-g' '!downloads/'
+    '-g' '!.local/'
+    '-g' '!.cache/'
+    '-g' '!**/node_modules/**'
+    '-g' '!**/.venv/**'
+    '-g' '!.tmux/plugins/'
+    '-g' '!.config/coc/'
+    '-g' '!.fzf/'
+    '-g' '!.git/'
+    '-g' '!.npm/'
+  )
+
+  if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    item=$(git ls-files -z | fzf --read0 \
+      --preview '[[ -f {} ]] && (batcat --style=numbers --color=always {} || cat {}) || tree -C {}' \
+      --preview-window=right:50%:wrap)
+  else
+    item=$(rg --files --hidden --follow "${excludes[@]}" 2>/dev/null | \
+      fzf --preview '[[ -f {} ]] && (batcat --style=numbers --color=always {} || cat {}) || tree -C {}' \
+          --preview-window=right:50%:wrap)
+  fi
+
+  if [[ -n "$item" ]]; then
+    if [[ -d "$item" ]]; then
+      cd "$item"
+    elif [[ -f "$item" ]]; then
+      nvim "$item"
     fi
-    if [ -n "$item" ]; then
-        if [ -d "$item" ]; then
-            cd "$item"
-        elif [ -f "$item" ]; then
-            v "$item"
-        fi
-    fi
-    zle reset-prompt
+  fi
+
+  zle reset-prompt
 }
 zle -N vf
-
 
 # Gather hosts from 'step ssh hosts' if available and remove sedimentum internal
 function gather_step_hosts() {
@@ -52,8 +92,7 @@ function ssh_with_fzf() {
   # Combine all hosts and remove duplicates
   all_hosts=($(
       echo "${config_hosts[@]}" "${step_hosts[@]}" |
-      awk 'NF' |                # Remove empty lines
-      sort -u                  # Sort and remove duplicates
+      awk 'NF' |  sort -u
   ))
 
   # Use fzf to select a host
@@ -71,10 +110,9 @@ zle -N ssh_with_fzf
 
 fzf_z_widget() {
   local selected_dir
-  selected_dir=$(z -l 2>&1 | sed '1d' | fzf --no-preview | awk '{print $2}')
+  selected_dir=$(z -l 2>&1 | fzf --no-preview | awk '{print $2}')
   if [[ -n "$selected_dir" ]]; then
-    BUFFER="cd $selected_dir"
-    zle accept-line
+    cd $selected_dir
   fi
   zle reset-prompt
 }
@@ -179,6 +217,24 @@ Ag() {
         fi
     fi
 }
+
+Rg() {
+  local query="${1:-}"
+  if [[ -n "$query" ]]; then
+    local item=$(git ls-files | xargs rg --json --json-seq |
+      jq -r "select(.data.lines.text | test(\"$query\")) | \"\(.data.path):\(.data.line_number)\"" 2>/dev/null |
+      fzf --preview 'batcat --style=numbers --color=always {1} | rg --context 10 -F {2} {1}' --preview-window=right:70%:wrap --height 40% --header="Files containing: $query")
+
+    if [[ -n "$item" ]]; then
+      local filename=$(echo "$item" | cut -d':' -f1)
+      local line_number=$(echo "$item" | cut -d':' -f2)
+      nvim "+${line_number}" "$filename"
+    fi
+  fi
+}
+
+
+
 
 is_valid_tz() {
     [[ -f "/usr/share/zoneinfo/$1" || -L "/usr/share/zoneinfo/$1" ]]
