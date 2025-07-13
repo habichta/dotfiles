@@ -16,13 +16,19 @@ nnoremap <Leader>P :GFiles?<Cr>
 nnoremap <Leader>} :Files<Cr>
 nnoremap <Leader>[ :History<Cr>
 nnoremap <Leader>\ :Buffers<Cr>
-noremap <Leader>] :Tags<Cr>
-" nnoremap <Leader>o :RG<CR>
-nnoremap <silent> <Leader>O :call fzf#vim#grep(
-      \ 'rg --column --line-number --no-heading --color=always --smart-case -- ' . expand('<cword>'),
-      \ fzf#vim#with_preview({'options': ['--query', '!deps !tests '], 'dir': systemlist('git rev-parse --show-toplevel')[0]}))<Enter>
-nnoremap <Leader>o :RG<CR>
+nnoremap <Leader>] :Tags<Cr>
 
+nnoremap <silent> <Leader>o :call fzf#vim#grep(
+      \ 'rg --column --line-number --hidden --no-heading --color=always --smart-case -F -- ""',
+      \ fzf#vim#with_preview({'options': ['--query', '!deps !tests '], 'dir': systemlist('git rev-parse --show-toplevel')[0]}))<Enter>
+
+nnoremap <silent> <Leader>O :call fzf#vim#grep(
+      \ 'rg --column --line-number --hidden --no-heading --color=always --smart-case -F -- ' . expand('<cword>'),
+      \ fzf#vim#with_preview({'options': ['--query', '!deps !tests '], 'dir': systemlist('git rev-parse --show-toplevel')[0]}))<Enter>
+
+vnoremap <silent> <Leader>O :<C-u>call fzf#vim#grep(
+      \ 'rg --column --line-number --hidden --color=always --smart-case -F  -- ' . shellescape(functions#GetVisualSelection()),
+      \ fzf#vim#with_preview({'options': ['--query', '!deps !tests '], 'dir': systemlist('git rev-parse --show-toplevel')[0]}))<Enter>
 
 
 command! BuffersDelete call fzf#run(fzf#wrap({

@@ -161,3 +161,32 @@ function! functions#DeleteBuffers(lines)
   execute 'bwipeout' join(map(a:lines, {_, line -> split(line)[0]}))
 endfunction
 
+function! functions#GetVisualSelection()
+    " Why is this not a built-in Vim script function?!
+    let [line_start, column_start] = getpos("'<")[1:2]
+    let [line_end, column_end] = getpos("'>")[1:2]
+    let lines = getline(line_start, line_end)
+    if len(lines) == 0
+        return ''
+    endif
+    let lines[-1] = lines[-1][: column_end - (&selection == 'inclusive' ? 1 : 2)]
+    let lines[0] = lines[0][column_start - 1:]
+    return join(lines, "\n")
+endfunction
+
+function! functions#EscapeRipgrepChars(text)
+    let escaped = a:text
+    " Escape single quotes by ending quote, adding escaped quote, starting quote again
+    let escaped = substitute(escaped, "'", "'\"'\"'", 'g')
+    " Escape exclamation marks with backslash
+    let escaped = substitute(escaped, '!', '\\!', 'g')
+    return escaped
+endfunction
+
+
+function! functions#QuoteForRipgrep(text)
+    " Escape backslashes and double quotes, then wrap in double quotes
+    let escaped = substitute(a:text, '\\', '\\\\', 'g')
+    let escaped = substitute(escaped, '"', '\\"', 'g')
+    return '"' . escaped . '"'
+endfunction

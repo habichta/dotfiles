@@ -62,7 +62,6 @@ eval "$(register-python-argcomplete pipx)"
 # Alias
 ########################################
 
-#VIM
 alias v="nvim"
 alias vi="nvim"
 alias vim="nvim"
@@ -77,6 +76,9 @@ alias cat="batcat"
 alias cc="clear"
 alias g="git"
 alias ai=aider # Aider AI
+
+# WSL2
+alias exp="explorer.exe ."
 
 #Download / Watch Youtube Video
 #alias youtubed='PYTHONPATH=~/projects/youtube-dl python -m youtube_dl -o "$HOME/Downloads/%(title)s.%(ext)s"'

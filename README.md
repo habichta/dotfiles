@@ -76,5 +76,8 @@
 
 # TODO
 
-- Tridactyl setup
 - NAS mount
+- Deep dive RipGrep
+- Deep dive FZF
+- Clean up formatting utilites -> install in vim? global pipx? allow local project installs? Python / Typescript
+- Linting / RipgRep usage / Clipboard

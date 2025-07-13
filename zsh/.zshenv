@@ -4,13 +4,15 @@
 export DOTFILES="$HOME/.dotfiles"
 
 ########################################
-# PATH  
+# PATH/HOME  
 ########################################
 export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
 export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:$HOME/.fzf/bin"
 export PATH="$PATH:$DOTFILES/scripts"
 export PATH=$PATH:/mnt/c/Windows/System32:/mnt/c/Windows
+
+. "$HOME/.cargo/env"
 ########################################
 # ZSH 
 ########################################
@@ -39,4 +41,3 @@ export FZF_CTRL_T_DEFAULT_COMMAND="$FZF_DEFAULT_COMMAND"
 export EDITOR="nvim"
 export VISUAL="nvim"
 export MANPAGER='nvim +Man!'
-

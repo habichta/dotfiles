@@ -1,9 +1,6 @@
 " put non-configured settings back to default
 sanitise tridactyllocal tridactylsync
 
-" " make gu take you back to subreddit from comments
-" bindurl reddit.com gu urlparent 4
-
 " allow Ctrl-a to select all in the commandline
 unbind --mode=ex <C-a>
 
