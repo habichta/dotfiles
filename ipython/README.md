@@ -1,0 +1,1 @@
+- Symlink into `~/.ipython/profile_default/startup/`

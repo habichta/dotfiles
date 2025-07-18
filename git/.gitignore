@@ -6,3 +6,4 @@ Session.vim
 mise.local.toml
 *.aider.*
 .luarc.json
+.tmp

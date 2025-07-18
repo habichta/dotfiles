@@ -40,6 +40,7 @@ vim.api.nvim_set_keymap('n', '<leader>co', ':lua close_other_buffers(false)<CR>'
 vim.api.nvim_set_keymap('n', '<leader>cO', ':lua close_other_buffers(true)<CR>', { noremap = true, silent = true })
 
 vim.keymap.set("n", "<leader>Gd", ":Gdiffsplit master<CR>", { desc = "Git diff with master" })
+vim.keymap.set("n", "<leader>Gc", ":Gdiffsplit HEAD~1<CR>", { desc = "Git diff with previous commit" })
 
 
 function RemoveUnusedImports()

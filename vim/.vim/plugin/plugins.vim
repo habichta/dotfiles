@@ -19,15 +19,15 @@ nnoremap <Leader>\ :Buffers<Cr>
 nnoremap <Leader>] :Tags<Cr>
 
 nnoremap <silent> <Leader>o :call fzf#vim#grep(
-      \ 'rg --column --line-number --hidden --no-heading --color=always --smart-case -F -- ""',
+      \ 'rg --column --line-number --hidden --no-heading --color=always --smart-case -F --glob "!**/.git/**" -- ""',
       \ fzf#vim#with_preview({'options': ['--query', '!deps !tests '], 'dir': systemlist('git rev-parse --show-toplevel')[0]}))<Enter>
 
 nnoremap <silent> <Leader>O :call fzf#vim#grep(
-      \ 'rg --column --line-number --hidden --no-heading --color=always --smart-case -F -- ' . expand('<cword>'),
+      \ 'rg --column --line-number --hidden --no-heading --color=always --smart-case -F --glob "!**/.git/**" -- ' . expand('<cword>'),
       \ fzf#vim#with_preview({'options': ['--query', '!deps !tests '], 'dir': systemlist('git rev-parse --show-toplevel')[0]}))<Enter>
 
 vnoremap <silent> <Leader>O :<C-u>call fzf#vim#grep(
-      \ 'rg --column --line-number --hidden --color=always --smart-case -F  -- ' . shellescape(functions#GetVisualSelection()),
+      \ 'rg --column --line-number --hidden --color=always --smart-case -F --glob "!**/.git/**" -- ' . shellescape(functions#GetVisualSelection()),
       \ fzf#vim#with_preview({'options': ['--query', '!deps !tests '], 'dir': systemlist('git rev-parse --show-toplevel')[0]}))<Enter>
 
 
