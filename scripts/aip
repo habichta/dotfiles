@@ -1,0 +1,5 @@
+#!/bin/bash
+tmpfile=$(mktemp)
+cat > "$tmpfile"
+aider "$tmpfile" < /dev/tty
+rm "$tmpfile"

@@ -39,6 +39,8 @@ source ~/.vimrc
  Plug 'antoinemadec/coc-fzf', {'branch': 'release'}
  Plug 'norcalli/nvim-colorizer.lua'
  Plug 'habichta/nvim-aider'
+ Plug 'nvim-lua/plenary.nvim'
+ Plug 'greggh/claude-code.nvim'
  call plug#end()
 
 luafile ~/.config/nvim/lua/init.lua

@@ -24,3 +24,5 @@ endfunction
 
 let g:test#custom_transformations = {'docker': function('HelpanyDockerTransform')}
 let g:test#transformation = 'docker'
+
+map <Leader>id :call functions#InsertPDB()<CR>

@@ -29,9 +29,15 @@ require("nvim_aider").setup({
     gui = { nerdFontsVersion = "3" },
   },
   win = {
-    wo = { winbar = "Aider" },
+    wo = { 
+      winbar = "Aider",
+      number = false,
+      relativenumber = false,
+      signcolumn = "no",
+    },
     style = "nvim_aider",
     position = "right",
+    width = 0.3,
   },
 })
 
@@ -59,6 +65,7 @@ vim.api.nvim_set_keymap('n', '<leader>AZ', ':lua AddFilesToAider()<CR>', {
 })
 
 vim.api.nvim_set_keymap('n', '<leader>AA', ':Aider toggle<CR>', { noremap = true, silent = true, desc = "Toggle Aider" })
+vim.api.nvim_set_keymap('t', '<leader>AA', '<C-\\><C-n>:Aider toggle<CR>', { noremap = true, silent = true, desc = "Toggle Aider from Terminal" })
 vim.api.nvim_set_keymap('n', '<leader>AC', ':Aider command<CR>',
   { noremap = true, silent = true, desc = "Aider Commands" })
 vim.api.nvim_set_keymap('n', '<leader>AS', ':Aider send<CR>', { noremap = true, silent = true, desc = "Send to Aider" })

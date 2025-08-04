@@ -1,5 +1,5 @@
 {
-  "coc.preferences.formatOnSave": true,
+  "coc.preferences.formatOnSave": false,
   "inlayHint.enable": false,
   "signature.enable": true,
   "diagnostic.checkCurrentLine": true,
@@ -9,8 +9,9 @@
   "javascript.autoClosingTags": true,
   "pyright.organizeimports.provider": "isort",
   "python.analysis.autoImportCompletions": true,
-  "python.formatting.blackPath": "~/.dotfiles/configs/.config/nvim/venv/bin/black",
   "python.formatting.provider": "black",
+  "python.formatting.blackPath": "black",
+  "python.formatting.blackArgs": ["--fast"],
   "python.linting.pylintEnabled": true,
   "python.sortImports.args": ["--line-length", "120", "--profile", "black"],
   "python.sortImports.path": "/usr/bin/isort",

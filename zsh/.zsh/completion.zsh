@@ -55,3 +55,6 @@ zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f
 # make completion
 zstyle ':completion:*:make:*:targets' call-command true
 zstyle ':completion:*:*:make:*' tag-order 'targets'
+
+# docker completion
+zstyle ':completion:*:docker:*' tag-order 'containers' 'images' 'volumes' 'networks' 'secrets' 'configs' 'plugins'
