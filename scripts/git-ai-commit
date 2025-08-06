@@ -68,7 +68,7 @@ generate_ai_message() {
     Here's the diff:
     $diff_output"
         fi
-        echo "$prompt" | claude
+        echo "$prompt" | claude --print
     }
 
 echo "Generating AI commit message..."
