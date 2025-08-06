@@ -25,8 +25,8 @@ export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
 # FPATH ###############################
-# Docker completion
-export FPATH=~/.docker/completions:$FPATH
+# Completions for ZSH
+export FPATH=~/.zsh/completions:$FPATH
 
 ########################################
 # FZF 
