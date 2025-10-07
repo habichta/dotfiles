@@ -20,6 +20,7 @@
     s = status
     sw = switch
     d = diff
+    dm = diff master
     a = "!f() { git add \"$@\" && git s; }; f"
     p = push
     st = stash

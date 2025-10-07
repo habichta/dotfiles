@@ -1,11 +1,37 @@
 #!/bin/bash
 
-DIR="$1"
+CONFIG_FILE=""
+TARGET=""
 
-if [ -z "$DIR" ]; then
-  echo "Usage: format <folder>"
+# Parse arguments
+for arg in "$@"; do
+  case $arg in
+    --config=*)
+      CONFIG_FILE="${arg#*=}"
+      shift
+      ;;
+    *)
+      TARGET="$arg"
+      shift
+      ;;
+  esac
+done
+
+if [ -z "$TARGET" ]; then
+  echo "Usage: format-python [--config=<config_file>] <target>"
   exit 1
 fi
 
-python -m black "$DIR"
-python -m isort "$DIR"
+# Black
+if [ -n "$CONFIG_FILE" ]; then
+  python -m black --config "$CONFIG_FILE" "$TARGET"
+else
+  python -m black "$TARGET"
+fi
+
+# isort
+if [ -n "$CONFIG_FILE" ]; then
+  python -m isort --settings-file "$CONFIG_FILE" "$TARGET"
+else
+  python -m isort "$TARGET"
+fi

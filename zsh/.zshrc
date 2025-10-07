@@ -85,3 +85,5 @@ alias exp="explorer.exe ."
 #alias vlc="/mnt/c/Program\ Files/VideoLAN/VLC/vlc.exe"
 
 [ -z "$ZPROF" ] || zprof
+
+. "$HOME/.local/share/../bin/env"

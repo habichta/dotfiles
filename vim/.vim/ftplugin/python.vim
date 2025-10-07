@@ -1,7 +1,9 @@
-"let g:black_linelength = 120
-"let g:black_virtualenv = '~/.config/nvim/venv'
-" autocmd BufWritePre *.py execute ':Black'
-" autocmd BufWritePre *.py execute ':Isort'
+"" Format Python with Black via CoC
+command! Black :call CocAction('format')
+command! Isort :call CocAction('runCommand', 'python.sortImports')
+
+" Or create a combined command
+command! Format :call CocAction('format') | :call CocAction('runCommand', 'python.sortImports')
 
 " configure the test runner
 let test#python#runner = 'pytest'
@@ -16,7 +18,9 @@ function! HelpanyDockerTransform(cmd) abort
   let cwd = getcwd()
 
   if cwd =~ '^' . parent_path
-    return 'docker-compose -f docker-compose.test.yml run --rm tests ' . a:cmd
+  " Remove 'uv run' if present
+    let cmd = substitute(a:cmd, '^uv run\s*', '', '')
+    return 'docker-compose -f docker-compose.test.yml run --rm tests ' . cmd
   else
     return a:cmd
   endif
@@ -24,5 +28,3 @@ endfunction
 
 let g:test#custom_transformations = {'docker': function('HelpanyDockerTransform')}
 let g:test#transformation = 'docker'
-
-map <Leader>id :call functions#InsertPDB()<CR>

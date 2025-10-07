@@ -8,3 +8,4 @@ mise.local.toml
 *.aider*
 .luarc.json
 .gitignored
+.vim/coc-settings.json

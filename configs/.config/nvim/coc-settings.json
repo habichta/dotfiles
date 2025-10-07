@@ -1,42 +1,55 @@
 {
-  "coc.preferences.formatOnSave": false,
+  "[python][javascript][javascriptreact][typescript][typescriptreact][yaml][css][scss][rust][dockerfile]": {
+    "coc.preferences.formatOnSave": true
+  },
+
+  // General
   "inlayHint.enable": false,
   "signature.enable": true,
   "diagnostic.checkCurrentLine": true,
-  "eslint.autoFixOnSave": true,
+  "workspace.ignoredFolders": ["$HOME", "$HOME/.cargo/**", "$HOME/.rustup/**"],
+
+  // ESLint & Prettier
   "eslint.enable": true,
+  "eslint.autoFixOnSave": true,
+  "eslint.filetypes": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "prettier.enable": true,
+  "prettier.eslintIntegration": true,
+
+  // HTML / JS / TS
   "html.format.enable": true,
   "javascript.autoClosingTags": true,
-  "pyright.organizeimports.provider": "isort",
-  "python.analysis.autoImportCompletions": true,
-  "python.formatting.provider": "black",
-  "python.formatting.blackPath": "black",
-  "python.formatting.blackArgs": ["--fast"],
-  "python.linting.pylintEnabled": true,
-  "python.sortImports.args": ["--line-length", "120", "--profile", "black"],
-  "python.sortImports.path": "/usr/bin/isort",
-  "snippets.snipmate.enable": false,
-  "snippets.ultisnips.enable": true,
   "typescript.autoClosingTags": true,
   "typescript.preferences.importModuleSpecifier": "non-relative",
   "tsserver.enable": true,
   "tsserver.experimental.enableProjectDiagnostics": true,
-  "eslint.filetypes": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact"
-  ],
-  "prettier.enable": true,
-  "prettier.eslintIntegration": true,
 
+  // Python
+  "python.pythonPath": "python",
+  "python.analysis.autoImportCompletions": true,
+  "python.linting.pylintEnabled": true,
+  "python.formatting.provider": "black",
+  "python.formatting.blackPath": "black",
+  "python.formatting.blackArgs": ["--fast"],
+  "pyright.organizeimports.provider": "isort",
+  "python.sortImports.path": "isort",
+  "python.sortImports.args": ["--line-length", "120", "--profile", "black"],
+
+  // Rust
+  "rust-analyzer.imports.granularity.group": "module",
+  "rust-analyzer.imports.prefix": "self",
+  "rust-analyzer.imports.group.enable": true,
+  "rust-analyzer.imports.sort": true,
+  "rust-analyzer.diagnostics.enable": true,
+
+  // YAML
   "yaml.schemas": {
     "kubernetes": "/*.yaml"
   },
+
+  // C/C++
   "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/18.1.3/clangd_18.1.3/bin/clangd",
-  "snippets.ultisnips.pythonPrompt": false,
-  "workspace.ignoredFolders": ["$HOME", "$HOME/.cargo/**", "$HOME/.rustup/**"],
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  }
 }

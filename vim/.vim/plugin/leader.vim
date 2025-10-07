@@ -20,7 +20,7 @@ nnoremap <Leader>z <C-w>\|<C-w>_
 nnoremap <Leader>Z <C-w>=
 
 " rename file (prompts for new filename)
-nnoremap <Leader>rn :call functions#RenameFile()<CR>
+nnoremap <Leader>Rn :call functions#RenameFile()<CR>
 
 "Close Window if it is not the last
 nnoremap <Leader>cw :close<CR>
