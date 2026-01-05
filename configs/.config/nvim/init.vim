@@ -22,7 +22,7 @@ source ~/.vimrc
  Plug 'nvim-lualine/lualine.nvim'
  Plug 'nvim-tree/nvim-tree.lua'
  Plug 'nvim-tree/nvim-web-devicons'
- Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate', 'branch' : 'master'}
  Plug 'psf/black', {'on': 'Black'}
  Plug 'ryanoasis/vim-devicons'
  Plug 'sainnhe/gruvbox-material'

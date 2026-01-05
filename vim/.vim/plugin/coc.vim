@@ -45,7 +45,7 @@ nmap <silent> ]g <Plug>(coc-diagnostic-next)
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+nmap <silent> R <Plug>(coc-references)
 
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call ShowDocumentation()<CR>
@@ -66,8 +66,8 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 nmap <leader>r <Plug>(coc-rename)
 
 " Formatting selected code.
-xmap <silent> <leader>f <Plug>(coc-format-selected)
-nmap <silent> <leader>f <Plug>(coc-format-selected)
+xmap <silent> <leader>fo <Plug>(coc-format-selected)
+nmap <silent> <leader>fo <Plug>(coc-format-selected)
 
 
 augroup mygroup
@@ -154,4 +154,4 @@ nnoremap <silent><nowait> <leader>gdv :call CocAction('jumpDefinition', 'vsplit'
 " Jump with horizontal split
 nnoremap <silent><nowait> <leader>gds :call CocAction('jumpDefinition', 'split')<CR>
 " Peek Definition
-nnoremap <silent><nowait> <leader>d  :call CocAction('jumpDefinition', v:false)<CR>
+nnoremap <silent><nowait> <leader>D  :call CocAction('jumpDefinition', v:false)<CR>

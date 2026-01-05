@@ -34,7 +34,7 @@ export FPATH=~/.zsh/completions:$FPATH
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export FZF_DEFAULT_OPTS='--height 80% --layout=reverse --border --info=inline
---bind "ctrl-/:toggle-preview,ctrl-f:half-page-down,ctrl-b:half-page-up,ctrl-a:select-all+accept"'
+--bind "ctrl-/:toggle-preview,ctrl-j:down,ctrl-k:up,ctrl-d:half-page-down,ctrl-u:half-page-up,ctrl-a:select-all+accept"'
 # find files with `rg`
 export FZF_DEFAULT_COMMAND="rg --files --hidden --glob '!.git'"
 export FZF_CTRL_T_DEFAULT_COMMAND="$FZF_DEFAULT_COMMAND"

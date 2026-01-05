@@ -1,2 +1,2 @@
 "format js, *sx, using the prettier command
-nnoremap <silent> <Leader>f :Prettier<CR>
+nnoremap <silent> <Leader>fo :Prettier<CR>

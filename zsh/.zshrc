@@ -57,6 +57,12 @@ eval "$(/home/habichta/.local/bin/mise activate zsh)"
 ########################################
 eval "$(register-python-argcomplete pipx)"
 
+########################################
+# UVX
+########################################
+eval "$(uvx --generate-shell-completion zsh)"
+eval "$(uv --generate-shell-completion zsh)"
+
 
 ########################################
 # Alias
@@ -80,9 +86,9 @@ alias ai=aider # Aider AI
 # WSL2
 alias exp="explorer.exe ."
 
-#Download / Watch Youtube Video
-#alias youtubed='PYTHONPATH=~/projects/youtube-dl python -m youtube_dl -o "$HOME/Downloads/%(title)s.%(ext)s"'
-#alias vlc="/mnt/c/Program\ Files/VideoLAN/VLC/vlc.exe"
+#Download / Watch Youtube Video / Install yt-dlp using uv tool and stable commit from repo
+alias youtubed='yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]" -o "$HOME/Downloads/%(title)s.%(ext)s"'
+alias vlc="/mnt/c/Program\ Files/VideoLAN/VLC/vlc.exe"
 
 [ -z "$ZPROF" ] || zprof
 

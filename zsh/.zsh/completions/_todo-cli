@@ -1,0 +1,655 @@
+#compdef todo-cli
+
+autoload -U is-at-least
+
+_todo-cli() {
+    typeset -A opt_args
+    typeset -a _arguments_options
+    local ret=1
+
+    if is-at-least 5.2; then
+        _arguments_options=(-s -S -C)
+    else
+        _arguments_options=(-s -C)
+    fi
+
+    local context curcontext="$curcontext" state line
+    _arguments "${_arguments_options[@]}" : \
+'--gen-completions[Generate completion files for configured shell]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'-V[Print version]' \
+'--version[Print version]' \
+":: :_todo-cli_commands" \
+"*::: :->todo-cli" \
+&& ret=0
+    case $state in
+    (todo-cli)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:todo-cli-command-$line[1]:"
+        case $line[1] in
+            (task)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_todo-cli__task_commands" \
+"*::: :->task" \
+&& ret=0
+
+    case $state in
+    (task)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:todo-cli-task-command-$line[1]:"
+        case $line[1] in
+            (get)
+_arguments "${_arguments_options[@]}" : \
+'-j[]' \
+'--json[]' \
+'-v[]' \
+'--verbose[]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':id:_default' \
+&& ret=0
+;;
+(add)
+_arguments "${_arguments_options[@]}" : \
+'-d+[]:DETAILS:_default' \
+'--details=[]:DETAILS:_default' \
+'-D+[]:DUE_DATE:_default' \
+'--due-date=[]:DUE_DATE:_default' \
+'--completed-at=[]:COMPLETED_AT:_default' \
+'-P+[]:PRIORITY:(high middle low)' \
+'--priority=[]:PRIORITY:(high middle low)' \
+'*-l+[]:LABELS:_default' \
+'*--labels=[]:LABELS:_default' \
+'-T[]' \
+'--today[]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':title:_default' \
+&& ret=0
+;;
+(set)
+_arguments "${_arguments_options[@]}" : \
+'*-i+[]:IDS:_default' \
+'*--ids=[]:IDS:_default' \
+'-t+[]:TITLE:_default' \
+'--title=[]:TITLE:_default' \
+'-d+[]:DETAILS:_default' \
+'--details=[]:DETAILS:_default' \
+'-D+[]:DUE_DATE:_default' \
+'--due-date=[]:DUE_DATE:_default' \
+'-c+[]:COMPLETED_AT:_default' \
+'--completed-at=[]:COMPLETED_AT:_default' \
+'-P+[]:PRIORITY:(high middle low)' \
+'--priority=[]:PRIORITY:(high middle low)' \
+'*-l+[]:LABELS:_default' \
+'*--labels=[]:LABELS:_default' \
+'-T[]' \
+'--today[]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(complete)
+_arguments "${_arguments_options[@]}" : \
+'*-i+[]:IDS:_default' \
+'*--ids=[]:IDS:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(uncomplete)
+_arguments "${_arguments_options[@]}" : \
+'*-i+[]:IDS:_default' \
+'*--ids=[]:IDS:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(list)
+_arguments "${_arguments_options[@]}" : \
+'*-l+[]:LABELS:_default' \
+'*--labels=[]:LABELS:_default' \
+'-P+[]:PRIORITY:(high middle low)' \
+'--priority=[]:PRIORITY:(high middle low)' \
+'-o+[]:ORDER:(id title due-date completed-at priority)' \
+'--order=[]:ORDER:(id title due-date completed-at priority)' \
+'-T[]' \
+'--today[]' \
+'-v[]' \
+'--verbose[]' \
+'-j[]' \
+'--json[]' \
+'--desc[]' \
+'-H[]' \
+'--hide-done[]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(delete)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+'*::ids:_default' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_todo-cli__task__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:todo-cli-task-help-command-$line[1]:"
+        case $line[1] in
+            (get)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(add)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(set)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(complete)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(uncomplete)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(list)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(delete)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(label)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_todo-cli__label_commands" \
+"*::: :->label" \
+&& ret=0
+
+    case $state in
+    (label)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:todo-cli-label-command-$line[1]:"
+        case $line[1] in
+            (add)
+_arguments "${_arguments_options[@]}" : \
+'*-i+[]:IDS:_default' \
+'*--ids=[]:IDS:_default' \
+'-l+[]:LABEL:_default' \
+'--label=[]:LABEL:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(list)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(update)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+':old_label:_default' \
+':new_label:_default' \
+&& ret=0
+;;
+(delete)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+':label:_default' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_todo-cli__label__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:todo-cli-label-help-command-$line[1]:"
+        case $line[1] in
+            (add)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(list)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(update)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(delete)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_todo-cli__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:todo-cli-help-command-$line[1]:"
+        case $line[1] in
+            (task)
+_arguments "${_arguments_options[@]}" : \
+":: :_todo-cli__help__task_commands" \
+"*::: :->task" \
+&& ret=0
+
+    case $state in
+    (task)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:todo-cli-help-task-command-$line[1]:"
+        case $line[1] in
+            (get)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(add)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(set)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(complete)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(uncomplete)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(list)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(delete)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(label)
+_arguments "${_arguments_options[@]}" : \
+":: :_todo-cli__help__label_commands" \
+"*::: :->label" \
+&& ret=0
+
+    case $state in
+    (label)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:todo-cli-help-label-command-$line[1]:"
+        case $line[1] in
+            (add)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(list)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(update)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(delete)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+}
+
+(( $+functions[_todo-cli_commands] )) ||
+_todo-cli_commands() {
+    local commands; commands=(
+'task:Managing Tasks' \
+'label:Managing Labels' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'todo-cli commands' commands "$@"
+}
+(( $+functions[_todo-cli__help_commands] )) ||
+_todo-cli__help_commands() {
+    local commands; commands=(
+'task:Managing Tasks' \
+'label:Managing Labels' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'todo-cli help commands' commands "$@"
+}
+(( $+functions[_todo-cli__help__help_commands] )) ||
+_todo-cli__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'todo-cli help help commands' commands "$@"
+}
+(( $+functions[_todo-cli__help__label_commands] )) ||
+_todo-cli__help__label_commands() {
+    local commands; commands=(
+'add:' \
+'list:' \
+'update:' \
+'delete:' \
+    )
+    _describe -t commands 'todo-cli help label commands' commands "$@"
+}
+(( $+functions[_todo-cli__help__label__add_commands] )) ||
+_todo-cli__help__label__add_commands() {
+    local commands; commands=()
+    _describe -t commands 'todo-cli help label add commands' commands "$@"
+}
+(( $+functions[_todo-cli__help__label__delete_commands] )) ||
+_todo-cli__help__label__delete_commands() {
+    local commands; commands=()
+    _describe -t commands 'todo-cli help label delete commands' commands "$@"
+}
+(( $+functions[_todo-cli__help__label__list_commands] )) ||
+_todo-cli__help__label__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'todo-cli help label list commands' commands "$@"
+}
+(( $+functions[_todo-cli__help__label__update_commands] )) ||
+_todo-cli__help__label__update_commands() {
+    local commands; commands=()
+    _describe -t commands 'todo-cli help label update commands' commands "$@"
+}
+(( $+functions[_todo-cli__help__task_commands] )) ||
+_todo-cli__help__task_commands() {
+    local commands; commands=(
+'get:Get a task' \
+'add:' \
+'set:' \
+'complete:' \
+'uncomplete:' \
+'list:' \
+'delete:' \
+    )
+    _describe -t commands 'todo-cli help task commands' commands "$@"
+}
+(( $+functions[_todo-cli__help__task__add_commands] )) ||
+_todo-cli__help__task__add_commands() {
+    local commands; commands=()
+    _describe -t commands 'todo-cli help task add commands' commands "$@"
+}
+(( $+functions[_todo-cli__help__task__complete_commands] )) ||
+_todo-cli__help__task__complete_commands() {
+    local commands; commands=()
+    _describe -t commands 'todo-cli help task complete commands' commands "$@"
+}
+(( $+functions[_todo-cli__help__task__delete_commands] )) ||
+_todo-cli__help__task__delete_commands() {
+    local commands; commands=()
+    _describe -t commands 'todo-cli help task delete commands' commands "$@"
+}
+(( $+functions[_todo-cli__help__task__get_commands] )) ||
+_todo-cli__help__task__get_commands() {
+    local commands; commands=()
+    _describe -t commands 'todo-cli help task get commands' commands "$@"
+}
+(( $+functions[_todo-cli__help__task__list_commands] )) ||
+_todo-cli__help__task__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'todo-cli help task list commands' commands "$@"
+}
+(( $+functions[_todo-cli__help__task__set_commands] )) ||
+_todo-cli__help__task__set_commands() {
+    local commands; commands=()
+    _describe -t commands 'todo-cli help task set commands' commands "$@"
+}
+(( $+functions[_todo-cli__help__task__uncomplete_commands] )) ||
+_todo-cli__help__task__uncomplete_commands() {
+    local commands; commands=()
+    _describe -t commands 'todo-cli help task uncomplete commands' commands "$@"
+}
+(( $+functions[_todo-cli__label_commands] )) ||
+_todo-cli__label_commands() {
+    local commands; commands=(
+'add:' \
+'list:' \
+'update:' \
+'delete:' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'todo-cli label commands' commands "$@"
+}
+(( $+functions[_todo-cli__label__add_commands] )) ||
+_todo-cli__label__add_commands() {
+    local commands; commands=()
+    _describe -t commands 'todo-cli label add commands' commands "$@"
+}
+(( $+functions[_todo-cli__label__delete_commands] )) ||
+_todo-cli__label__delete_commands() {
+    local commands; commands=()
+    _describe -t commands 'todo-cli label delete commands' commands "$@"
+}
+(( $+functions[_todo-cli__label__help_commands] )) ||
+_todo-cli__label__help_commands() {
+    local commands; commands=(
+'add:' \
+'list:' \
+'update:' \
+'delete:' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'todo-cli label help commands' commands "$@"
+}
+(( $+functions[_todo-cli__label__help__add_commands] )) ||
+_todo-cli__label__help__add_commands() {
+    local commands; commands=()
+    _describe -t commands 'todo-cli label help add commands' commands "$@"
+}
+(( $+functions[_todo-cli__label__help__delete_commands] )) ||
+_todo-cli__label__help__delete_commands() {
+    local commands; commands=()
+    _describe -t commands 'todo-cli label help delete commands' commands "$@"
+}
+(( $+functions[_todo-cli__label__help__help_commands] )) ||
+_todo-cli__label__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'todo-cli label help help commands' commands "$@"
+}
+(( $+functions[_todo-cli__label__help__list_commands] )) ||
+_todo-cli__label__help__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'todo-cli label help list commands' commands "$@"
+}
+(( $+functions[_todo-cli__label__help__update_commands] )) ||
+_todo-cli__label__help__update_commands() {
+    local commands; commands=()
+    _describe -t commands 'todo-cli label help update commands' commands "$@"
+}
+(( $+functions[_todo-cli__label__list_commands] )) ||
+_todo-cli__label__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'todo-cli label list commands' commands "$@"
+}
+(( $+functions[_todo-cli__label__update_commands] )) ||
+_todo-cli__label__update_commands() {
+    local commands; commands=()
+    _describe -t commands 'todo-cli label update commands' commands "$@"
+}
+(( $+functions[_todo-cli__task_commands] )) ||
+_todo-cli__task_commands() {
+    local commands; commands=(
+'get:Get a task' \
+'add:' \
+'set:' \
+'complete:' \
+'uncomplete:' \
+'list:' \
+'delete:' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'todo-cli task commands' commands "$@"
+}
+(( $+functions[_todo-cli__task__add_commands] )) ||
+_todo-cli__task__add_commands() {
+    local commands; commands=()
+    _describe -t commands 'todo-cli task add commands' commands "$@"
+}
+(( $+functions[_todo-cli__task__complete_commands] )) ||
+_todo-cli__task__complete_commands() {
+    local commands; commands=()
+    _describe -t commands 'todo-cli task complete commands' commands "$@"
+}
+(( $+functions[_todo-cli__task__delete_commands] )) ||
+_todo-cli__task__delete_commands() {
+    local commands; commands=()
+    _describe -t commands 'todo-cli task delete commands' commands "$@"
+}
+(( $+functions[_todo-cli__task__get_commands] )) ||
+_todo-cli__task__get_commands() {
+    local commands; commands=()
+    _describe -t commands 'todo-cli task get commands' commands "$@"
+}
+(( $+functions[_todo-cli__task__help_commands] )) ||
+_todo-cli__task__help_commands() {
+    local commands; commands=(
+'get:Get a task' \
+'add:' \
+'set:' \
+'complete:' \
+'uncomplete:' \
+'list:' \
+'delete:' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'todo-cli task help commands' commands "$@"
+}
+(( $+functions[_todo-cli__task__help__add_commands] )) ||
+_todo-cli__task__help__add_commands() {
+    local commands; commands=()
+    _describe -t commands 'todo-cli task help add commands' commands "$@"
+}
+(( $+functions[_todo-cli__task__help__complete_commands] )) ||
+_todo-cli__task__help__complete_commands() {
+    local commands; commands=()
+    _describe -t commands 'todo-cli task help complete commands' commands "$@"
+}
+(( $+functions[_todo-cli__task__help__delete_commands] )) ||
+_todo-cli__task__help__delete_commands() {
+    local commands; commands=()
+    _describe -t commands 'todo-cli task help delete commands' commands "$@"
+}
+(( $+functions[_todo-cli__task__help__get_commands] )) ||
+_todo-cli__task__help__get_commands() {
+    local commands; commands=()
+    _describe -t commands 'todo-cli task help get commands' commands "$@"
+}
+(( $+functions[_todo-cli__task__help__help_commands] )) ||
+_todo-cli__task__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'todo-cli task help help commands' commands "$@"
+}
+(( $+functions[_todo-cli__task__help__list_commands] )) ||
+_todo-cli__task__help__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'todo-cli task help list commands' commands "$@"
+}
+(( $+functions[_todo-cli__task__help__set_commands] )) ||
+_todo-cli__task__help__set_commands() {
+    local commands; commands=()
+    _describe -t commands 'todo-cli task help set commands' commands "$@"
+}
+(( $+functions[_todo-cli__task__help__uncomplete_commands] )) ||
+_todo-cli__task__help__uncomplete_commands() {
+    local commands; commands=()
+    _describe -t commands 'todo-cli task help uncomplete commands' commands "$@"
+}
+(( $+functions[_todo-cli__task__list_commands] )) ||
+_todo-cli__task__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'todo-cli task list commands' commands "$@"
+}
+(( $+functions[_todo-cli__task__set_commands] )) ||
+_todo-cli__task__set_commands() {
+    local commands; commands=()
+    _describe -t commands 'todo-cli task set commands' commands "$@"
+}
+(( $+functions[_todo-cli__task__uncomplete_commands] )) ||
+_todo-cli__task__uncomplete_commands() {
+    local commands; commands=()
+    _describe -t commands 'todo-cli task uncomplete commands' commands "$@"
+}
+
+if [ "$funcstack[1]" = "_todo-cli" ]; then
+    _todo-cli "$@"
+else
+    compdef _todo-cli todo-cli
+fi

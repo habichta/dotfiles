@@ -19,9 +19,6 @@ nnoremap <silent> <Leader>q :nohlsearch<CR>
 nnoremap <Leader>z <C-w>\|<C-w>_
 nnoremap <Leader>Z <C-w>=
 
-" rename file (prompts for new filename)
-nnoremap <Leader>Rn :call functions#RenameFile()<CR>
-
 "Close Window if it is not the last
 nnoremap <Leader>cw :close<CR>
 
@@ -34,3 +31,10 @@ nnoremap <Leader>u :e!<CR>
 "" Copy current file path to clipboard
 nnoremap <silent> <leader>cp :let @+ = expand('%:p')<CR>
 
+" simple get/put for diff
+nnoremap <Leader>dg do
+vnoremap <Leader>dg :diffget<CR>
+nnoremap <Leader>dp dp
+vnoremap <Leader>dp :diffput<CR>
+nnoremap <Leader>dw :windo diffth<CR>
+nnoremap <Leader>de :diffoff!<CR>

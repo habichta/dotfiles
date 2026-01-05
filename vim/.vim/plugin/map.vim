@@ -103,3 +103,13 @@ inoremap <C-h> <Left>
 inoremap <C-l> <Right>
 inoremap <C-k> <Up>
 inoremap <C-j> <Down>
+
+" remove trailing whitelines
+nnoremap <Leader>fw :%s/\s\+$//<cr>:nohlsearch<cr>
+" " convert tabs to whitespace
+" nnoremap <Leader>cw :%s/\t/  /g<cr>:nohlsearch<cr>
+"
+" Remap F1
+nnoremap <F1> <Nop>
+inoremap <F1> <Nop>
+vnoremap <F1> <Nop>

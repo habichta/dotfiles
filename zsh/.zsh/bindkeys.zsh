@@ -13,6 +13,9 @@ bindkey "^[b" backward-word
 bindkey "^[f" forward-word
 bindkey '^X^E' edit-command-line
 
+bindkey  '^K' up-line-or-history  # Ctrl + J for down history
+bindkey  '^J' down-line-or-history
+
 bindkey -M viins '\e[1;5D' backward-word    # Ctrl + Left
 bindkey -M viins '\e[1;5C' forward-word     # Ctrl + Right
 

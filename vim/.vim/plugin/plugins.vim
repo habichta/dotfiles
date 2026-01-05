@@ -18,6 +18,11 @@ nnoremap <Leader>[ :History<Cr>
 nnoremap <Leader>\ :Buffers<Cr>
 nnoremap <Leader>] :Tags<Cr>
 
+autocmd FileType fzf tnoremap <buffer> <C-j> <Down>
+autocmd FileType fzf tnoremap <buffer> <C-k> <Up>
+autocmd FileType fzf tnoremap <buffer> <C-d> <PageDown>
+autocmd FileType fzf tnoremap <buffer> <C-u> <PageUp>
+
 nnoremap <silent> <Leader>o :call fzf#vim#grep(
       \ 'rg --column --line-number --hidden --no-heading --color=always --smart-case -F --glob "!**/.git/**" -- ""',
       \ fzf#vim#with_preview({'options': ['--query', '!deps !tests '], 'dir': systemlist('git rev-parse --show-toplevel')[0]}))<Enter>
@@ -69,9 +74,9 @@ call wilder#set_option('renderer', wilder#popupmenu_renderer(wilder#popupmenu_bo
       \ 'max_height': '15%',
       \ })))
 
+
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8 } }
 let g:fzf_preview_window = ['right:50%', 'ctrl-_']
-
 " vim-test
 " <Plug> vim-test {{{
 " setup mappings

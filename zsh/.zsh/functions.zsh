@@ -307,3 +307,22 @@ function helpany_update_dev_python_deps {
     # Install dependencies from requirements file, ignoring lines starting with -e file:///
     grep -v '^-e file:///' "$requirements_file" | pip install -r /dev/stdin
 }
+
+function tget {
+  local id=$(todo-cli task list -v --json $* | jq -r '.[] | "\(.id) | \(.title) | \(.labels | join(","))"' | fzf  | cut -d '|' -f1 | xargs)
+  if [[ -n "$id" ]]; then
+    todo-cli task get -v  $id
+  else
+    echo "No tasks selected"
+  fi
+}
+
+function tcomplete {
+  local ids=$(todo-cli task list -v --json -H | jq -r '.[] | "\(.id) | \(.title) | \(.labels | join(","))"' | fzf --multi | cut -d '|' -f1 | xargs)
+  if [[ -n "$ids" ]]; then
+    todo-cli task complete --ids $ids
+  else
+    echo "No tasks selected"
+  fi
+}
+
