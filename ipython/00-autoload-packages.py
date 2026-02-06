@@ -1,12 +1,7 @@
 imports = {
     "os": None,
-    "functools": None,
-    "collections": None,
-    "datetime": None,
-    "re": None,
     "numpy": "np",
     "pandas": "pd",
-    "scipy": None,
 }
 
 for module, alias in imports.items():

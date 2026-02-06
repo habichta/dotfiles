@@ -31,7 +31,7 @@
     fall = fetch --all --tags --recurse-submodules=on-demand
     ctags = "!bash -c '[ -f .git/hooks/ctags ] || git init; .git/hooks/ctags' git-ctags"
     update-all = "!f() { \
-        git fetch --all && \
+        git fetch --all --tags && \
         git rebase && \
         git submodule update --init --recursive; \
     }; f"

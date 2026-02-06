@@ -28,7 +28,7 @@ mise use python@$full_version
 # Activate mise environment
 eval "$(mise activate)"
 
-virtualenv -p "$(mise which python)" .venv
+$(mise which python) -m venv .venv
 
 mv mise.toml mise.local.toml
 echo '[env]' >> mise.local.toml

@@ -75,6 +75,38 @@ function vf() {
 }
 zle -N vf
 
+function vig() {
+  local item
+  if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    item=$(rg --no-heading --line-number --color=always --hidden "" |
+      fzf --ansi \
+          --delimiter : \
+          --preview 'batcat --style=numbers --color=always {1} --highlight-line {2}' \
+          --preview-window=right:50%:wrap)
+  else
+    item=$(rg --no-heading --line-number --color=always --hidden --follow "" |
+      fzf --ansi \
+          --delimiter : \
+          --preview 'batcat --style=numbers --color=always {1} --highlight-line {2}' \
+          --preview-window=right:50%:wrap)
+  fi
+
+  if [[ -n "$item" ]] then 
+
+    file=${item%%:*}
+    line=${item#*:}
+    line=${line%%:*}
+    line=${line//[^0-9]/}
+
+    nvim +"$line" "$file"
+
+  fi
+
+
+  zle reset-prompt
+}
+zle -N vig
+
 # Gather hosts from 'step ssh hosts' if available and remove sedimentum internal
 function gather_step_hosts() {
     if command -v step >/dev/null 2>&1; then

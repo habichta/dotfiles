@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+########################################################################
+# After creating a python project with uv. This script will instrument the
+# project to auto-activate the venv when jumping to the dir
+########################################################################
+
+printf '[env]\n_.python.venv = ".venv"\n' > mise.local.toml

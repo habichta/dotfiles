@@ -82,6 +82,8 @@ alias cat="batcat"
 alias cc="clear"
 alias g="git"
 alias ai=aider # Aider AI
+alias jup="uv run --with jupyter jupyter lab" # Jupyter Lab via uv, using current virtualenv
+alias ipy="ipython"
 
 # WSL2
 alias exp="explorer.exe ."

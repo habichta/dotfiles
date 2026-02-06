@@ -1,8 +1,0 @@
-#!/bin/bash
-
-if ! python -c "import notebook" &>/dev/null; then
-  echo "Installing Jupyter Notebook..."
-  python -m pip install notebook || exit 1
-fi
-
-exec jupyter notebook "$@"

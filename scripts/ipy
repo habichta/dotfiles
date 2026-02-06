@@ -1,8 +1,0 @@
-#!/bin/bash
-
-if ! python -c "import IPython" &>/dev/null; then
-  echo "Installing IPython..."
-  python -m pip install ipython || exit 1
-fi
-
-exec ipython "$@"

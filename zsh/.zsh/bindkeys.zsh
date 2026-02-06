@@ -26,6 +26,9 @@ bindkey -M vicmd '\e[1;5C' forward-word     # Ctrl + Right in command mode
 bindkey -M viins '^[s' vf
 bindkey -M vicmd '^[s' vf
 
+bindkey -M viins '^[S' vig
+bindkey -M vicmd '^[S' vig
+
 bindkey -M vicmd '^[x' d
 
 bindkey -M viins '^[\[' ssh_with_fzf

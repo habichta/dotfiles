@@ -1,7 +1,9 @@
--- General Mappings
+-- Visual mode search
+vim.keymap.set("v", "/", 'y/<C-R>"<CR>', { silent = true })
+
+-- Window management shortcuts
 vim.api.nvim_set_keymap('n', ',gvv', ':vertical wincmd f<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', ',gvh', ':wincmd f<CR>', { noremap = true, silent = true })
-
 
 -- Function to move the rest of the line up
 function MoveLineUp()
@@ -39,8 +41,8 @@ end
 vim.api.nvim_set_keymap('n', '<leader>co', ':lua close_other_buffers(false)<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>cO', ':lua close_other_buffers(true)<CR>', { noremap = true, silent = true })
 
-vim.keymap.set("n", "<leader>Gd", ":Gdiffsplit master<CR>", { desc = "Git diff with master" })
-vim.keymap.set("n", "<leader>Gc", ":Gdiffsplit HEAD~1<CR>", { desc = "Git diff with previous commit" })
+vim.keymap.set("n", "<leader>Gm", ":Gvdiffsplit master<CR>", { desc = "Git diff with master" })
+vim.keymap.set("n", "<leader>Gc", ":Gvdiffsplit HEAD~1<CR>", { desc = "Git diff with previous commit" })
 
 
 function RemoveUnusedImports()
