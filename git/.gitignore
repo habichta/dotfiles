@@ -9,3 +9,4 @@ mise.local.toml
 .luarc.json
 .gitignored
 .vim/coc-settings.json
+.claude

@@ -44,6 +44,8 @@ vim.api.nvim_set_keymap('n', '<leader>cO', ':lua close_other_buffers(true)<CR>',
 vim.keymap.set("n", "<leader>Gm", ":Gvdiffsplit master<CR>", { desc = "Git diff with master" })
 vim.keymap.set("n", "<leader>Gc", ":Gvdiffsplit HEAD~1<CR>", { desc = "Git diff with previous commit" })
 
+vim.keymap.set("n", "<leader>GG", ":G<CR>", { desc = "Open Git" })
+
 
 function RemoveUnusedImports()
   local filetype = vim.bo.filetype

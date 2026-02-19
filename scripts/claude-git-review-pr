@@ -1,0 +1,44 @@
+#!/bin/bash
+set -euo pipefail
+
+# Optional additional info passed as argument
+ADDITIONAL_INFO="${1:-}"  # default to empty string if no argument provided
+
+# Get the PR for the current branch
+PR_NUMBER=$(gh pr view --json number --jq '.number' 2>/dev/null) || {
+    echo "No open PR found for the current branch."
+    exit 1
+}
+
+echo "Fetching PR #$PR_NUMBER..."
+
+TITLE=$(gh pr view "$PR_NUMBER" --json title       --jq '.title')
+URL=$(gh pr view   "$PR_NUMBER" --json url         --jq '.url')
+BASE=$(gh pr view  "$PR_NUMBER" --json baseRefName --jq '.baseRefName')
+BODY=$(gh pr view  "$PR_NUMBER" --json body        --jq '.body // "(no description)"')
+DIFF=$(gh pr diff  "$PR_NUMBER")
+
+# Build prompt
+PROMPT="Review PR #$PR_NUMBER: \"$TITLE\"
+$URL  (merging into $BASE)
+
+## Description
+$BODY
+
+## Diff
+\`\`\`diff
+$DIFF
+\`\`\`
+
+Look for bugs, obvious mistakes, and improvements. Be concise. Clearly separate the filenames in your output and always add row numbers. Order by criticality and add red color in case of bugs"
+
+# Append optional additional info if provided
+if [[ -n "$ADDITIONAL_INFO" ]]; then
+    PROMPT="$PROMPT
+
+## Additional Info
+$ADDITIONAL_INFO"
+fi
+
+# Send prompt to Claude
+claude "$PROMPT"
