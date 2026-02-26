@@ -30,7 +30,7 @@ bindkey -M visual S add-surround
 # Quick way do go to previously visited directories
 function d() {
   ddir="$(dirs -v | awk '{print $2}' | fzf)"
-  ddir=${ddir/#\~/${HOME}} 
+  ddir=${ddir/#\~/${HOME}}
   cd "$ddir"
   zle reset-prompt
 }
@@ -77,31 +77,28 @@ zle -N vf
 
 function vig() {
   local item
-  if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-    item=$(rg --no-heading --line-number --color=always --hidden "" |
-      fzf --ansi \
-          --delimiter : \
-          --preview 'batcat --style=numbers --color=always {1} --highlight-line {2}' \
-          --preview-window=right:50%:wrap)
-  else
-    item=$(rg --no-heading --line-number --color=always --hidden --follow "" |
-      fzf --ansi \
-          --delimiter : \
-          --preview 'batcat --style=numbers --color=always {1} --highlight-line {2}' \
-          --preview-window=right:50%:wrap)
-  fi
 
-  if [[ -n "$item" ]] then 
+  item=$(
+    fzf --ansi --disabled --query "" \
+        --bind "change:reload:rg --no-messages \
+                                  --hidden \
+                                  --line-number \
+                                  --color=always \
+                                  -g '!*/deps/*/**' \
+                                  {q} || true" \
+        --delimiter : \
+        --preview 'batcat --style=numbers --color=always {1} --highlight-line {2}' \
+        --preview-window=right:50%:wrap
+  )
 
-    file=${item%%:*}
-    line=${item#*:}
+  if [[ -n "$item" ]]; then
+    local file=${item%%:*}
+    local line=${item#*:}
     line=${line%%:*}
-    line=${line//[^0-9]/}
 
-    nvim +"$line" "$file"
-
+    zle -I
+    nvim +$line "$file"
   fi
-
 
   zle reset-prompt
 }
@@ -165,17 +162,17 @@ function fo() {
 
 # fkill - kill processes - list only the ones you can kill. Modified the earlier script.
 function fkill() {
-    local pid 
+    local pid
     if [ "$UID" != "0" ]; then
         pid=$(ps -f -u $UID | sed 1d | fzf -m | awk '{print $2}')
     else
         pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
-    fi  
+    fi
 
     if [ "x$pid" != "x" ]
     then
         echo $pid | xargs kill -${1:-9}
-    fi  
+    fi
 }
 
 # use CTRL+G/CTRL+? to select git things with FZF
@@ -290,54 +287,6 @@ convert_timezone() {
     }
 
     TZ="$to_tz" date -d "@$utc_epoch" +"%Y-%m-%d %H:%M:%S %Z"
-}
-
-
-function pipx_install() {
-  read -p "Enter the package: " package
-  read -p "Enter the python version: " python_version
-  read -p "Enter the version (optional): " version
-
-  python_path=$(mise where python@$python_version)/bin/python
-  
-  if [ -z "$version" ]; then
-    pipx install $package --python $python_path
-  else
-    pipx install $package==$version --python $python_path
-  fi
-}
-#Update Python Dependencies of a Service Repo for Development
-function helpany_update_dev_python_deps {
-    # Path to requirements file
-    requirements_file="requirements/dev.txt"
-
-    # Check if in virtualenv
-    if [[ -z "$VIRTUAL_ENV" ]]; then
-        echo "No virtual environment found. Please activate one before running this function."
-        return 1
-    fi
-
-    # Check if deps/ directory exists
-    if [[ -d "deps" ]]; then
-        echo "Installing dependencies from submodules in deps/"
-
-        for dir in deps/*/; do
-            if [[ -d "$dir" ]]; then
-                echo "Installing dependencies from $dir"
-                pip install "$dir"
-            fi
-        done
-    else
-        echo "No deps/ directory found."
-    fi
-    # Check if requirements file exists
-    if [[ ! -f "$requirements_file" ]]; then
-        echo "requirements/dev.txt not found."
-        return 1
-    fi
-
-    # Install dependencies from requirements file, ignoring lines starting with -e file:///
-    grep -v '^-e file:///' "$requirements_file" | pip install -r /dev/stdin
 }
 
 function tget {
