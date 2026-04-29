@@ -57,4 +57,4 @@ $ADDITIONAL_INFO"
 fi
 
 # Send prompt to Claude
-claude "$PROMPT"
+vibe "$PROMPT"

@@ -41,6 +41,9 @@ Plug 'norcalli/nvim-colorizer.lua'
 Plug 'habichta/nvim-aider'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'greggh/claude-code.nvim'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
+Plug 'nvim-treesitter/nvim-treesitter-context'
+
 " Avante
 " Plug 'stevearc/dressing.nvim'
 " Plug 'MunifTanjim/nui.nvim'
@@ -49,4 +52,3 @@ Plug 'greggh/claude-code.nvim'
  call plug#end()
 
 luafile ~/.config/nvim/lua/init.lua
-

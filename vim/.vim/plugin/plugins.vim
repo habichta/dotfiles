@@ -23,6 +23,11 @@ autocmd FileType fzf tnoremap <buffer> <C-k> <Up>
 autocmd FileType fzf tnoremap <buffer> <C-d> <PageDown>
 autocmd FileType fzf tnoremap <buffer> <C-u> <PageUp>
 
+augroup no_ipynb
+  autocmd!
+  autocmd BufReadCmd *.ipynb echom "Refusing to open .ipynb files. Use Jupyter." | bdelete
+augroup END
+
 nnoremap <silent> <Leader>o :call fzf#vim#grep(
       \ 'rg --column --line-number --hidden --no-heading --color=always --smart-case -F --glob "!**/.git/**" -- ""',
       \ fzf#vim#with_preview({'options': ['--query', '!deps !tests '], 'dir': systemlist('git rev-parse --show-toplevel')[0]}))<Enter>

@@ -85,6 +85,7 @@ function vig() {
                                   --line-number \
                                   --color=always \
                                   -g '!*/deps/*/**' \
+                                  -g '!**/.git/**' \
                                   {q} || true" \
         --delimiter : \
         --preview 'batcat --style=numbers --color=always {1} --highlight-line {2}' \

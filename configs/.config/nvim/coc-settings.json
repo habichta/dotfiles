@@ -1,5 +1,5 @@
 {
-  "[python][javascript][javascriptreact][typescript][typescriptreact][yaml][css][scss][rust][dockerfile]": {
+  "[python][javascript][javascriptreact][typescript][typescriptreact][yaml][css][scss][rust][dockerfile][c][cpp]": {
     "coc.preferences.formatOnSave": true
   },
 
@@ -56,8 +56,7 @@
     "--background-index",
     "--clang-tidy",
     "--completion-style=detailed",
-    "--header-insertion=never"
+    "--header-insertion=never",
   ],
   "suggest.autoTrigger": "always",
-  "coc.preferences.formatOnSaveFiletypes": ["c", "cpp", "cuda"]
 }
