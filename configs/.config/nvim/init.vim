@@ -38,17 +38,11 @@ Plug 'liuchengxu/vista.vim', {'on': 'Vista'}
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'antoinemadec/coc-fzf', {'branch': 'release'}
 Plug 'norcalli/nvim-colorizer.lua'
-Plug 'habichta/nvim-aider'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'greggh/claude-code.nvim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
 Plug 'nvim-treesitter/nvim-treesitter-context'
-
-" Avante
-" Plug 'stevearc/dressing.nvim'
-" Plug 'MunifTanjim/nui.nvim'
-" Plug 'MeanderingProgrammer/render-markdown.nvim'
-" Plug 'yetone/avante.nvim', { 'branch': 'main', 'do': 'make' }
+Plug 'olimorris/codecompanion.nvim', {'tag': 'v19.12.0'}
  call plug#end()
 
 luafile ~/.config/nvim/lua/init.lua
