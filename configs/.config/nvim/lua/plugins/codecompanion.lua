@@ -5,7 +5,7 @@ local function load_mistral_key(env_file)
     local key, value = line:match("^([%w_]+)=(.+)$")
     if key == "MISTRAL_API_KEY" then
       f:close()
-      return value:gsub("^%s*(.-)%s*$", "%1")
+      return value:gsub("^%s*[\"']?(.-)%s*[\"']?%s*$", "%1")
     end
   end
   f:close()
@@ -15,6 +15,15 @@ local env_file = vim.fn.expand("~/.vibe/.env")
 vim.env.MISTRAL_API_KEY = load_mistral_key(env_file)
 
 require("codecompanion").setup({
+  adapters = {
+    mistral = function()
+      return require("codecompanion.adapters").extend("mistral", {
+        env = {
+          api_key = "MISTRAL_API_KEY",
+        },
+      })
+    end,
+  },
   display = {
     action_palette = {
       width = 0.9,
@@ -38,9 +47,20 @@ require("codecompanion").setup({
   },
   interactions = {
     chat = {
-      adapter = {
-        name = "mistral_vibe",
-      },
+      adapter = "mistral",
+      model= "mistral-large-latest",
+    },
+    inline = {
+      adapter = "mistral",
+      model= "mistral-large-latest",
+    },
+    background = {
+      adapter = "mistral",
+      model= "mistral-small-latest",
+    },
+    cmd = {
+      adapter = "mistral",
+      model= "mistral-small-latest",
     },
     cli = {
       agent = "mistral_vibe",
@@ -67,6 +87,6 @@ require("codecompanion").setup({
 
 vim.keymap.set({ "n", "v" }, "<Leader>CA", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
 vim.keymap.set({ "n", "v" }, "<Leader>CI", "<cmd>CodeCompanion<cr>", { noremap = true, silent = true })
-vim.keymap.set({ "n", "v" }, "<Leader>CL", "<cmd>CodeCompanionCLI<cr>", { noremap = true, silent = true })
+vim.keymap.set({ "n", "v" }, "<Leader>CL", "<cmd>CodeCompanionCLI<C-h><cr>", { noremap = true, silent = true })
 vim.keymap.set({ "n", "v" }, "<Leader>CH", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true })
 vim.keymap.set("v", "ga", "<cmd>CodeCompanionChat Add<cr>", { noremap = true, silent = true })

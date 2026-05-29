@@ -9,9 +9,12 @@ then
     tmux attach -t Shell || tmux new -s Shell
 fi
 
-eval `ssh-agent` > /dev/null
-emulate ksh -c "source ssh-find-agent" 
-ssh-add -l >&/dev/null || ssh-find-agent -a || eval $(ssh-agent) > /dev/null
+export SSH_AUTH_SOCK="$HOME/.ssh/agent.sock"
+ssh-add -l &>/dev/null
+if [ $? -eq 2 ]; then
+  rm -f "$SSH_AUTH_SOCK"
+  (umask 077; ssh-agent -a "$SSH_AUTH_SOCK" >/dev/null)
+fi
 
 # deactivate ctrl-s XOFF
 stty -ixon 
@@ -45,23 +48,25 @@ source ~/.zsh/completion.zsh
 #ZSH hooks - changes TMUX windows name when changing directories
 add-zsh-hook chpwd update-tmux-window-name
 
-eval "$(starship init zsh)"
+########################################
+# Cached subprocess evals — refresh with `zsh-cache-refresh`
+########################################
+ZSH_CACHE_DIR="$HOME/.cache/zsh"
+cached_eval() {
+  local key=$1; shift
+  local cache="$ZSH_CACHE_DIR/$key.zsh"
+  if [ ! -f "$cache" ]; then
+    mkdir -p "$ZSH_CACHE_DIR"
+    "$@" > "$cache" 2>/dev/null
+  fi
+  source "$cache"
+}
+zsh-cache-refresh() { rm -rf "$ZSH_CACHE_DIR" && echo "Cleared $ZSH_CACHE_DIR — restart your shell."; }
 
-########################################
-# MISE
-########################################
-eval "$(/home/habichta/.local/bin/mise activate zsh)"
-
-########################################
-# PIPX 
-########################################
-eval "$(register-python-argcomplete pipx)"
-
-########################################
-# UVX
-########################################
-eval "$(uvx --generate-shell-completion zsh)"
-eval "$(uv --generate-shell-completion zsh)"
+cached_eval starship starship init zsh
+cached_eval mise     /home/habichta/.local/bin/mise activate zsh
+cached_eval uvx      uvx --generate-shell-completion zsh
+cached_eval uv       uv  --generate-shell-completion zsh
 
 
 ########################################
