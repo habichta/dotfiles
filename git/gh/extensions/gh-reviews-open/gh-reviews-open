@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+gh search prs --review-requested=@me --review=none --state open

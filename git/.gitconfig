@@ -32,10 +32,10 @@
     fall = fetch --all --tags --recurse-submodules=on-demand
     ctags = "!bash -c '[ -f .git/hooks/ctags ] || git init; .git/hooks/ctags' git-ctags"
     update-all = "!f() { \
-        git fetch --all --tags && \
-        git rebase && \
-        git submodule update --init --recursive; \
-    }; f"
+          git fetch --all --tags --no-recurse-submodules && \
+          git rebase && \
+          git submodule update --init --recursive -j 8; \
+      }; f"
     ua = "!git update-all"
     branch-clean-all-local = !git branch -vv | grep \": gone]\" | awk \"{print \\$1}\" | xargs git branch -D
     branch-clean-all-remote = !git remote prune origin

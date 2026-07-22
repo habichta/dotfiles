@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+method=squash        # default
+pr=""
+
+# Args in any order: a method keyword and/or a PR number/URL/branch.
+for arg in "$@"; do
+  case "$arg" in
+    merge|squash|rebase) method="$arg" ;;
+    -h|--help) echo "usage: gh pr-merge-accepted [merge|squash|rebase] [PR]"; exit 0 ;;
+    *) pr="$arg" ;;
+  esac
+done
+
+# Empty array => gh uses the current branch's PR.
+pref=()
+[ -n "$pr" ] && pref=("$pr")
+
+gh pr checks "${pref[@]}" --watch
+
+approvals=$(gh pr view "${pref[@]}" --json reviews \
+  -q '[.reviews[] | select(.state=="APPROVED")] | length')
+[ "$approvals" -gt 0 ] || { printf '\033[31m\xe2\x9c\x97\033[0m No approving review.\n'; exit 1; }
+
+gh pr merge "${pref[@]}" --"$method" --delete-branch
+echo "Merged (${method})."

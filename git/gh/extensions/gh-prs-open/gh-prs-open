@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+#
+# gh prs-open [--accepted]
+#
+# Lists all open (not-yet-merged) PRs authored by you, across repos.
+#   --accepted   only PRs approved by at least one review.
+# Any other arguments are passed through to `gh search prs`.
+
+set -euo pipefail
+
+passthrough=()
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --accepted) passthrough+=(--review=approved); shift ;;
+    *)          passthrough+=("$1"); shift ;;
+  esac
+done
+
+gh search prs --author=@me --state=open "${passthrough[@]}"

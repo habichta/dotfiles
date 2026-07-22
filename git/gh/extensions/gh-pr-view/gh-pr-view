@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+#
+# gh pr-view [<number|branch>]
+#
+# Opens the PR in the browser. With no argument it uses the current branch's PR.
+# If no PR exists, it falls back to opening the repo in the browser.
+
+set -euo pipefail
+
+if gh pr view --web "$@" 2>/dev/null; then
+  exit 0
+fi
+
+echo "gh pr-view: no PR found, opening the repo instead" >&2
+gh repo view --web

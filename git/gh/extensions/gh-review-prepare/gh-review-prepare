@@ -1,0 +1,91 @@
+#!/usr/bin/env bash
+#
+# gh review-prepare [<num> | <owner/repo>#<num>]
+#
+# Prepares a local checkout for reviewing an open PR that requested your review:
+#   1. Resolves which repo the PR belongs to
+#   2. cd's into ~/repos/helpany/<RepoName>
+#   3. Fetches so all branches are available / up to date
+#   4. Checks out the PR's head branch
+#   5. Runs `git update-all`
+#
+# Selecting the PR:
+#   - no argument       -> pick from your review-requested PRs via fzf
+#   - <num>             -> that PR; if the number matches several repos, pick via fzf
+#   - <owner/repo>#<num> -> that exact PR (unambiguous; skips fzf)
+#
+# NOTE: a gh extension runs in a subprocess, so the `cd` here cannot change
+# your interactive shell's directory. All git work happens in the right repo,
+# and the final line printed to stdout is the repo path. Wrap this in a shell
+# function (see README) if you also want your shell to land in the directory.
+
+set -euo pipefail
+
+ROOT="${GH_REVIEW_PREPARE_ROOT:-$HOME/repos/helpany}"
+
+die() { printf 'gh review-prepare: %s\n' "$1" >&2; exit 1; }
+
+# All PRs requesting your review as TSV: nameWithOwner \t number \t title
+prs_tsv() {
+  gh search prs --review-requested=@me --state=open \
+    --json number,repository,title \
+    --jq '.[] | [.repository.nameWithOwner, (.number|tostring), .title] | @tsv'
+}
+
+# fzf-pick one PR; optional $1 restricts to a given number. Echoes "owner/repo#num".
+fzf_pick() {
+  command -v fzf >/dev/null 2>&1 || die "fzf not available; pass <owner/repo>#<num>"
+  local tsv line
+  tsv="$(prs_tsv)"
+  [[ -n "${1:-}" ]] && tsv="$(awk -F'\t' -v n="$1" '$2 == n' <<< "$tsv")"
+  [[ -z "$tsv" ]] && die "no open review-requested PRs to choose from"
+  line="$(awk -F'\t' '{printf "%s#%s\t%s\n", $1, $2, $3}' <<< "$tsv" \
+           | fzf --delimiter='\t' --with-nth=1,2 --prompt='review PR> ')" \
+    || die "no PR selected"
+  printf '%s' "${line%%$'\t'*}"
+}
+
+arg="${1:-}"
+nwo=""; id=""
+if [[ -z "$arg" ]]; then
+  ref="$(fzf_pick)"
+  nwo="${ref%#*}"; id="${ref##*#}"
+elif [[ "$arg" =~ ^([^#]+/[^#]+)#([0-9]+)$ ]]; then
+  nwo="${BASH_REMATCH[1]}"; id="${BASH_REMATCH[2]}"
+elif [[ "$arg" =~ ^[0-9]+$ ]]; then
+  matches="$(prs_tsv | awk -F'\t' -v n="$arg" '$2 == n')"
+  count="$(grep -c . <<< "$matches" || true)"
+  if [[ "$count" -eq 0 ]]; then
+    die "no open review-requested PR found with ID $arg"
+  elif [[ "$count" -eq 1 ]]; then
+    nwo="$(cut -f1 <<< "$matches")"; id="$arg"
+  else
+    ref="$(fzf_pick "$arg")"
+    nwo="${ref%#*}"; id="${ref##*#}"
+  fi
+else
+  die "invalid argument '$arg'; expected <num> or <owner/repo>#<num>"
+fi
+
+name="${nwo##*/}"
+dir="$ROOT/$name"
+[[ -d "$dir" ]] || die "repo directory not found: $dir"
+
+cd "$dir"
+git rev-parse --git-dir >/dev/null 2>&1 || die "not a git repository: $dir"
+
+# The branch to review.
+branch="$(gh pr view "$id" --repo "$nwo" --json headRefName --jq .headRefName)"
+[[ -z "$branch" ]] && die "could not determine head branch for PR #$id"
+
+echo ">> $nwo #$id -> $dir (branch: $branch)" >&2
+
+# Make sure all branches are available / up to date, then check out the PR branch.
+git fetch --all --prune --no-recurse-submodules >&2
+git checkout "$branch" >&2
+
+# Sync everything (fetch --all --tags && rebase && submodule update).
+git update-all >&2
+
+# Last line on stdout = the repo path, for shell-function consumption.
+echo "$dir"

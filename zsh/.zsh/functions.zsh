@@ -308,3 +308,15 @@ function tcomplete {
   fi
 }
 
+
+function review-prepare {
+  local dir
+  dir="$(gh review-prepare "$1")" || return
+  cd "$dir"
+}
+
+function pr-prepare {
+  local dir
+  dir="$(gh pr-prepare "$@")" || return
+  cd "$dir"
+}

@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+#
+# gh pr-view-diff [<number|branch>]
+#
+# Opens the PR's diff (Files changed) in the browser. With no argument it uses
+# the current branch's PR. If no PR exists, it fails (no fallback).
+
+set -euo pipefail
+
+exec gh pr diff --web "$@"

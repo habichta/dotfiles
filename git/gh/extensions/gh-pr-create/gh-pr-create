@@ -1,0 +1,95 @@
+#!/usr/bin/env bash
+#
+# gh pr-create [--ready] [--branch <branch>] [--base <base>] [--reviewer <user>]...
+#
+# Creates a PR for a branch into master (or main if master doesn't exist).
+#   - Draft by default; pass --ready (--finished) for a non-draft PR.
+#   - Head branch defaults to the current branch; override with --branch.
+#   - Base defaults to origin's master, falling back to main; override with --base.
+#   - --reviewer requests review; only users with repo access are accepted
+#     (validated against the collaborator list). Repeatable and/or comma-separated.
+#   - --pick-reviewers opens an fzf picker over the users who have access.
+#
+# Title/body are auto-filled from the branch's commits (gh's --fill).
+
+set -euo pipefail
+
+die() { printf 'gh pr-create: %s\n' "$1" >&2; exit 1; }
+
+draft=true
+branch=""
+base=""
+reviewers=()
+pick=false
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --ready|--finished|-r) draft=false; shift ;;
+    --draft|-d)            draft=true;  shift ;;
+    --branch|-b)           branch="${2:-}"; [[ -z "$branch" ]] && die "--branch needs a value"; shift 2 ;;
+    --base|-B)             base="${2:-}";   [[ -z "$base"   ]] && die "--base needs a value";   shift 2 ;;
+    --reviewer|-a)
+      [[ -z "${2:-}" ]] && die "--reviewer needs a value"
+      IFS=',' read -r -a _r <<< "$2"; reviewers+=("${_r[@]}"); shift 2 ;;
+    --pick-reviewers|-A)   pick=true; shift ;;
+    -h|--help)
+      echo "usage: gh pr-create [--ready] [--branch <branch>] [--base <base>] [--reviewer <user>]... [--pick-reviewers]"; exit 0 ;;
+    *) die "unknown argument: $1" ;;
+  esac
+done
+
+git rev-parse --git-dir >/dev/null 2>&1 || die "not a git repository"
+
+# Head branch: current branch unless overridden.
+if [[ -z "$branch" ]]; then
+  branch="$(git rev-parse --abbrev-ref HEAD)"
+fi
+[[ "$branch" == "HEAD" ]] && die "detached HEAD; pass --branch <branch>"
+
+# Base branch: master if it exists on origin, else main.
+if [[ -z "$base" ]]; then
+  if git ls-remote --exit-code --heads origin master >/dev/null 2>&1; then
+    base=master
+  elif git ls-remote --exit-code --heads origin main >/dev/null 2>&1; then
+    base=main
+  else
+    die "neither master nor main exists on origin; pass --base <base>"
+  fi
+fi
+
+[[ "$branch" == "$base" ]] && die "head branch ($branch) is the same as base ($base)"
+
+# Users who actually have access to this repo (eligible reviewers).
+collaborators() {
+  local nwo
+  nwo="$(gh repo view --json nameWithOwner --jq .nameWithOwner)" || die "could not resolve repo"
+  gh api "repos/$nwo/collaborators" --paginate --jq '.[].login' \
+    || die "could not list collaborators (need push access to the repo)"
+}
+
+# Interactive fzf picker over users with access.
+if $pick; then
+  command -v fzf >/dev/null 2>&1 || die "--pick-reviewers needs fzf"
+  mapfile -t _picked < <(collaborators | sort -u | fzf --multi --prompt="reviewers> ")
+  [[ ${#_picked[@]} -gt 0 ]] && reviewers+=("${_picked[@]}")
+fi
+
+# Validate every requested reviewer against the access list.
+if [[ ${#reviewers[@]} -gt 0 ]]; then
+  eligible="$(collaborators)"
+  for r in "${reviewers[@]}"; do
+    grep -qix -- "$r" <<< "$eligible" \
+      || die "reviewer '$r' does not have access to this repo. Eligible: $(tr '\n' ' ' <<< "$eligible")"
+  done
+fi
+
+# Make sure the head branch is on the remote so gh can open the PR.
+git push --set-upstream origin "$branch" >&2
+
+args=(--base "$base" --head "$branch" --fill)
+$draft && args+=(--draft)
+for r in "${reviewers[@]:-}"; do
+  [[ -n "$r" ]] && args+=(--reviewer "$r")
+done
+
+gh pr create "${args[@]}"

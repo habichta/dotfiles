@@ -24,7 +24,12 @@ stty -ixon
 ########################################
 # Should be called before compinit
 zmodload zsh/complist
-autoload -U compinit add-zsh-hook edit-command-line; compinit
+autoload -Uz compinit add-zsh-hook edit-command-line
+if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(#qN.mh+24) ]]; then
+  compinit -u
+else
+  compinit -uC
+fi
 
 zle -N edit-command-line
 
@@ -55,9 +60,10 @@ ZSH_CACHE_DIR="$HOME/.cache/zsh"
 cached_eval() {
   local key=$1; shift
   local cache="$ZSH_CACHE_DIR/$key.zsh"
-  if [ ! -f "$cache" ]; then
+  if [[ ! -f "$cache" ]]; then
     mkdir -p "$ZSH_CACHE_DIR"
     "$@" > "$cache" 2>/dev/null
+    zcompile "$cache" 2>/dev/null
   fi
   source "$cache"
 }

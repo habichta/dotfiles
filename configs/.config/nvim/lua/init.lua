@@ -16,6 +16,13 @@ vim.opt.directory = '/tmp/nvim/swap//'
 -- File format
 vim.opt.fileformats = { "unix" }
 
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = '*',
+  callback = function()
+    pcall(vim.treesitter.start)
+  end,
+})
+
 --Required
 require('functions.carriage-return')
 require('functions.global-replace')
@@ -31,7 +38,7 @@ require('plugins.rust')
 require('plugins.coc')
 require('plugins.nvim-tree')
 require('plugins.lualine')
-require('plugins.treesitter')
+-- require('plugins.treesitter')
 require('plugins.gitsigns')
 require('plugins.colorizer')
 require('plugins.claude-code')
