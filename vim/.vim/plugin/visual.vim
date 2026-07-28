@@ -19,8 +19,7 @@ set list
 set listchars=trail:~,tab:»·,eol:⏎
 " display symbol for wrapped lines on new line
 set showbreak=↪
-" use this to denote indentation
-let g:indentLine_char = '┆'
+" indent guides are added to 'listchars' per-buffer by lua/functions/indent-guides.lua
 "}}}
 "
 
@@ -31,8 +30,3 @@ set relativenumber
 set scrolloff=20
 " Do not wrap lines. Allow long lines to extend as far as the line goes.
 set nowrap
-
-" Fix issue with DevIcons (remove brackets around icons in nerdtree)
-if exists('g:loaded_webdevicons')
-    call webdevicons#refresh()
-endif

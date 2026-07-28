@@ -63,8 +63,17 @@ set history=1000
 set undolevels=1000
 " Enable auto completion menu after pressing TAB.
 set wildmenu
-" Make wildmenu behave like similar to Bash completion.
-set wildmode=list:longest
+" Show completions in a floating popup menu (replaces wilder.nvim) and match
+" fuzzily, so ":Gitsi<Tab>" finds ":Gitsigns". Don't preselect the first entry,
+" so <CR> still runs exactly what was typed.
+if has('nvim-0.9') || has('patch-9.0.0000')
+  set wildoptions=pum,fuzzy,tagfile
+  set wildmode=noselect:lastused,full
+  set pumblend=20
+  set pumheight=15
+else
+  set wildmode=list:longest
+endif
 " There are certain files that we would never want to edit with Vim.
 " Wildmenu will ignore files with these extensions.
 set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx
@@ -94,3 +103,10 @@ let g:python3_host_prog = '~/.config/nvim/.venv/bin/python3'
 let g:node_host_prog = expand('~/.local/share/mise/installs/node/22.17.0/bin/neovim-node-host')
 let $YARN_PATH = '/usr/bin/yarn'
 let g:copilot_node_command = '~/.local/share/mise/installs/node/22.17.0/bin/node'
+
+" Run the copilot-language-server bundled with copilot.vim instead of resolving
+" it through `npx @github/copilot-language-server@^<version>` on every launch.
+" npx costs two extra processes and an npm resolution step each time nvim starts.
+" Trade-off: the server is now pinned to whatever copilot.vim ships, so it only
+" updates on :PlugUpdate copilot.vim rather than picking up new patches by itself.
+let g:copilot_npx_command = 0
