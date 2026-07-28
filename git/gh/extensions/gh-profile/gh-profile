@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+#
+# gh profile [<user>] [--no-browser]
+#
+# Opens a GitHub profile page in the browser. With no argument it uses your
+# own account.
+#   --no-browser   print the URL instead of opening it.
+
+set -euo pipefail
+
+user=""
+open_browser=1
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --no-browser|-n) open_browser=0; shift ;;
+    -*)              echo "gh profile: unknown flag $1" >&2; exit 1 ;;
+    *)               user="$1"; shift ;;
+  esac
+done
+
+if [[ -n "$user" ]]; then
+  url="$(gh api "users/${user#@}" --jq .html_url)"
+else
+  url="$(gh api user --jq .html_url)"
+fi
+
+if (( ! open_browser )); then
+  echo "$url"
+  exit 0
+fi
+
+for opener in "${BROWSER:-}" wslview xdg-open open explorer.exe; do
+  [[ -n "$opener" ]] || continue
+  command -v "$opener" >/dev/null 2>&1 || continue
+  "$opener" "$url" >/dev/null 2>&1 && exit 0
+  # explorer.exe reports failure even when it opened the URL fine
+  [[ "$opener" == explorer.exe ]] && exit 0
+done
+
+echo "gh profile: no browser found, URL is $url" >&2
+exit 1

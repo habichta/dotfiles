@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+#
+# gh repo-sync [<name>|<owner>/<name>] [--public] [--remote <name>] [--no-push]
+#
+# Creates a GitHub repo for the local repo in the current directory, wires it
+# up as a remote and pushes the current branch. Private unless --public.
+#   <name>          repo name (default: the local repo's directory name)
+#   --public        create it public instead of private
+#   --remote <name> remote to add (default: origin)
+#   --no-push       create and add the remote, but don't push
+# Any other flags are passed through to `gh repo create`.
+
+set -euo pipefail
+
+name=""
+visibility=--private
+remote=origin
+push=1
+passthrough=()
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --public)   visibility=--public;   shift ;;
+    --private)  visibility=--private;  shift ;;
+    --internal) visibility=--internal; shift ;;
+    --remote)   remote="$2";           shift 2 ;;
+    --no-push)  push=0;                shift ;;
+    -*)         passthrough+=("$1");   shift ;;
+    *)          name="$1";             shift ;;
+  esac
+done
+
+if ! root="$(git rev-parse --show-toplevel 2>/dev/null)"; then
+  echo "gh repo-sync: not inside a git repository" >&2
+  exit 1
+fi
+
+if git remote get-url "$remote" >/dev/null 2>&1; then
+  echo "gh repo-sync: remote '$remote' already exists ($(git remote get-url "$remote"))" >&2
+  echo "gh repo-sync: pass --remote <name> to use a different one" >&2
+  exit 1
+fi
+
+if (( push )) && ! git rev-parse HEAD >/dev/null 2>&1; then
+  echo "gh repo-sync: no commits yet, commit first or pass --no-push" >&2
+  exit 1
+fi
+
+args=()
+[[ -n "$name" ]] && args+=("$name")
+args+=(--source="$root" "$visibility" --remote="$remote")
+(( push )) && args+=(--push)
+
+gh repo create "${args[@]}" "${passthrough[@]}"

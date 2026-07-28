@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+#
+# gh review-claude [-p|--print] [-m|--manual] [<num>] [<extra context…>]
+#
+# Reviews a pull request with Claude Code by invoking the /review-pr slash
+# command, which lives in ~/.claude/commands/review-pr.md.
+#
+# Selecting the PR:
+#   - no argument   -> the PR for the current branch
+#   - <num>         -> that PR in the current repo
+#
+# Anything after the (optional) number is passed to the review as extra
+# instructions, e.g.  gh review-claude 42 "focus on the retry logic"
+#
+# Runs in Claude's `auto` permission mode by default: a review only reads
+# (gh pr view, git diff, Read, Grep), and auto mode clears read-only work
+# without prompting. Override with CLAUDE_REVIEW_PERMISSION_MODE.
+#
+# Flags:
+#   -p, --print     non-interactive; print the review to stdout and exit
+#   -m, --manual    prompt for permissions as usual (disables auto mode)
+#
+# Must be run inside the repo's checkout — the review reads the working tree
+# for context, not just the diff. For a PR in another repo, run
+# `gh review-prepare` first to land in the right checkout on the right branch.
+
+set -euo pipefail
+
+CMD_FILE="${CLAUDE_CONFIG_DIR:-$HOME/.claude}/commands/review-pr.md"
+
+die() { printf 'gh review-claude: %s\n' "$1" >&2; exit 1; }
+
+perm_mode="${CLAUDE_REVIEW_PERMISSION_MODE:-auto}"
+print_mode=false
+args=()
+for arg in "$@"; do
+  case "$arg" in
+    -p|--print)  print_mode=true ;;
+    -m|--manual) perm_mode="" ;;
+    -h|--help)   awk 'NR>1 && /^#/ {sub(/^# ?/,""); print; next} NR>1 {exit}' "$0"; exit 0 ;;
+    *)           args+=("$arg") ;;
+  esac
+done
+
+command -v claude >/dev/null 2>&1 || die "claude not found on PATH"
+[[ -f "$CMD_FILE" ]] || die "missing slash command: $CMD_FILE"
+git rev-parse --is-inside-work-tree >/dev/null 2>&1 \
+  || die "not inside a git repository"
+
+# First arg is the PR number only if it is bare digits; otherwise everything
+# is extra context and the PR comes from the current branch.
+num=""
+if [[ ${#args[@]} -gt 0 && "${args[0]}" =~ ^[0-9]+$ ]]; then
+  num="${args[0]}"
+  args=("${args[@]:1}")
+fi
+
+# Resolve + validate up front so failures are a clear one-liner, not a Claude
+# session that starts and then reports it cannot find the PR.
+pr_json="$(gh pr view $num --json number,title,state 2>/dev/null)" || {
+  [[ -n "$num" ]] && die "no PR #$num in this repo"
+  die "no open PR for the current branch (pass a PR number, or push the branch first)"
+}
+num="$(jq -r .number <<< "$pr_json")"
+title="$(jq -r .title <<< "$pr_json")"
+state="$(jq -r .state <<< "$pr_json")"
+
+printf 'Reviewing PR #%s (%s): %s%s\n' "$num" "$state" "$title" \
+  "${perm_mode:+  [permission-mode: $perm_mode]}" >&2
+
+prompt="/review-pr $num"
+[[ ${#args[@]} -gt 0 ]] && prompt="$prompt ${args[*]}"
+
+claude_args=()
+[[ -n "$perm_mode" ]]        && claude_args+=(--permission-mode "$perm_mode")
+[[ "$print_mode" == true ]]  && claude_args+=(--print)
+
+exec claude "${claude_args[@]}" "$prompt"
