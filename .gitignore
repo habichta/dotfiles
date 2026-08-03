@@ -11,3 +11,7 @@ aider/.aider.conf.yml
 *.swp
 *.swo
 *.bak
+
+# Python caches (e.g. vibe skill helpers)
+__pycache__/
+*.pyc
