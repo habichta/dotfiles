@@ -3,9 +3,10 @@ name: procrastinator
 description: >
   Unblocks a stalled task by naming one tiny, concrete next step from the current branch's
   own unfinished work. Reads the branch diff, finds the lowest-effort leftover, and answers
-  with a one-line situation plus at most 3 zero-decision steps.
+  with a one-line situation plus at most 3 zero-decision steps. Serves tasks in escalating
+  tiers, so `/procrastinator next` after each one ramps from trivial toward the real work.
   Use when the user says "I'm procrastinating", "where do I start", "give me a small step",
-  "help me get back into this", "what's next", or invokes /procrastinator.
+  "help me get back into this", "what's next", "next task", or invokes /procrastinator.
 ---
 
 # Procrastinator
@@ -17,21 +18,58 @@ Invocation: `/procrastinator [steer…]`
 
 ## Output format
 
-Exactly this. Nothing before it, nothing after it except the optional deferred line.
+Exactly this. Nothing before it, nothing after it.
 
 ```
-**Situation:** <one line — where the branch actually stands>
+**Situation:** <one line — where the branch actually stands>  ⟨tier N/4: <tier name>⟩
 
 1. Open `path/to/file.py:LINE`
 2. <the single concrete change — literal text to type, or a small diff>
 3. <how it ends: a copy-pasteable verify command, or "save and you're done">
 
-*Later (not now): <one judgment call left on this branch, with file:line>*
+▸ done → `/procrastinator next`  ·  not this one → `/procrastinator skip`  ·  too big → `/procrastinator smaller`
 ```
 
 **Max 3 steps.** If it needs 4, it's the wrong task — pick something smaller.
 Step 1 is always physically opening an exact location. Never "figure out where".
-The deferred line is optional; drop it if the steer asked for only the start.
+
+**The footer is mandatory on every single response.** It is the only thing preventing a
+context switch out of the editor to work out how to continue. Print it verbatim, always,
+even when the tier is empty or the branch looks finished.
+
+## The ramp
+
+Candidates sort into four tiers by cognitive cost. Always serve the **lowest non-empty
+tier**, so the work escalates on its own as the cheap stuff runs out:
+
+| Tier | Name | What qualifies |
+|---|---|---|
+| 1 | `warmup` | One file, no decisions. Duplicate branches, stray debug log, unused import, dead comment. |
+| 2 | `wiring` | Mechanical but touches 2-3 files. Hardcoded value → settings/env, field missing from admin/serializer/enum map. |
+| 3 | `small call` | One contained decision that has an obvious default. Naming, placement, a guard clause's position. |
+| 4 | `design` | The parked TODOs. Real behavioural questions with no default answer. |
+
+Show the tier in the situation line so the ramp is legible and finite.
+
+**Never skip a tier to serve something "more important".** Importance is not the ranking
+criterion — cognitive cost is. The ramp exists so that by the time tier 4 arrives, they are
+already several hours into working and it no longer reads as a wall.
+
+## State lives in git, not in memory
+
+Do not try to remember what was suggested before. **Re-scan from scratch every invocation.**
+A task that got done no longer matches its pattern in the code, so it drops off the candidate
+list by itself. This is why the ramp works across sessions with no bookkeeping.
+
+Before answering, always check what moved since last time:
+
+```bash
+git status --short
+git diff --stat
+```
+
+If the previous suggestion is gone from the working tree, they did it. Do not congratulate
+them, do not mention it — just serve the next one.
 
 ## Hard rules
 
@@ -42,7 +80,7 @@ The deferred line is optional; drop it if the steer asked for only the start.
 3. **Trivial is correct.** A one-line merge of two duplicate branches is a better answer
    than a well-scoped refactor. The goal is opening the file, not shipping.
 4. **Zero decisions in the 3 steps.** If any step contains "check whether", "decide if",
-   or "consider" — it belongs in the deferred line instead.
+   or "consider" — it is not tier 1 or 2. Re-file it and serve something cheaper.
 5. **One file** across all 3 steps where possible. Task-switching is a real cost.
 6. **Be brief.** Under ~15 lines total.
 
@@ -103,10 +141,22 @@ text. A wrong line number breaks the spell instantly and costs more than it save
 
 Everything after `/procrastinator` biases the pick:
 
-- names an area/file/feature → prefer leftovers there
-- `test` / `tests` → lift the no-tests rule; find the untested branch
-- `bigger` / `real` / `meaty` → promote the deferred judgment call into the 3 steps
-- `just tell me` / `smallest` → output step 1 only, drop the rest
+| Steer | Effect |
+|---|---|
+| *(none)* | Lowest non-empty tier. |
+| `next` | They finished one. Re-scan; serve the next item, advancing a tier if the current one is now empty. |
+| `skip` | Not that one. Different item, same tier. If the tier is exhausted, go up one. |
+| `smaller` | Too big. Drop a tier, or split the same task and serve only its first third. |
+| `bigger` / `real` | Jump straight to the highest non-empty tier. |
+| `<area/file/feature>` | Prefer candidates there, still lowest-tier-first within it. |
+| `test` / `tests` | Lift the no-tests rule; find the untested branch. |
+| `smallest` / `just tell me` | Step 1 only — plus the footer, which is never dropped. |
+
+## When the branch is clean
+
+If no candidates remain in any tier, say so in one line, name the single largest remaining
+piece of actual feature work, and still print the footer. Never pad with invented busywork —
+a fake task burns the trust that makes the real ones get done.
 
 ## Tone
 
