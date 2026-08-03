@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+# Compact candidate report for the /procrastinator skill.
+#
+# Prints a bounded summary (never the raw diff) so the caller can pick a task
+# without pulling thousands of diff lines into context. Line numbers are read
+# from the working tree, so they are already correct to cite.
+#
+# Usage: procrastinator-scan [base-ref]
+
+set -uo pipefail
+
+BASE="${1:-}"
+if [ -z "$BASE" ]; then
+    BASE=$(git symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null | sed 's|origin/||')
+    [ -z "$BASE" ] && for b in main master; do
+        git show-ref --verify --quiet "refs/heads/$b" && BASE=$b && break
+    done
+fi
+[ -z "$BASE" ] && { echo "no base branch found"; exit 1; }
+
+MERGE_BASE=$(git merge-base "$BASE" HEAD 2>/dev/null) || { echo "no merge base with $BASE"; exit 1; }
+
+# noise that never contains a warmup task but bloats every scan
+EXCLUDES=(
+    ':(exclude)*migrations/*' ':(exclude)*.lock' ':(exclude)*lock.json'
+    ':(exclude)*.svg' ':(exclude)*.min.*' ':(exclude)*snapshot*'
+    ':(exclude)*.po' ':(exclude)*.mo' ':(exclude)*generated*' ':(exclude)*_pb2.py*'
+)
+
+mapfile -t FILES < <(git diff "$MERGE_BASE"..HEAD --name-only --diff-filter=d -- . "${EXCLUDES[@]}")
+[ ${#FILES[@]} -eq 0 ] && { echo "no changed files vs $BASE"; exit 0; }
+
+# keep only files that still exist in the working tree
+EXISTING=()
+for f in "${FILES[@]}"; do [ -f "$f" ] && EXISTING+=("$f"); done
+[ ${#EXISTING[@]} -eq 0 ] && { echo "no existing changed files"; exit 0; }
+
+echo "BASE=$BASE  files=${#EXISTING[@]}"
+
+echo
+echo "== uncommitted (did they just do one?) =="
+git status --short | head -15
+git diff --stat | tail -3
+
+echo
+echo "== smallest changed files (cheapest to read fully) =="
+git diff "$MERGE_BASE"..HEAD --numstat -- . "${EXCLUDES[@]}" \
+    | awk 'NF==3 && $1 ~ /^[0-9]+$/ {print $1, $3}' \
+    | sort -n | head -8 | awk '{printf "  +%-5s %s\n", $1, $2}'
+
+echo
+echo "== markers in changed files =="
+grep -nEI --color=never 'TODO|FIXME|XXX|HACK|NotImplementedError' "${EXISTING[@]}" 2>/dev/null \
+    | grep -vE '\.md:' | cut -c1-160 | head -15 || true
+
+echo
+echo "== debug scaffolding in changed files =="
+grep -nEI --color=never '(^|[^a-zA-Z_.])(print|console\.log|breakpoint|pdb\.set_trace|debugger)\s*\(' \
+    "${EXISTING[@]}" 2>/dev/null | cut -c1-160 | head -10 || true
+
+echo
+echo "== added constants / literals (hardcoded values, dupes) =="
+# buffer the filename and only print it once a real hit follows, so empty
+# files don't eat the line budget
+git diff "$MERGE_BASE"..HEAD -U0 -- . "${EXCLUDES[@]}" \
+    | grep -E '^(\+\+\+ b/|\+[[:space:]]*[A-Za-z_][A-Za-z0-9_]*[[:space:]]*=[[:space:]]*[0-9"'"'"'])' \
+    | awk '
+        /^\+\+\+ b\// { f = substr($0, 7); shown = 0; next }
+        { if (!shown) { print f; shown = 1 }; print "   " substr($0, 2) }
+      ' | cut -c1-140 | head -30 || true
+
+echo
+echo "-- end of report; do NOT pull the full diff --"

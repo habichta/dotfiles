@@ -61,13 +61,7 @@ Do not try to remember what was suggested before. **Re-scan from scratch every i
 A task that got done no longer matches its pattern in the code, so it drops off the candidate
 list by itself. This is why the ramp works across sessions with no bookkeeping.
 
-Before answering, always check what moved since last time:
-
-```bash
-git status --short
-git diff --stat
-```
-
+The scan's "uncommitted" section already shows what moved since last time — no extra call.
 If the previous suggestion is gone from the working tree, they did it. Do not congratulate
 them, do not mention it — just serve the next one.
 
@@ -107,35 +101,55 @@ negotiable stylistic preferences:
 **Never explain any of this to the user, and never mention ADHD in the output.** Just produce
 the format. Being told how your own attention works is not help.
 
-## Steps (for you, to find the task)
+## Speed budget — answer in under ~15 seconds
 
-**1. Read the branch.**
+Waiting is where the focus goes. A slow perfect answer is worth less than a fast good one,
+because the user is gone before it lands. Treat this as a hard constraint, not an aspiration.
 
-```bash
-BASE=$(git symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null | sed 's|origin/||' || echo master)
-git log --oneline $BASE..HEAD
-git diff $BASE...HEAD --stat
-```
+**Two tool calls. That is the budget.**
 
-**2. Find candidate leftovers.** Look only inside added lines:
+**Call 1 — the scan.** One command, always:
 
 ```bash
-git diff $BASE...HEAD -U2 | grep -nE "^\+.*(TODO|FIXME|XXX|HACK|NotImplemented)"
+~/.dotfiles/scripts/procrastinator-scan
 ```
 
-Then scan the diff for the quiet ones, usually better answers than the TODOs:
+It prints a bounded ~40-line report: changed files by size, uncommitted work, markers,
+debug scaffolding, and added constants — with working-tree line numbers that are already
+correct to cite.
+
+**Call 2 — confirm the one spot.** A narrow window on the single file you picked:
+
+```bash
+sed -n '220,235p' path/to/file.py
+```
+
+Then answer. Do not open a third thing to feel more certain.
+
+**Never pull the full diff.** `git diff $BASE...HEAD` on a real branch is thousands of lines,
+and reading it costs more than every other step combined. The scan exists precisely so this
+never happens. If the report is thin, answer from what it gave you.
+
+**Ship the best candidate found, not the best that exists.** Stop looking the moment you have
+something that satisfies the current tier. Exhaustive search is the failure mode here.
+
+## What counts as a candidate
+
+The scan surfaces markers and constants directly. The subtler ones live in the small files
+the report lists under "smallest changed files" — those are cheap to read in full:
 
 - **Duplicated branches** — two `case`/`elif` arms added that produce the same result; merge them.
 - **Hardcoded value breaking a local convention** — a new constant set literally while every
-  sibling in the same class/module reads from env/settings/config.
+  sibling in the same class/module reads from env/settings/config. Check the siblings before
+  claiming this; a module where several values are hardcoded has no convention to break.
 - **Half-wired plumbing** — a field added to a model but missing from admin, serializer,
   or an enum's display map.
 - **Leftover scaffolding** — a debug log, a commented-out line, an unused import they added.
 
-**3. Rank by cognitive cost, not importance.** The answer is the one requiring zero decisions.
+**Rank by cognitive cost, not importance.** The answer is the one requiring zero decisions.
 
-**4. Verify before naming it.** Open the file and confirm the exact line numbers and current
-text. A wrong line number breaks the spell instantly and costs more than it saved.
+**Cite line numbers from the working tree, never from diff-hunk arithmetic.** A wrong line
+number breaks the spell instantly and costs more than it saved.
 
 ## Steer argument
 
