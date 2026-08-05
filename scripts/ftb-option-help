@@ -1,0 +1,145 @@
+#!/usr/bin/env zsh
+# Preview helper for fzf-tab option completions.
+#
+# Called as:  ftb-option-help <command> [subcommand]
+# Environment (exported by fzf-tab's lib/-ftb-preview.tpl):
+#   $word  the completion being previewed, e.g. --mixed
+#   $desc  zsh's own description for it, e.g. "--mixed -- reset HEAD and index"
+#
+# Tier 1 is zsh's description: exact, always correct, always shown.
+# Tier 2 greps the man page for the paragraph documenting the option. That is a
+# heuristic over man's layout, so it is best-effort and silent on failure.
+
+emulate -L zsh
+
+# argv: <context-command> [word ...]   — the words are the current command line,
+# used to find a subcommand ("reset") to qualify the man page with.
+local cmd=${1:-} opt=${word:-}
+local -a cmdwords=("${@:2}")
+
+# fzf-tab hands over the completion word with compadd's trailing suffix still
+# attached — "--hard " with a space, "--cleanup=" with an equals. Both must go
+# before comparing against the option spellings parsed out of the man page.
+# NB: plain substitution, not [[:space:]]# — `emulate -L zsh` turns off
+# EXTENDED_GLOB, so the # repeat operator would not apply here. Options never
+# contain internal whitespace, so removing all of it is safe.
+opt=${opt//[[:space:]]/}
+opt=${opt%=}
+
+# Diagnostic: set FTB_HELP_DEBUG=/path/to/log to trace what the preview gets.
+# This is how the argument-splitting bug above was finally found — keep it.
+_ftb_log() {
+  [[ -n ${FTB_HELP_DEBUG:-} ]] || return 0
+  print -r -- "$@" >> "${FTB_HELP_DEBUG}" 2>/dev/null
+}
+_ftb_log "--- argv=[$*] word=[${word:-}] desc=[${desc:-}]"
+
+# Self-test: `ftb-option-help --self-test git reset --mixed`
+if [[ ${1:-} == --self-test ]]; then
+  # --self-test <context-cmd> [words...] <option>
+  cmd=$2
+  opt=${@[-1]}
+  cmdwords=("${@[3,-2]}")
+  word=$opt
+  desc="$opt -- (self-test)"
+fi
+
+# --- Not an option: keep the preview pane useful ----------------------------
+if [[ ${opt} != -* ]]; then
+  if [[ -n ${realpath:-} && -d ${realpath} ]]; then
+    ls --color=always -- "${realpath}" 2>/dev/null
+  elif [[ -n ${realpath:-} && -f ${realpath} ]]; then
+    if (( $+commands[batcat] )); then
+      batcat --color=always --style=plain --line-range=:200 -- "${realpath}" 2>/dev/null
+    else
+      head -n 200 -- "${realpath}" 2>/dev/null
+    fi
+  elif [[ -n ${desc:-} && ${desc} != ${opt} ]]; then
+    print -r -- "${desc}"
+  fi
+  return 0
+fi
+
+# --- Tier 1: zsh's completion description -----------------------------------
+if [[ -n ${desc:-} ]]; then
+  print -r -- "${desc}"
+else
+  print -r -- "${opt}"
+fi
+
+# --- Tier 2: man page paragraph ---------------------------------------------
+# Candidate man pages. Called with one arg it is zsh's context command, which
+# is already the man page name for subcommands ("git-reset"); fall back to the
+# leading segment ("git"). Called with two it is "<cmd> <sub>".
+# Subcommand-qualified pages first: "man git" exists but documents none of
+# git-reset's options, so trying it first would stop the search too early.
+local -a pages
+local w
+for w in "${cmdwords[@]}"; do
+  [[ ${w} == -* || -z ${w} ]] && continue   # options are not subcommands
+  [[ ${w} == ${cmd} ]] && continue          # "git git"
+  pages+=("${cmd}-${w}")
+done
+pages+=("${cmd}" "${cmd%%-*}")
+pages=(${(u)pages})              # dedupe, preserve order
+
+_ftb_log "    opt=[${opt}] cmd=[${cmd}] pages=[${pages[*]}]"
+
+# Reflow man output to the actual preview pane. fzf exports FZF_PREVIEW_COLUMNS
+# to preview commands; without this, man formats to 80 columns and the pane
+# clips the overflow. Clamped so a very narrow pane does not mangle the layout.
+local -i width=${FZF_PREVIEW_COLUMNS:-80}
+(( width < 40 )) && width=40
+export MANWIDTH=$width
+
+local page out
+for page in "${pages[@]}"; do
+  [[ -n ${page} && ${page} != -* && ${page} != *- ]] || continue
+  _ftb_log "    trying man ${page} (exists: $(man -w ${page} >/dev/null 2>&1 && echo yes || echo no))"
+
+  out=$(man "${page}" 2>/dev/null | col -bx | awk -v opt="${opt}" '
+    function ltrim(s) { sub(/^[ \t]+/, "", s); return s }
+    BEGIN { found = 0; n = 0 }
+    {
+      t = ltrim($0)
+      if (!found) {
+        # Option definitions start with "-". They may list several spellings,
+        # e.g. "-m, --max-time <seconds>", so split the leading cluster on
+        # commas and compare each spelling with its argument part removed.
+        if (t ~ /^-/) {
+          head = t
+          if (match(head, /  +/)) head = substr(head, 1, RSTART - 1)
+          cnt = split(head, parts, /, */)
+          for (i = 1; i <= cnt; i++) {
+            p = parts[i]
+            sub(/[ =[<].*$/, "", p)
+            if (p == opt) {
+              found = 1
+              indent = match($0, /[^ ]/)
+              # Dedent from this line indent: man indents option blocks ~11
+              # columns, dead space in a narrow pane. Relative structure is
+              # preserved. (No apostrophes here - awk program is in '' quotes.)
+              print substr($0, indent)
+              break
+            }
+          }
+        }
+        next
+      }
+      ind = match($0, /[^ ]/)
+      # Stop at the next option documented at the same or shallower indent.
+      if (t ~ /^-/ && ind <= indent) exit
+      print substr($0, indent)
+      if (++n > 40) exit
+    }
+  ')
+
+  if [[ -n ${out} ]]; then
+    print
+    print -r -- "── man ${page} ──"
+    print -r -- "${out}"
+    return 0
+  fi
+done
+
+return 0

@@ -1,0 +1,91 @@
+#!/usr/bin/env bash
+#
+# gh review-mistral [-p|--print] [-m|--manual] [<num>] [<extra context…>]
+#
+# Reviews a pull request with Mistral Vibe by invoking the /review-pr skill,
+# which lives in $VIBE_HOME/skills/review-pr/SKILL.md (default ~/.vibe).
+#
+# Selecting the PR:
+#   - no argument   -> the PR for the current branch
+#   - <num>         -> that PR in the current repo
+#
+# Anything after the (optional) number is passed to the review as extra
+# instructions, e.g.  gh review-mistral 42 "focus on the retry logic"
+#
+# A review only reads, so by default the tool set is restricted to bash,
+# read_file and grep, and those calls are auto-approved — the review runs
+# start to finish unattended. Override the tool set with VIBE_REVIEW_TOOLS.
+#
+# Flags:
+#   -p, --print     non-interactive; print the review to stdout and exit
+#   -m, --manual    prompt for tool approval as usual (disables auto-approve)
+#
+# Must be run inside the repo's checkout — the review reads the working tree
+# for context, not just the diff. For a PR in another repo, run
+# `gh review-prepare` first to land in the right checkout on the right branch.
+
+set -euo pipefail
+
+SKILL_FILE="${VIBE_HOME:-$HOME/.vibe}/skills/review-pr/SKILL.md"
+
+die() { printf 'gh review-mistral: %s\n' "$1" >&2; exit 1; }
+
+# Read-only tool set. Vibe's --enabled-tools disables everything else in
+# programmatic mode, which is exactly what a review wants.
+read -r -a review_tools <<< "${VIBE_REVIEW_TOOLS:-bash read_file grep}"
+
+auto_approve=true
+print_mode=false
+args=()
+for arg in "$@"; do
+  case "$arg" in
+    -p|--print)  print_mode=true ;;
+    -m|--manual) auto_approve=false ;;
+    -h|--help)   awk 'NR>1 && /^#/ {sub(/^# ?/,""); print; next} NR>1 {exit}' "$0"; exit 0 ;;
+    *)           args+=("$arg") ;;
+  esac
+done
+
+command -v vibe >/dev/null 2>&1 || die "vibe not found on PATH"
+[[ -f "$SKILL_FILE" ]] || die "missing skill: $SKILL_FILE"
+git rev-parse --is-inside-work-tree >/dev/null 2>&1 \
+  || die "not inside a git repository"
+
+# First arg is the PR number only if it is bare digits; otherwise everything
+# is extra context and the PR comes from the current branch.
+num=""
+if [[ ${#args[@]} -gt 0 && "${args[0]}" =~ ^[0-9]+$ ]]; then
+  num="${args[0]}"
+  args=("${args[@]:1}")
+fi
+
+# Resolve + validate up front so failures are a clear one-liner, not a Vibe
+# session that starts and then reports it cannot find the PR.
+pr_json="$(gh pr view $num --json number,title,state 2>/dev/null)" || {
+  [[ -n "$num" ]] && die "no PR #$num in this repo"
+  die "no open PR for the current branch (pass a PR number, or push the branch first)"
+}
+num="$(jq -r .number <<< "$pr_json")"
+title="$(jq -r .title <<< "$pr_json")"
+state="$(jq -r .state <<< "$pr_json")"
+
+printf 'Reviewing PR #%s (%s): %s%s\n' "$num" "$state" "$title" \
+  "$([[ "$auto_approve" == true ]] && echo '  [auto-approve: read-only tools]')" >&2
+
+prompt="/review-pr $num"
+[[ ${#args[@]} -gt 0 ]] && prompt="$prompt ${args[*]}"
+
+vibe_args=()
+if [[ "$auto_approve" == true ]]; then
+  vibe_args+=(--auto-approve)
+  for t in "${review_tools[@]}"; do
+    vibe_args+=(--enabled-tools "$t")
+  done
+fi
+
+if [[ "$print_mode" == true ]]; then
+  # Programmatic mode: no TTY to answer a trust prompt, so trust explicitly.
+  exec vibe --trust "${vibe_args[@]}" -p "$prompt"
+fi
+
+exec vibe "${vibe_args[@]}" "$prompt"

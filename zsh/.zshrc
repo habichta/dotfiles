@@ -1,108 +1,40 @@
-#######################################
-# BASIC 
+########################################
+# Loader — modules live in ~/.zsh/
+#
+#   basic.zsh      terminal, tmux, ssh-agent, ~/.local/bin env
+#   options.zsh    zmodload / autoload / compinit / setopt
+#   functions.zsh  shell functions
+#   bindkeys.zsh   key bindings
+#   completion.zsh completion styling
+#   cache.zsh      cached_eval + starship/mise/uv init
+#   aliases.zsh    general aliases
+#   wsl.zsh        Windows interop: vpn, ff, explorer, vlc
+#   web.zsh        web-* page shortcuts (needs ff from wsl.zsh)
+#
+# Order matters: options.zsh runs compinit, which completion.zsh builds on,
+# and basic.zsh sets PATH bits that cache.zsh needs to find uv/uvx.
 ########################################
 [ -z "$ZPROF" ] || zmodload zsh/zprof
 
-export TERM=tmux-256color
-if [ -z "$TMUX" ]
-then
-    tmux attach -t Shell || tmux new -s Shell
-fi
+source ~/.zsh/basic.zsh
+source ~/.zsh/options.zsh
 
-export SSH_AUTH_SOCK="$HOME/.ssh/agent.sock"
-ssh-add -l &>/dev/null
-if [ $? -eq 2 ]; then
-  rm -f "$SSH_AUTH_SOCK"
-  (umask 077; ssh-agent -a "$SSH_AUTH_SOCK" >/dev/null)
-fi
-
-# deactivate ctrl-s XOFF
-stty -ixon 
-
-########################################
-# ZSH AUTOLOAD / SETOPT
-########################################
-# Should be called before compinit
-zmodload zsh/complist
-autoload -Uz compinit add-zsh-hook edit-command-line
-if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(#qN.mh+24) ]]; then
-  compinit -u
-else
-  compinit -uC
-fi
-
-zle -N edit-command-line
-
-setopt IGNORE_EOF # Ignore EOF; use 'exit' to quit the shell
-setopt SHARE_HISTORY # Share history between all sessions
-setopt AUTO_PUSHD # Push the current directory visited on the stack.
-setopt PUSHD_IGNORE_DUPS # Do not store duplicates in the stack.
-setopt PUSHD_SILENT # Do not print the directory stack after pushd or popd.
-
-#Colorscheme for Dirs
-eval "$(dircolors ~/.gruvbox.dircolors)"
-
-########################################
-# ZSH Hooks and Functions
-########################################
 source ~/.zsh/plugins/zsh-z/zsh-z.plugin.zsh
 source ~/.zsh/functions.zsh
 source ~/.zsh/bindkeys.zsh
 source ~/.zsh/completion.zsh
 
+# fzf-tab must come after compinit (options.zsh) and after the completion
+# zstyles above, since it wraps the completion widget.
+source ~/.zsh/plugins/fzf-tab/fzf-tab.plugin.zsh
+source ~/.zsh/fzf-tab.zsh
+
 #ZSH hooks - changes TMUX windows name when changing directories
 add-zsh-hook chpwd update-tmux-window-name
 
-########################################
-# Cached subprocess evals — refresh with `zsh-cache-refresh`
-########################################
-ZSH_CACHE_DIR="$HOME/.cache/zsh"
-cached_eval() {
-  local key=$1; shift
-  local cache="$ZSH_CACHE_DIR/$key.zsh"
-  if [[ ! -f "$cache" ]]; then
-    mkdir -p "$ZSH_CACHE_DIR"
-    "$@" > "$cache" 2>/dev/null
-    zcompile "$cache" 2>/dev/null
-  fi
-  source "$cache"
-}
-zsh-cache-refresh() { rm -rf "$ZSH_CACHE_DIR" && echo "Cleared $ZSH_CACHE_DIR — restart your shell."; }
-
-cached_eval starship starship init zsh
-cached_eval mise     /home/habichta/.local/bin/mise activate zsh
-cached_eval uvx      uvx --generate-shell-completion zsh
-cached_eval uv       uv  --generate-shell-completion zsh
-
-
-########################################
-# Alias
-########################################
-
-alias v="nvim"
-alias vi="nvim"
-alias vim="nvim"
-alias vl="nvim -c \"normal '0\"" # open last file
-alias ls='ls --color=auto'
-alias ll="ls -la --color=auto"
-alias rmr="rm -r"
-alias lsa="ls -la"
-alias reload="exec $SHELL"
-alias cpwd="pwd | xclip -sel clip" # copy pwd to clip board
-alias cat="batcat"
-alias cc="clear"
-alias g="git"
-alias ai=aider # Aider AI
-alias jup="uv run --with jupyter jupyter lab" # Jupyter Lab via uv, using current virtualenv
-alias ipy="ipython"
-
-# WSL2
-alias exp="explorer.exe ."
-
-#Download / Watch Youtube Video / Install yt-dlp using uv tool and stable commit from repo
-alias youtubed='yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]" -o "$HOME/Downloads/%(title)s.%(ext)s"'
-alias vlc="/mnt/c/Program\ Files/VideoLAN/VLC/vlc.exe"
+source ~/.zsh/cache.zsh
+source ~/.zsh/aliases.zsh
+source ~/.zsh/wsl.zsh
+source ~/.zsh/web.zsh
 
 [ -z "$ZPROF" ] || zprof
-
-. "$HOME/.local/share/../bin/env"
