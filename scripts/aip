@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 tmpfile=$(mktemp)
 cat > "$tmpfile"
 aider "$tmpfile" < /dev/tty

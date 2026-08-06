@@ -10,3 +10,6 @@ mise.local.toml
 .gitignored
 .vim/coc-settings.json
 .claude
+
+# zsh byte-code, written next to each sourced module (see ~/.zshrc)
+*.zwc

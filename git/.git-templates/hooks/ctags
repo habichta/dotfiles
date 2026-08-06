@@ -3,5 +3,16 @@ set -e
 PATH="/usr/local/bin:$PATH"
 dir="`git rev-parse --git-dir`"
 trap 'rm -f "$dir/$$.tags"' EXIT
-git ls-files | ctags  -L - -f"$dir/$$.tags"
+
+# Drop submodules (mode 160000) from the file list. `git ls-files` emits a
+# submodule as its bare directory path rather than its contents, and
+# --recurse=yes in ~/.ctags.d/options.ctags then makes ctags descend the whole
+# tree beneath it -- which is how deps/ tags reached :Tags.
+#
+# --exclude= cannot fix this: ctags applies it only while recursing on its own
+# argument list, and ignores it entirely for files supplied via -L.
+git ls-files -s \
+  | awk -F'\t' '$1 !~ /^160000/ { print $2 }' \
+  | ctags -L - -f"$dir/$$.tags"
+
 mv "$dir/$$.tags" "$dir/tags"

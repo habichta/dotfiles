@@ -16,6 +16,18 @@
 ########################################
 [ -z "$ZPROF" ] || zmodload zsh/zprof
 
+# Byte-compile each module to <file>.zwc. `source foo.zsh` transparently reads
+# foo.zsh.zwc whenever it is newer, and silently falls back to the plain file
+# when it is stale — so a missed recompile costs speed, never correctness.
+# This differs from the .zcompdump case in options.zsh, which was a loss only
+# because compinit rewrites the dump on every start; these modules are static.
+() {
+  local f
+  for f in ~/.zsh/*.zsh(N) ~/.zsh/plugins/*/*.zsh(N) ~/.zsh/plugins/*/*/*.zsh(N); do
+    [[ -s $f.zwc && $f.zwc -nt $f ]] || zcompile -- $f 2>/dev/null
+  done
+}
+
 source ~/.zsh/basic.zsh
 source ~/.zsh/options.zsh
 

@@ -15,3 +15,5 @@
 --exclude=tags
 --exclude=log
 --exclude=node_modules
+--exclude=.venv
+--exclude=__pycache__

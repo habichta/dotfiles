@@ -6,6 +6,13 @@ export DOTFILES="$HOME/.dotfiles"
 ########################################
 # PATH/HOME  
 ########################################
+# .zshenv runs for EVERY zsh, including non-interactive ones, so these appends
+# stack up: nested shells grew $PATH by ~150 chars per level and every entry
+# below was already duplicated once by the `env` script basic.zsh sources.
+# `path` is the array tied to $PATH; -U keeps the first occurrence and drops
+# later duplicates. (Do NOT extend this to fpath/FPATH — see options.zsh.)
+typeset -U path PATH
+
 export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
 export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:$HOME/.fzf/bin"

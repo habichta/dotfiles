@@ -19,4 +19,4 @@ fi
 stty -ixon
 
 # uv / ~/.local/bin environment
-. "$HOME/.local/share/../bin/env"
+. "$HOME/.local/bin/env"

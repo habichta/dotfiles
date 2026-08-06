@@ -7,8 +7,8 @@
     lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
     lg3 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
     c = commit
-    cai = "!git-ai-commit"
-    caia = "!git-ai-commit --amend"
+    cai = "!claude-git-commit"
+    caia = "!claude-git-commit --amend"
     conflict = diff --name-only --diff-filter=U
     ch = checkout
     chm = "!git checkout $(git branch --list main master | sed 's/^* //')"
@@ -100,14 +100,8 @@
 	excludesfile = ~/.gitignore
 [init]
   templatedir = ~/.git-templates
-[merge]
-  tool = diffconflicts
-[mergetool]
-  keepBackup = false
-	prompt = false
-[mergetool.diffconflicts]
-  cmd = vim -c DiffConflicts "$MERGED" "$BASE" "$LOCAL" "$REMOTE"
-  trustExitCode = true
+# Conflicts are resolved in nvim via fugitive's `:Gdiffsplit!` (3-way diff of
+# both ancestors), so there is no `git mergetool` config here.
 [pager]
   stash = false
   grep = false

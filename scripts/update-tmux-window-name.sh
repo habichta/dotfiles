@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 update_window_name() {
   if [ -n "$TMUX" ]; then
       local REPO_NAME=$(basename "$(git rev-parse --show-toplevel 2>/dev/null)")
