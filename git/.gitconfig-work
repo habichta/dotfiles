@@ -1,0 +1,4 @@
+# Identity for ~/repos/helpany/, pulled in by the includeIf at the end of
+# .gitconfig. Explicit rather than relying on the global [user] fallback.
+[user]
+	email = arthur.habicht@helpany.com

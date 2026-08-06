@@ -1,0 +1,4 @@
+# Identity for ~/repos/personal/, pulled in by the includeIf at the end of
+# .gitconfig. Matches the uid on the signing key, so `git commit -S` verifies.
+[user]
+	email = habichta@protonmail.com

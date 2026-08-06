@@ -100,6 +100,7 @@
 	excludesfile = ~/.gitignore
 [init]
   templatedir = ~/.git-templates
+  defaultBranch = master
 # Conflicts are resolved in nvim via fugitive's `:Gdiffsplit!` (3-way diff of
 # both ancestors), so there is no `git mergetool` config here.
 [pager]
@@ -111,18 +112,11 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 [help]
-	autocorrect = 1
-[diff "jupyternotebook"]
-	command = git-nbdiffdriver diff
-[merge "jupyternotebook"]
-	driver = git-nbmergedriver merge %O %A %B %L %P
-	name = jupyter notebook merge driver
-[difftool "nbdime"]
-	cmd = git-nbdifftool diff \"$LOCAL\" \"$REMOTE\" \"$BASE\"
+	# `1` meant "run the guessed command after 0.1s", which is no time to abort
+	# a mistyped push/reset. `prompt` asks instead.
+	autocorrect = prompt
 [difftool]
 	prompt = false
-[mergetool "nbdime"]
-	cmd = git-nbmergetool merge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
 [color]
 	ui = true
 	diff = auto
@@ -135,5 +129,27 @@
   autosquash = true
 [status]
   showUntrackedFiles = all
+[diff]
+  # Don't walk submodule worktrees on every status: with 5-7 submodules that
+  # cost 59ms vs 6ms. `dirty` hides uncommitted changes *inside* a submodule
+  # but still reports a bumped submodule commit, which is what you'd commit.
+  ignoreSubmodules = dirty
 [submodule]
   recurse = true
+[rerere]
+  # Replays previous conflict resolutions. Worth it given pull.rebase +
+  # rebase.autosquash below mean the same conflicts resurface often.
+  enabled = true
+[fetch]
+  prune = true
+[push]
+  autoSetupRemote = true
+
+# Must stay last: git applies config in order, so these have to come after the
+# [user] block at the top to override user.email. The two paths are disjoint,
+# so their order relative to each other does not matter. Anything outside both
+# trees (~/.dotfiles included) still falls back to the [user] block above.
+[includeIf "gitdir:~/repos/personal/"]
+  path = ~/.gitconfig-personal
+[includeIf "gitdir:~/repos/helpany/"]
+  path = ~/.gitconfig-work

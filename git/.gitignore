@@ -13,3 +13,4 @@ mise.local.toml
 
 # zsh byte-code, written next to each sourced module (see ~/.zshrc)
 *.zwc
+

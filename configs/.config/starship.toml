@@ -1,0 +1,21 @@
+format = """
+$fill
+$all
+$jobs$character
+"""
+
+[line_break]
+disabled = true
+
+[fill]
+symbol = "·"
+style = "bright-black"
+
+[cmake]
+symbol = " "
+
+# Scanning submodule worktrees dominated prompt latency in the deps/-heavy
+# repos (75-91ms -> ~15ms). Pin bumps still show; only worktree dirt inside a
+# submodule is ignored, and `git status` still reports that in full.
+[git_status]
+ignore_submodules = true
